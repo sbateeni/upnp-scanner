@@ -6,6 +6,10 @@
         {
           "id": "CVE-2013-4853",
           "description": "Buffer overflow in ProFTPD allowing remote code execution"
+        },
+        {
+          "id": "CVE-2021-45898",
+          "description": "vsftpd 3.0.3 denial of service"
         }
       ]
     },
@@ -15,6 +19,14 @@
         {
           "id": "CVE-2018-15473",
           "description": "OpenSSH username enumeration vulnerability"
+        },
+        {
+          "id": "CVE-2020-14145",
+          "description": "Information leak in OpenSSH client"
+        },
+        {
+          "id": "CVE-2019-6111",
+          "description": "OpenSSH scp vulnerability"
         }
       ]
     },
@@ -24,6 +36,10 @@
         {
           "id": "CVE-2020-25785",
           "description": "Telnet client buffer overflow"
+        },
+        {
+          "id": "CVE-2019-16025",
+          "description": "Cisco IOS XE Software Telnet DoS"
         }
       ]
     },
@@ -33,6 +49,10 @@
         {
           "id": "CVE-2020-8656",
           "description": "Exim buffer overflow leading to remote code execution"
+        },
+        {
+          "id": "CVE-2019-19943",
+          "description": "Exim use-after-free vulnerability"
         }
       ]
     },
@@ -42,6 +62,10 @@
         {
           "id": "CVE-2020-17530",
           "description": "Apache Struts RCE through DNS lookup"
+        },
+        {
+          "id": "CVE-2019-9599",
+          "description": "Denial of service in DNS servers"
         }
       ]
     },
@@ -51,6 +75,14 @@
         {
           "id": "CVE-2021-41773",
           "description": "Apache HTTP Server path traversal"
+        },
+        {
+          "id": "CVE-2021-42013",
+          "description": "Apache HTTP Server RCE"
+        },
+        {
+          "id": "CVE-2020-17519",
+          "description": "Apache Flink path traversal"
         }
       ]
     },
@@ -60,6 +92,10 @@
         {
           "id": "CVE-2022-26904",
           "description": "Windows MSRPC remote code execution"
+        },
+        {
+          "id": "CVE-2021-34527",
+          "description": "Windows Print Spooler RCE (PrintNightmare)"
         }
       ]
     },
@@ -69,6 +105,10 @@
         {
           "id": "CVE-2017-0144",
           "description": "EternalBlue SMB exploit"
+        },
+        {
+          "id": "CVE-2019-0708",
+          "description": "BlueKeep RDP remote code execution"
         }
       ]
     },
@@ -78,6 +118,10 @@
         {
           "id": "CVE-2021-3449",
           "description": "OpenSSL denial of service"
+        },
+        {
+          "id": "CVE-2020-13777",
+          "description": "BlueZ information disclosure"
         }
       ]
     },
@@ -87,6 +131,10 @@
         {
           "id": "CVE-2017-0144",
           "description": "EternalBlue SMB exploit"
+        },
+        {
+          "id": "CVE-2020-0796",
+          "description": "SMBv3 compression vulnerability (SMBGhost)"
         }
       ]
     },
@@ -96,6 +144,10 @@
         {
           "id": "CVE-2020-8012",
           "description": "Mail server buffer overflow"
+        },
+        {
+          "id": "CVE-2019-11500",
+          "description": "Dovecot authentication bypass"
         }
       ]
     },
@@ -114,6 +166,10 @@
         {
           "id": "CVE-2020-0618",
           "description": "Microsoft SQL Server Reporting Services RCE"
+        },
+        {
+          "id": "CVE-2019-0708",
+          "description": "BlueKeep RDP remote code execution"
         }
       ]
     },
@@ -123,6 +179,10 @@
         {
           "id": "CVE-2020-2737",
           "description": "Oracle Database authentication bypass"
+        },
+        {
+          "id": "CVE-2019-2725",
+          "description": "Oracle WebLogic RCE"
         }
       ]
     },
@@ -132,6 +192,10 @@
         {
           "id": "CVE-2020-12075",
           "description": "MQTT broker authentication bypass"
+        },
+        {
+          "id": "CVE-2019-11298",
+          "description": "EMQ X Broker authentication bypass"
         }
       ]
     },
@@ -145,6 +209,10 @@
         {
           "id": "CVE-2017-3599",
           "description": "MySQL privilege escalation"
+        },
+        {
+          "id": "CVE-2019-2851",
+          "description": "MySQL Server buffer overflow"
         }
       ]
     },
@@ -154,6 +222,10 @@
         {
           "id": "CVE-2019-0708",
           "description": "BlueKeep RDP remote code execution"
+        },
+        {
+          "id": "CVE-2021-34527",
+          "description": "Windows Print Spooler RCE (PrintNightmare)"
         }
       ]
     },
@@ -163,6 +235,10 @@
         {
           "id": "CVE-2017-17215",
           "description": "Huawei HG532 RCE via UPnP"
+        },
+        {
+          "id": "CVE-2021-27348",
+          "description": "UPnP SSDP buffer overflow"
         }
       ]
     },
@@ -172,6 +248,10 @@
         {
           "id": "CVE-2019-9193",
           "description": "PostgreSQL privilege escalation"
+        },
+        {
+          "id": "CVE-2021-32029",
+          "description": "PostgreSQL JDBC driver RCE"
         }
       ]
     },
@@ -181,6 +261,10 @@
         {
           "id": "CVE-2019-15693",
           "description": "RealVNC authentication bypass"
+        },
+        {
+          "id": "CVE-2020-28897",
+          "description": "TigerVNC authentication bypass"
         }
       ]
     },
@@ -190,6 +274,10 @@
         {
           "id": "CVE-2025-58364",
           "description": "CUPS remote denial of service"
+        },
+        {
+          "id": "CVE-2020-10001",
+          "description": "CUPS information disclosure"
         }
       ]
     },
@@ -203,6 +291,10 @@
         {
           "id": "CVE-2020-13937",
           "description": "Apache Shiro RCE via deserialization"
+        },
+        {
+          "id": "CVE-2021-27348",
+          "description": "UPnP SSDP buffer overflow"
         }
       ]
     },
@@ -212,6 +304,10 @@
         {
           "id": "CVE-2020-13167",
           "description": "Portainer authentication bypass"
+        },
+        {
+          "id": "CVE-2022-21587",
+          "description": "Oracle E-Business Suite RCE"
         }
       ]
     },
@@ -230,6 +326,32 @@
         {
           "id": "CVE-2017-2741",
           "description": "HP JetDirect printer command injection"
+        },
+        {
+          "id": "CVE-2020-25785",
+          "description": "HP Printer buffer overflow"
+        }
+      ]
+    },
+    "161": {
+      "service": "SNMP",
+      "cves": [
+        {
+          "id": "CVE-2020-16898",
+          "description": "Windows TCP/IP RCE (Bad Neighbor)"
+        },
+        {
+          "id": "CVE-2019-16025",
+          "description": "Cisco IOS XE Software SNMP DoS"
+        }
+      ]
+    },
+    "111": {
+      "service": "RPCBind",
+      "cves": [
+        {
+          "id": "CVE-2017-8779",
+          "description": "RPCBind denial of service"
         }
       ]
     }

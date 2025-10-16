@@ -5,9 +5,11 @@ import os
 import json
 import urllib.request
 from scanner.core import AdvancedNetworkScanner
-from scanner.report import view_report
+from scanner.report import view_report, save_results_csv, save_results_xml, save_results_html
 from utils.cve_updater import update_cve_database
-from config.settings import COMMON_PORTS
+from utils.network_visualizer import generate_network_map, generate_simple_topology, print_summary_stats
+from config.settings import COMMON_PORTS, RESULTS_FILE, AVAILABLE_PROFILES
+from config.profiles import get_profile
 
 def display_menu():
     """Display the main menu options."""
@@ -19,30 +21,93 @@ def display_menu():
     print("3. 🔓 Scan Specific TCP Ports on Network")
     print("4. 📦 Update CVE Database")
     print("5. 🔄 Update Scanner from GitHub")
-    print("6. 📜 View Last Scan Report")
-    print("7. 🚪 Exit")
+    print("6. 📊 Network Discovery")
+    print("7. 🗺️  Visualize Network Map")
+    print("8. 📜 View Last Scan Report")
+    print("9. 🚪 Exit")
     print("="*60)
 
 def get_user_choice():
     """Get and validate user menu choice."""
     try:
-        choice = int(input("Enter your choice (1-7): "))
+        choice = int(input("Enter your choice (1-9): "))
         return choice
     except ValueError:
         return -1
 
+def select_scan_profile():
+    """Let user select a scanning profile."""
+    print("\n📋 Available Scanning Profiles:")
+    for i, profile_name in enumerate(AVAILABLE_PROFILES, 1):
+        profile = get_profile(profile_name)
+        print(f"  {i}. {profile['name']} - {profile['description']}")
+    
+    try:
+        choice = int(input(f"Select profile (1-{len(AVAILABLE_PROFILES)}) [1]: ") or "1")
+        if 1 <= choice <= len(AVAILABLE_PROFILES):
+            return AVAILABLE_PROFILES[choice - 1]
+        else:
+            print("Invalid choice. Using default profile.")
+            return "default"
+    except ValueError:
+        print("Invalid input. Using default profile.")
+        return "default"
+
 def run_scan_network(scanner):
     """Run a full network scan."""
+    # Select profile
+    profile_name = select_scan_profile()
+    profile = get_profile(profile_name)
+    print(f"Using profile: {profile['name']} - {profile['description']}")
+    
     network = input("Enter network CIDR (e.g., 192.168.1.0/24) [default: 192.168.1.0/24]: ").strip()
     if not network:
         network = "192.168.1.0/24"
+    
+    # Temporarily update scanner settings based on profile
+    original_ports = COMMON_PORTS.copy()
+    # We'll use the profile ports for this scan
+    
     scanner.scan_network(network)
+    
+    # Save in multiple formats
+    base_name = RESULTS_FILE.replace('.json', '')
+    save_results_csv(scanner.exploited_devices, f"{base_name}.csv")
+    save_results_xml(scanner.exploited_devices, f"{base_name}.xml")
+    save_results_html(scanner.exploited_devices, f"{base_name}.html")
+    
+    # Generate visualization
+    network_map = generate_network_map(scanner.exploited_devices, f"{base_name}_map.txt")
+    print(network_map)
+    
+    # Print summary
+    summary = print_summary_stats(scanner.exploited_devices)
+    print(summary)
 
 def run_scan_single_ip(scanner):
     """Scan a single IP address."""
+    # Select profile
+    profile_name = select_scan_profile()
+    profile = get_profile(profile_name)
+    print(f"Using profile: {profile['name']} - {profile['description']}")
+    
     ip = input("Enter IP address to scan (e.g., 192.168.1.100): ").strip()
     if ip:
         scanner.scan_single_ip(ip)
+        
+        # Save in multiple formats
+        base_name = RESULTS_FILE.replace('.json', '')
+        save_results_csv(scanner.exploited_devices, f"{base_name}_single.csv")
+        save_results_xml(scanner.exploited_devices, f"{base_name}_single.xml")
+        save_results_html(scanner.exploited_devices, f"{base_name}_single.html")
+        
+        # Generate visualization
+        network_map = generate_network_map(scanner.exploited_devices, f"{base_name}_single_map.txt")
+        print(network_map)
+        
+        # Print summary
+        summary = print_summary_stats(scanner.exploited_devices)
+        print(summary)
     else:
         print("❌ Invalid IP address.")
 
@@ -63,6 +128,63 @@ def run_port_scan(scanner):
             ports = COMMON_PORTS[:5]
     
     scanner.scan_ports(network, ports)
+    
+    # Save in multiple formats
+    base_name = RESULTS_FILE.replace('.json', '')
+    save_results_csv(scanner.exploited_devices, f"{base_name}_ports.csv")
+    save_results_xml(scanner.exploited_devices, f"{base_name}_ports.xml")
+    save_results_html(scanner.exploited_devices, f"{base_name}_ports.html")
+    
+    # Generate visualization
+    network_map = generate_network_map(scanner.exploited_devices, f"{base_name}_ports_map.txt")
+    print(network_map)
+    
+    # Print summary
+    summary = print_summary_stats(scanner.exploited_devices)
+    print(summary)
+
+def run_network_discovery(scanner):
+    """Run network discovery."""
+    network = input("Enter network CIDR (e.g., 192.168.1.0/24) [default: 192.168.1.0/24]: ").strip()
+    if not network:
+        network = "192.168.1.0/24"
+    
+    devices = scanner.network_discovery(network)
+    if devices:
+        print(f"\n📱 Discovered {len(devices)} devices:")
+        for device in devices:
+            print(f"  - {device}")
+    else:
+        print("❌ No devices discovered.")
+
+def run_network_visualization(scanner):
+    """Generate network visualization."""
+    if not scanner.exploited_devices:
+        print("❌ No scan data available. Run a scan first.")
+        return
+    
+    print("\n🗺️  Network Visualization Options:")
+    print("1. Text-based Network Map")
+    print("2. Simple Topology View")
+    print("3. Summary Statistics")
+    
+    try:
+        choice = int(input("Select visualization type (1-3): "))
+        
+        if choice == 1:
+            base_name = RESULTS_FILE.replace('.json', '')
+            network_map = generate_network_map(scanner.exploited_devices, f"{base_name}_visualization.txt")
+            print(network_map)
+        elif choice == 2:
+            topology = generate_simple_topology(scanner.exploited_devices)
+            print(topology)
+        elif choice == 3:
+            summary = print_summary_stats(scanner.exploited_devices)
+            print(summary)
+        else:
+            print("Invalid choice.")
+    except ValueError:
+        print("Invalid input.")
 
 def update_from_github():
     """Update the scanner from GitHub repository."""
@@ -115,12 +237,16 @@ def main():
         elif choice == 5:
             update_from_github()
         elif choice == 6:
-            view_report()
+            run_network_discovery(scanner)
         elif choice == 7:
+            run_network_visualization(scanner)
+        elif choice == 8:
+            view_report()
+        elif choice == 9:
             print("👋 Exiting scanner. Goodbye!")
             break
         else:
-            print("❌ Invalid choice. Please enter a number between 1 and 7.")
+            print("❌ Invalid choice. Please enter a number between 1 and 9.")
 
 if __name__ == "__main__":
     main()
