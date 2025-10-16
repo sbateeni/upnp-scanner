@@ -115,7 +115,7 @@ class AdvancedNetworkScanner:
             with self.lock:
                 self.stats["vulnerabilities_found"] += vulnerabilities_found
 
-        # --- CVE Testing (Only if device is contacted) ---
+        # --- CVE Testing (Only if device is contacted) --- 
         if contacted:
             logger.info(f"✅ Contacted device at {ip} (Server: {device_info.get('server', 'N/A')})")
         else:
@@ -145,9 +145,12 @@ class AdvancedNetworkScanner:
 
         save_results(self.exploited_devices, RESULTS_FILE)
         
-        # Save to persistent storage
-        scan_id = persistent_storage.save_scan_results(self.exploited_devices, network, "network_scan")
-        persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        # Save to persistent storage with error handling
+        try:
+            scan_id = persistent_storage.save_scan_results(self.exploited_devices, network, "network_scan")
+            persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        except Exception as e:
+            logger.error(f"❌ Error saving to persistent storage: {e}")
         
         logger.info(f"✅ Scan complete. Full log: {LOG_FILE}")
         if self.exploited_devices:
@@ -176,10 +179,13 @@ class AdvancedNetworkScanner:
         self.exploited_devices = all_results
         save_results(self.exploited_devices, RESULTS_FILE)
         
-        # Save to persistent storage
-        if networks:
-            scan_id = persistent_storage.save_scan_results(self.exploited_devices, ", ".join(networks), "multiple_networks")
-            persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        # Save to persistent storage with error handling
+        try:
+            if networks:
+                scan_id = persistent_storage.save_scan_results(self.exploited_devices, ", ".join(networks), "multiple_networks")
+                persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        except Exception as e:
+            logger.error(f"❌ Error saving to persistent storage: {e}")
             
         logger.info(f"✅ Multi-network scan complete. Results saved to: {RESULTS_FILE}")
 
@@ -213,9 +219,12 @@ class AdvancedNetworkScanner:
 
         save_results(self.exploited_devices, RESULTS_FILE)
         
-        # Save to persistent storage
-        scan_id = persistent_storage.save_scan_results(self.exploited_devices, network, "network_with_exclusions")
-        persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        # Save to persistent storage with error handling
+        try:
+            scan_id = persistent_storage.save_scan_results(self.exploited_devices, network, "network_with_exclusions")
+            persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        except Exception as e:
+            logger.error(f"❌ Error saving to persistent storage: {e}")
         
         logger.info(f"✅ Scan with exclusions complete. Results saved to: {RESULTS_FILE}")
 
@@ -244,9 +253,12 @@ class AdvancedNetworkScanner:
 
             save_results(self.exploited_devices, RESULTS_FILE)
             
-            # Save to persistent storage
-            scan_id = persistent_storage.save_scan_results(self.exploited_devices, network, "ipv6_network")
-            persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+            # Save to persistent storage with error handling
+            try:
+                scan_id = persistent_storage.save_scan_results(self.exploited_devices, network, "ipv6_network")
+                persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+            except Exception as e:
+                logger.error(f"❌ Error saving to persistent storage: {e}")
             
             logger.info(f"✅ IPv6 scan complete. Results saved to: {RESULTS_FILE}")
             
@@ -271,9 +283,12 @@ class AdvancedNetworkScanner:
         self.scan_single_host(ip)
         save_results(self.exploited_devices, RESULTS_FILE)
         
-        # Save to persistent storage
-        scan_id = persistent_storage.save_scan_results(self.exploited_devices, ip, "single_ip")
-        persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        # Save to persistent storage with error handling
+        try:
+            scan_id = persistent_storage.save_scan_results(self.exploited_devices, ip, "single_ip")
+            persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        except Exception as e:
+            logger.error(f"❌ Error saving to persistent storage: {e}")
         
         logger.info(f"✅ Scan complete. Full log: {LOG_FILE}")
         if self.exploited_devices:
@@ -315,9 +330,12 @@ class AdvancedNetworkScanner:
                 
         save_results(self.exploited_devices, RESULTS_FILE)
         
-        # Save to persistent storage
-        scan_id = persistent_storage.save_scan_results(self.exploited_devices, network, "port_scan")
-        persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        # Save to persistent storage with error handling
+        try:
+            scan_id = persistent_storage.save_scan_results(self.exploited_devices, network, "port_scan")
+            persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        except Exception as e:
+            logger.error(f"❌ Error saving to persistent storage: {e}")
         
         logger.info(f"✅ Port scan complete. Full log: {LOG_FILE}")
         if self.exploited_devices:
