@@ -178,10 +178,6 @@ def simple_web_server():
             elif self.path == '/api/update_github':
                 # Handle GitHub update
                 try:
-                    import subprocess
-                    import os
-                    import platform
-                    
                     # Check if we're in a git repository
                     if not os.path.exists(".git"):
                         self.send_response(400)
