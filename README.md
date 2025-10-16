@@ -106,6 +106,8 @@ upnp-scanner/
 ├── requirements.txt        # Python dependencies
 ├── README.md              # This file
 ├── test_scanner.py        # Component testing script
+├── update_scanner.py      # Automatic update script
+├── termux_update.sh       # Termux-specific update script
 │
 ├── config/                # Configuration files
 │   ├── settings.py        # Global settings
@@ -127,10 +129,8 @@ upnp-scanner/
 │   ├── network_visualizer.py # Network visualization
 │   └── cli_ui.py         # Enhanced CLI interface
 │
-├── data/                  # Data files
-│   └── cve_db.json       # CVE database
-│
-└── update_scanner.py     # Automatic update script
+└── data/                  # Data files
+    └── cve_db.json       # CVE database
 ```
 
 ## 🔧 Configuration
@@ -228,6 +228,35 @@ Summary reports showing:
 - Service distribution
 - Critical vulnerability count
 
+## 📱 Termux Support
+
+The scanner is fully compatible with Termux on Android devices.
+
+### Termux Installation
+```bash
+# Install Termux from F-Droid (recommended)
+# Install required packages
+pkg update && pkg upgrade
+pkg install python git
+
+# Clone and install
+git clone <repository-url>
+cd upnp-scanner
+pip install -r requirements.txt
+```
+
+### Termux Update
+For easier updates in Termux, use the dedicated update script:
+```bash
+# Make the script executable
+chmod +x termux_update.sh
+
+# Run the update script
+./termux_update.sh
+```
+
+Or use the built-in update feature from the main menu (option 5).
+
 ## 🔒 Security Considerations
 
 This tool is designed for authorized security testing only. Always ensure you have permission before scanning any network.
@@ -248,6 +277,12 @@ This tool is designed for authorized security testing only. Always ensure you ha
 1. **Permission Errors**: Run with appropriate privileges for raw socket access
 2. **Network Unreachable**: Ensure the target network is accessible
 3. **Slow Scans**: Reduce thread count in settings for slower systems
+4. **GitHub Update Failures in Termux**: Use the termux_update.sh script or ensure git is properly installed
+
+### Termux-Specific Issues
+- **Git not found**: Run `pkg install git`
+- **Permission denied**: Ensure Termux has storage permissions
+- **Network timeouts**: Check internet connection and try again
 
 ### Support
 For issues, please check the GitHub repository or contact the maintainers.

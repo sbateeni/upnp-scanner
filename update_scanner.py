@@ -7,35 +7,95 @@ This script updates the scanner from GitHub and updates the CVE database
 import subprocess
 import sys
 import os
+import platform
 
 def update_from_github():
-    """Update the scanner from GitHub repository"""
+    """Update the scanner from GitHub repository with better Termux compatibility."""
     print("🔄 Updating scanner from GitHub...")
     
     try:
-        # Perform git pull
-        result = subprocess.run(['git', 'pull'], 
-                              capture_output=True, text=True, cwd=os.getcwd())
-        
-        if result.returncode == 0:
-            print("✅ GitHub update successful!")
-            print(result.stdout)
-            
-            # Check if requirements.txt was updated
-            if 'requirements.txt' in result.stdout:
-                print("📋 Requirements may have changed. Installing updates...")
-                subprocess.run(['pip', 'install', '-r', 'requirements.txt'], 
-                             capture_output=True, text=True, cwd=os.getcwd())
-                print("✅ Requirements updated.")
-            return True
-        else:
-            print("❌ GitHub update failed:")
-            print(result.stderr)
+        # Check if we're in a git repository
+        if not os.path.exists(".git"):
+            print("❌ This directory is not a git repository.")
+            print("💡 Please clone the repository first using:")
+            print("   git clone <repository-url>")
             return False
+            
+        # Detect if we're in Termux
+        is_termux = "termux" in platform.platform().lower()
+        
+        if is_termux:
+            print("📱 Detected Termux environment. Using compatible update method...")
+            # Use a more compatible approach for Termux
+            try:
+                # First, fetch the latest changes
+                print("📥 Fetching latest changes...")
+                result = subprocess.run(["git", "fetch"], capture_output=True, text=True, timeout=30)
+                if result.returncode != 0:
+                    print(f"❌ Fetch failed: {result.stderr}")
+                    return False
+                    
+                # Then merge the changes
+                print("📥 Merging changes...")
+                result = subprocess.run(["git", "merge", "origin/main"], capture_output=True, text=True, timeout=30)
+                
+                if result.returncode == 0:
+                    print("✅ GitHub update successful!")
+                    if result.stdout:
+                        print(result.stdout)
+                    # Check if requirements.txt was updated
+                    if "requirements.txt" in result.stdout:
+                        print("📋 Requirements may have changed. Installing updates...")
+                        try:
+                            subprocess.run(["pip", "install", "-r", "requirements.txt"], 
+                                         capture_output=True, text=True, timeout=60)
+                            print("✅ Requirements updated.")
+                        except subprocess.TimeoutExpired:
+                            print("⚠️  Requirements update timed out. Please run manually: pip install -r requirements.txt")
+                    return True
+                else:
+                    print("❌ Update failed:")
+                    if result.stderr:
+                        print(result.stderr)
+                    return False
+                        
+            except subprocess.TimeoutExpired:
+                print("❌ Update operation timed out. Please check your network connection.")
+                return False
+            except Exception as e:
+                print(f"❌ Error during update: {e}")
+                return False
+        else:
+            # Standard update method for other environments
+            print("💻 Using standard update method...")
+            
+            # Perform git pull
+            result = subprocess.run(["git", "pull"], capture_output=True, text=True, timeout=30)
+            
+            if result.returncode == 0:
+                print("✅ GitHub update successful!")
+                print(result.stdout)
+                
+                # Check if requirements.txt was updated
+                if "requirements.txt" in result.stdout:
+                    print("📋 Requirements may have changed. Installing updates...")
+                    subprocess.run(["pip", "install", "-r", "requirements.txt"], 
+                                 capture_output=True, text=True, timeout=60)
+                    print("✅ Requirements updated.")
+                return True
+            else:
+                print("❌ GitHub update failed:")
+                print(result.stderr)
+                return False
             
     except FileNotFoundError:
         print("❌ Git is not installed or not found in PATH.")
-        print("💡 Please install Git from https://git-scm.com/")
+        print("💡 Please install Git:")
+        print("   Termux: pkg install git")
+        print("   Other systems: Install from https://git-scm.com/")
+        return False
+    except subprocess.TimeoutExpired:
+        print("❌ Update operation timed out. Please check your network connection.")
         return False
     except Exception as e:
         print(f"❌ Error during GitHub update: {e}")
