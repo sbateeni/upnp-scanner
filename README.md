@@ -45,6 +45,20 @@ An advanced network scanning tool with CVE detection capabilities, designed for 
 - **IoT** - Optimized for IoT device detection
 - **Server** - Optimized for server detection
 
+### 🌐 Complex Network Support
+- **Multiple Network Scanning** - Scan several networks in one operation
+- **IP Exclusion Lists** - Skip specific IPs during scanning
+- **VLAN Scanning** - Scan VLANs by ID or range
+- **IPv6 Support** - Scan IPv6 networks
+- **Network Validation** - Safety checks for all network operations
+
+### 🎨 Enhanced UI/UX
+- **Colorized Terminal Output** - Improved readability with colors
+- **Animated Progress Indicators** - Visual feedback during operations
+- **Formatted Menus** - Clear, intuitive interface
+- **Interactive Prompts** - User-friendly input handling
+- **ASCII Art Banner** - Professional appearance
+
 ### 🛡️ Security Features
 - **Safe Network Validation** - Only allows scanning of private networks
 - **Port Validation** - Restricts scanning to known safe ports
@@ -78,8 +92,11 @@ python main.py
 5. **Update Scanner** - Update from GitHub
 6. **Network Discovery** - Discover devices without port scanning
 7. **Visualize Network** - Generate network maps and statistics
-8. **View Reports** - View previous scan results
-9. **Exit** - Quit the application
+8. **Scan Multiple Networks** - Scan several networks at once
+9. **Scan with IP Exclusions** - Skip specific IPs
+10. **VLAN Scan** - Scan VLANs by ID or range
+11. **View Reports** - View previous scan results
+12. **Exit** - Quit the application
 
 ## 📁 Project Structure
 
@@ -88,6 +105,7 @@ upnp-scanner/
 ├── main.py                 # Main application entry point
 ├── requirements.txt        # Python dependencies
 ├── README.md              # This file
+├── test_scanner.py        # Component testing script
 │
 ├── config/                # Configuration files
 │   ├── settings.py        # Global settings
@@ -98,14 +116,16 @@ upnp-scanner/
 │   ├── discovery.py      # Device discovery protocols
 │   ├── port_scanner.py   # Port scanning functionality
 │   ├── cve_checker.py    # CVE detection
-│   └── report.py         # Reporting functionality
+│   ├── report.py         # Reporting functionality
+│   └── vlan_scanner.py   # VLAN scanning utilities
 │
 ├── utils/                 # Utility modules
 │   ├── helpers.py        # General helper functions
 │   ├── security.py       # Security validation
 │   ├── cve_updater.py    # CVE database updates
 │   ├── github_webhook.py # GitHub integration
-│   └── network_visualizer.py # Network visualization
+│   ├── network_visualizer.py # Network visualization
+│   └── cli_ui.py         # Enhanced CLI interface
 │
 ├── data/                  # Data files
 │   └── cve_db.json       # CVE database
@@ -131,6 +151,44 @@ Edit `config/settings.py` to modify:
 - Thread limits
 - Port lists
 - File paths
+
+## 🌐 Complex Network Features
+
+### Multiple Network Scanning
+Scan multiple network subnets in a single operation:
+
+```python
+scanner.scan_multiple_networks(["192.168.1.0/24", "10.0.0.0/24", "172.16.0.0/24"])
+```
+
+### IP Exclusion Lists
+Skip specific IPs during scanning to avoid critical systems:
+
+```python
+scanner.scan_with_exclusions("192.168.1.0/24", ["192.168.1.1", "192.168.1.254"])
+```
+
+### VLAN Scanning
+Scan VLANs by ID or range:
+
+```python
+vlan_scanner = VLANScanner(scanner)
+vlan_scanner.scan_vlan_range("192.168.0.0/24", 100, 110)
+```
+
+### IPv6 Support
+Full support for IPv6 network scanning with safety validation.
+
+## 🎨 UI/UX Improvements
+
+### Colorized Output
+Enhanced terminal interface with color-coded messages for better readability.
+
+### Animated Progress
+Visual feedback during long-running operations with animated progress indicators.
+
+### Interactive Menus
+User-friendly menus with clear options and intuitive navigation.
 
 ## 🛡️ Safety Features
 
