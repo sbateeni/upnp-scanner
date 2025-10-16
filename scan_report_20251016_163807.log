@@ -1,0 +1,512 @@
+2025-10-16 16:38:29,632 | INFO     | 🚀 Starting advanced network scan on: 192.168.1.0/24
+2025-10-16 16:39:50,876 | INFO     | 🔓 Open ports on 192.168.1.6: [25, 993, 995]
+2025-10-16 16:39:50,876 | INFO     | 🔓 Open ports on 192.168.1.4: [25, 993, 995]
+2025-10-16 16:39:50,883 | INFO     | ✅ Contacted device at 192.168.1.6 (Server: Unknown)
+2025-10-16 16:39:50,883 | INFO     | ✅ Contacted device at 192.168.1.4 (Server: Unknown)
+2025-10-16 16:39:50,892 | INFO     | 🔓 Open ports on 192.168.1.5: [25, 993, 995]
+2025-10-16 16:39:50,895 | INFO     | ✅ Contacted device at 192.168.1.5 (Server: Unknown)
+2025-10-16 16:39:50,907 | INFO     | 🔓 Open ports on 192.168.1.10: [25, 993, 995]
+2025-10-16 16:39:50,907 | INFO     | 🔓 Open ports on 192.168.1.2: [25, 993, 995]
+2025-10-16 16:39:50,913 | INFO     | ✅ Contacted device at 192.168.1.10 (Server: Unknown)
+2025-10-16 16:39:50,914 | INFO     | ✅ Contacted device at 192.168.1.2 (Server: Unknown)
+2025-10-16 16:39:50,923 | INFO     | 🔓 Open ports on 192.168.1.35: [25, 993, 995]
+2025-10-16 16:39:50,923 | INFO     | 🔓 Open ports on 192.168.1.1: [25, 993, 995]
+2025-10-16 16:39:50,924 | INFO     | 🔓 Open ports on 192.168.1.3: [25, 993, 995]
+2025-10-16 16:39:50,924 | INFO     | 🔓 Open ports on 192.168.1.17: [25, 993, 995]
+2025-10-16 16:39:50,934 | INFO     | ✅ Contacted device at 192.168.1.3 (Server: Unknown)
+2025-10-16 16:39:50,935 | INFO     | ✅ Contacted device at 192.168.1.17 (Server: Unknown)
+2025-10-16 16:39:50,936 | INFO     | ✅ Contacted device at 192.168.1.1 (Server: Unknown)
+2025-10-16 16:39:50,938 | INFO     | ✅ Contacted device at 192.168.1.35 (Server: Unknown)
+2025-10-16 16:39:50,939 | INFO     | 🔓 Open ports on 192.168.1.30: [25, 993, 995]
+2025-10-16 16:39:50,939 | INFO     | 🔓 Open ports on 192.168.1.38: [25, 993, 995]
+2025-10-16 16:39:50,939 | INFO     | 🔓 Open ports on 192.168.1.15: [25, 993, 995]
+2025-10-16 16:39:50,939 | INFO     | 🔓 Open ports on 192.168.1.14: [25, 993, 995]
+2025-10-16 16:39:50,939 | INFO     | 🔓 Open ports on 192.168.1.19: [25, 993, 995]
+2025-10-16 16:39:50,939 | INFO     | 🔓 Open ports on 192.168.1.25: [25, 993, 995]
+2025-10-16 16:39:50,939 | INFO     | 🔓 Open ports on 192.168.1.20: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.11: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.21: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.23: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.46: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.41: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.24: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.34: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.7: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.28: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.12: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.16: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.27: [25, 993, 995]
+2025-10-16 16:39:50,954 | INFO     | 🔓 Open ports on 192.168.1.8: [25, 993, 995]
+2025-10-16 16:39:50,955 | INFO     | ✅ Contacted device at 192.168.1.15 (Server: Unknown)
+2025-10-16 16:39:50,957 | INFO     | ✅ Contacted device at 192.168.1.30 (Server: Unknown)
+2025-10-16 16:39:50,958 | INFO     | ✅ Contacted device at 192.168.1.38 (Server: Unknown)
+2025-10-16 16:39:50,961 | INFO     | ✅ Contacted device at 192.168.1.14 (Server: Unknown)
+2025-10-16 16:39:50,968 | INFO     | ✅ Contacted device at 192.168.1.25 (Server: Unknown)
+2025-10-16 16:39:50,969 | INFO     | 🔓 Open ports on 192.168.1.43: [25, 993, 995]
+2025-10-16 16:39:50,969 | INFO     | 🔓 Open ports on 192.168.1.39: [25, 993, 995]
+2025-10-16 16:39:50,969 | INFO     | 🔓 Open ports on 192.168.1.9: [25, 993, 995]
+2025-10-16 16:39:50,969 | INFO     | 🔓 Open ports on 192.168.1.18: [25, 993, 995]
+2025-10-16 16:39:50,969 | INFO     | 🔓 Open ports on 192.168.1.32: [25, 993, 995]
+2025-10-16 16:39:50,981 | INFO     | ✅ Contacted device at 192.168.1.20 (Server: Unknown)
+2025-10-16 16:39:50,984 | INFO     | 🔓 Open ports on 192.168.1.13: [25, 993, 995]
+2025-10-16 16:39:50,984 | INFO     | 🔓 Open ports on 192.168.1.26: [25, 993, 995]
+2025-10-16 16:39:50,985 | INFO     | ✅ Contacted device at 192.168.1.19 (Server: Unknown)
+2025-10-16 16:39:50,991 | INFO     | ✅ Contacted device at 192.168.1.34 (Server: Unknown)
+2025-10-16 16:39:50,993 | INFO     | ✅ Contacted device at 192.168.1.7 (Server: Unknown)
+2025-10-16 16:39:50,998 | INFO     | ✅ Contacted device at 192.168.1.24 (Server: Unknown)
+2025-10-16 16:39:51,000 | INFO     | 🔓 Open ports on 192.168.1.52: [25, 993, 995]
+2025-10-16 16:39:51,000 | INFO     | 🔓 Open ports on 192.168.1.40: [25, 993, 995]
+2025-10-16 16:39:51,001 | INFO     | 🔓 Open ports on 192.168.1.42: [25, 993, 995]
+2025-10-16 16:39:51,001 | INFO     | 🔓 Open ports on 192.168.1.29: [25, 993, 995]
+2025-10-16 16:39:51,001 | INFO     | 🔓 Open ports on 192.168.1.44: [25, 993, 995]
+2025-10-16 16:39:51,001 | INFO     | 🔓 Open ports on 192.168.1.48: [25, 993, 995]
+2025-10-16 16:39:51,001 | INFO     | 🔓 Open ports on 192.168.1.55: [25, 993, 995]
+2025-10-16 16:39:51,001 | INFO     | 🔓 Open ports on 192.168.1.60: [25, 993, 995]
+2025-10-16 16:39:51,001 | INFO     | 🔓 Open ports on 192.168.1.67: [25, 993, 995]
+2025-10-16 16:39:51,001 | INFO     | 🔓 Open ports on 192.168.1.53: [25, 993, 995]
+2025-10-16 16:39:51,000 | INFO     | 🔓 Open ports on 192.168.1.33: [25, 993, 995]
+2025-10-16 16:39:51,001 | INFO     | 🔓 Open ports on 192.168.1.70: [25, 993, 995]
+2025-10-16 16:39:51,000 | INFO     | 🔓 Open ports on 192.168.1.22: [25, 993, 995]
+2025-10-16 16:39:51,001 | INFO     | 🔓 Open ports on 192.168.1.45: [25, 993, 995]
+2025-10-16 16:39:51,001 | INFO     | 🔓 Open ports on 192.168.1.58: [25, 993, 995]
+2025-10-16 16:39:51,002 | INFO     | 🔓 Open ports on 192.168.1.49: [25, 993, 995]
+2025-10-16 16:39:51,001 | INFO     | 🔓 Open ports on 192.168.1.47: [25, 993, 995]
+2025-10-16 16:39:51,000 | INFO     | 🔓 Open ports on 192.168.1.37: [25, 993, 995]
+2025-10-16 16:39:51,003 | INFO     | ✅ Contacted device at 192.168.1.46 (Server: Unknown)
+2025-10-16 16:39:51,003 | INFO     | 🔓 Open ports on 192.168.1.54: [25, 993, 995]
+2025-10-16 16:39:51,006 | INFO     | ✅ Contacted device at 192.168.1.16 (Server: Unknown)
+2025-10-16 16:39:51,008 | INFO     | ✅ Contacted device at 192.168.1.12 (Server: Unknown)
+2025-10-16 16:39:51,008 | INFO     | ✅ Contacted device at 192.168.1.23 (Server: Unknown)
+2025-10-16 16:39:51,009 | INFO     | ✅ Contacted device at 192.168.1.21 (Server: Unknown)
+2025-10-16 16:39:51,014 | INFO     | ✅ Contacted device at 192.168.1.27 (Server: Unknown)
+2025-10-16 16:39:51,016 | INFO     | 🔓 Open ports on 192.168.1.69: [25, 993, 995]
+2025-10-16 16:39:51,016 | INFO     | 🔓 Open ports on 192.168.1.66: [25, 993, 995]
+2025-10-16 16:39:51,017 | INFO     | 🔓 Open ports on 192.168.1.31: [25, 993, 995]
+2025-10-16 16:39:51,018 | INFO     | 🔓 Open ports on 192.168.1.61: [25, 993, 995]
+2025-10-16 16:39:51,031 | INFO     | 🔓 Open ports on 192.168.1.56: [25, 993, 995]
+2025-10-16 16:39:51,034 | INFO     | ✅ Contacted device at 192.168.1.41 (Server: Unknown)
+2025-10-16 16:39:51,040 | INFO     | ✅ Contacted device at 192.168.1.11 (Server: Unknown)
+2025-10-16 16:39:51,043 | INFO     | ✅ Contacted device at 192.168.1.13 (Server: Unknown)
+2025-10-16 16:39:51,044 | INFO     | ✅ Contacted device at 192.168.1.9 (Server: Unknown)
+2025-10-16 16:39:51,047 | INFO     | 🔓 Open ports on 192.168.1.80: [25, 993, 995]
+2025-10-16 16:39:51,047 | INFO     | 🔓 Open ports on 192.168.1.85: [25, 993, 995]
+2025-10-16 16:39:51,047 | INFO     | 🔓 Open ports on 192.168.1.92: [25, 993, 995]
+2025-10-16 16:39:51,047 | INFO     | 🔓 Open ports on 192.168.1.63: [25, 993, 995]
+2025-10-16 16:39:51,047 | INFO     | 🔓 Open ports on 192.168.1.59: [25, 993, 995]
+2025-10-16 16:39:51,048 | INFO     | ✅ Contacted device at 192.168.1.18 (Server: Unknown)
+2025-10-16 16:39:51,047 | INFO     | 🔓 Open ports on 192.168.1.68: [25, 993, 995]
+2025-10-16 16:39:51,047 | INFO     | 🔓 Open ports on 192.168.1.51: [25, 993, 995]
+2025-10-16 16:39:51,047 | INFO     | 🔓 Open ports on 192.168.1.36: [25, 993, 995]
+2025-10-16 16:39:51,047 | INFO     | 🔓 Open ports on 192.168.1.90: [25, 993, 995]
+2025-10-16 16:39:51,047 | INFO     | 🔓 Open ports on 192.168.1.84: [25, 993, 995]
+2025-10-16 16:39:51,047 | INFO     | 🔓 Open ports on 192.168.1.72: [25, 993, 995]
+2025-10-16 16:39:51,047 | INFO     | 🔓 Open ports on 192.168.1.57: [25, 993, 995]
+2025-10-16 16:39:51,049 | INFO     | ✅ Contacted device at 192.168.1.28 (Server: Unknown)
+2025-10-16 16:39:51,050 | INFO     | ✅ Contacted device at 192.168.1.32 (Server: Unknown)
+2025-10-16 16:39:51,058 | INFO     | ✅ Contacted device at 192.168.1.39 (Server: Unknown)
+2025-10-16 16:39:51,062 | INFO     | 🔓 Open ports on 192.168.1.87: [25, 993, 995]
+2025-10-16 16:39:51,062 | INFO     | 🔓 Open ports on 192.168.1.75: [25, 993, 995]
+2025-10-16 16:39:51,062 | INFO     | 🔓 Open ports on 192.168.1.86: [25, 993, 995]
+2025-10-16 16:39:51,063 | INFO     | 🔓 Open ports on 192.168.1.74: [25, 993, 995]
+2025-10-16 16:39:51,063 | INFO     | 🔓 Open ports on 192.168.1.65: [25, 993, 995]
+2025-10-16 16:39:51,063 | INFO     | 🔓 Open ports on 192.168.1.50: [25, 993, 995]
+2025-10-16 16:39:51,063 | INFO     | 🔓 Open ports on 192.168.1.71: [25, 993, 995]
+2025-10-16 16:39:51,062 | INFO     | 🔓 Open ports on 192.168.1.94: [25, 993, 995]
+2025-10-16 16:39:51,062 | INFO     | 🔓 Open ports on 192.168.1.82: [25, 993, 995]
+2025-10-16 16:39:51,063 | INFO     | 🔓 Open ports on 192.168.1.62: [25, 993, 995]
+2025-10-16 16:39:51,062 | INFO     | 🔓 Open ports on 192.168.1.64: [25, 993, 995]
+2025-10-16 16:39:51,076 | INFO     | ✅ Contacted device at 192.168.1.43 (Server: Unknown)
+2025-10-16 16:39:51,078 | INFO     | 🔓 Open ports on 192.168.1.89: [25, 993, 995]
+2025-10-16 16:39:51,078 | INFO     | 🔓 Open ports on 192.168.1.96: [25, 993, 995]
+2025-10-16 16:39:51,079 | INFO     | 🔓 Open ports on 192.168.1.98: [25, 993, 995]
+2025-10-16 16:39:51,078 | INFO     | 🔓 Open ports on 192.168.1.76: [25, 993, 995]
+2025-10-16 16:39:51,078 | INFO     | 🔓 Open ports on 192.168.1.78: [25, 993, 995]
+2025-10-16 16:39:51,079 | INFO     | 🔓 Open ports on 192.168.1.97: [25, 993, 995]
+2025-10-16 16:39:51,079 | INFO     | 🔓 Open ports on 192.168.1.79: [25, 993, 995]
+2025-10-16 16:39:51,079 | INFO     | 🔓 Open ports on 192.168.1.73: [25, 993, 995]
+2025-10-16 16:39:51,078 | INFO     | 🔓 Open ports on 192.168.1.93: [25, 993, 995]
+2025-10-16 16:39:51,078 | INFO     | 🔓 Open ports on 192.168.1.95: [25, 993, 995]
+2025-10-16 16:39:51,078 | INFO     | 🔓 Open ports on 192.168.1.83: [25, 993, 995]
+2025-10-16 16:39:51,082 | INFO     | ✅ Contacted device at 192.168.1.26 (Server: Unknown)
+2025-10-16 16:39:51,090 | INFO     | ✅ Contacted device at 192.168.1.8 (Server: Unknown)
+2025-10-16 16:39:51,093 | INFO     | 🔓 Open ports on 192.168.1.99: [25, 993, 995]
+2025-10-16 16:39:51,093 | INFO     | 🔓 Open ports on 192.168.1.81: [25, 993, 995]
+2025-10-16 16:39:51,093 | INFO     | 🔓 Open ports on 192.168.1.77: [25, 993, 995]
+2025-10-16 16:39:51,094 | INFO     | 🔓 Open ports on 192.168.1.91: [25, 993, 995]
+2025-10-16 16:39:51,093 | INFO     | 🔓 Open ports on 192.168.1.88: [25, 993, 995]
+2025-10-16 16:39:51,135 | INFO     | ✅ Contacted device at 192.168.1.60 (Server: Unknown)
+2025-10-16 16:39:51,143 | INFO     | ✅ Contacted device at 192.168.1.47 (Server: Unknown)
+2025-10-16 16:39:51,178 | INFO     | ✅ Contacted device at 192.168.1.42 (Server: Unknown)
+2025-10-16 16:39:51,190 | INFO     | ✅ Contacted device at 192.168.1.77 (Server: Unknown)
+2025-10-16 16:39:51,192 | INFO     | ✅ Contacted device at 192.168.1.56 (Server: Unknown)
+2025-10-16 16:39:51,194 | INFO     | ✅ Contacted device at 192.168.1.40 (Server: Unknown)
+2025-10-16 16:39:51,197 | INFO     | ✅ Contacted device at 192.168.1.44 (Server: Unknown)
+2025-10-16 16:39:51,197 | INFO     | ✅ Contacted device at 192.168.1.66 (Server: Unknown)
+2025-10-16 16:39:51,199 | INFO     | ✅ Contacted device at 192.168.1.29 (Server: Unknown)
+2025-10-16 16:39:51,202 | INFO     | ✅ Contacted device at 192.168.1.58 (Server: Unknown)
+2025-10-16 16:39:51,206 | INFO     | ✅ Contacted device at 192.168.1.37 (Server: Unknown)
+2025-10-16 16:39:51,210 | INFO     | ✅ Contacted device at 192.168.1.69 (Server: Unknown)
+2025-10-16 16:39:51,210 | INFO     | ✅ Contacted device at 192.168.1.90 (Server: Unknown)
+2025-10-16 16:39:51,213 | INFO     | ✅ Contacted device at 192.168.1.80 (Server: Unknown)
+2025-10-16 16:39:51,217 | INFO     | ✅ Contacted device at 192.168.1.63 (Server: Unknown)
+2025-10-16 16:39:51,219 | INFO     | ✅ Contacted device at 192.168.1.31 (Server: Unknown)
+2025-10-16 16:39:51,220 | INFO     | ✅ Contacted device at 192.168.1.59 (Server: Unknown)
+2025-10-16 16:39:51,220 | INFO     | ✅ Contacted device at 192.168.1.68 (Server: Unknown)
+2025-10-16 16:39:51,220 | INFO     | ✅ Contacted device at 192.168.1.52 (Server: Unknown)
+2025-10-16 16:39:51,225 | INFO     | ✅ Contacted device at 192.168.1.67 (Server: Unknown)
+2025-10-16 16:39:51,225 | INFO     | ✅ Contacted device at 192.168.1.33 (Server: Unknown)
+2025-10-16 16:39:51,229 | INFO     | ✅ Contacted device at 192.168.1.70 (Server: Unknown)
+2025-10-16 16:39:51,236 | INFO     | ✅ Contacted device at 192.168.1.22 (Server: Unknown)
+2025-10-16 16:39:51,239 | INFO     | ✅ Contacted device at 192.168.1.54 (Server: Unknown)
+2025-10-16 16:39:51,240 | INFO     | ✅ Contacted device at 192.168.1.57 (Server: Unknown)
+2025-10-16 16:39:51,241 | INFO     | ✅ Contacted device at 192.168.1.55 (Server: Unknown)
+2025-10-16 16:39:51,243 | INFO     | ✅ Contacted device at 192.168.1.49 (Server: Unknown)
+2025-10-16 16:39:51,243 | INFO     | ✅ Contacted device at 192.168.1.87 (Server: Unknown)
+2025-10-16 16:39:51,243 | INFO     | ✅ Contacted device at 192.168.1.53 (Server: Unknown)
+2025-10-16 16:39:51,244 | INFO     | ✅ Contacted device at 192.168.1.45 (Server: Unknown)
+2025-10-16 16:39:51,244 | INFO     | ✅ Contacted device at 192.168.1.79 (Server: Unknown)
+2025-10-16 16:39:51,248 | INFO     | ✅ Contacted device at 192.168.1.48 (Server: Unknown)
+2025-10-16 16:39:51,250 | INFO     | ✅ Contacted device at 192.168.1.89 (Server: Unknown)
+2025-10-16 16:39:51,251 | INFO     | ✅ Contacted device at 192.168.1.92 (Server: Unknown)
+2025-10-16 16:39:51,253 | INFO     | ✅ Contacted device at 192.168.1.73 (Server: Unknown)
+2025-10-16 16:39:51,254 | INFO     | ✅ Contacted device at 192.168.1.74 (Server: Unknown)
+2025-10-16 16:39:51,255 | INFO     | ✅ Contacted device at 192.168.1.81 (Server: Unknown)
+2025-10-16 16:39:51,259 | INFO     | ✅ Contacted device at 192.168.1.82 (Server: Unknown)
+2025-10-16 16:39:51,260 | INFO     | ✅ Contacted device at 192.168.1.72 (Server: Unknown)
+2025-10-16 16:39:51,262 | INFO     | ✅ Contacted device at 192.168.1.96 (Server: Unknown)
+2025-10-16 16:39:51,263 | INFO     | ✅ Contacted device at 192.168.1.65 (Server: Unknown)
+2025-10-16 16:39:51,263 | INFO     | ✅ Contacted device at 192.168.1.61 (Server: Unknown)
+2025-10-16 16:39:51,264 | INFO     | ✅ Contacted device at 192.168.1.93 (Server: Unknown)
+2025-10-16 16:39:51,266 | INFO     | ✅ Contacted device at 192.168.1.83 (Server: Unknown)
+2025-10-16 16:39:51,268 | INFO     | ✅ Contacted device at 192.168.1.71 (Server: Unknown)
+2025-10-16 16:39:51,273 | INFO     | ✅ Contacted device at 192.168.1.99 (Server: Unknown)
+2025-10-16 16:39:51,273 | INFO     | ✅ Contacted device at 192.168.1.75 (Server: Unknown)
+2025-10-16 16:39:51,274 | INFO     | ✅ Contacted device at 192.168.1.91 (Server: Unknown)
+2025-10-16 16:39:51,274 | INFO     | ✅ Contacted device at 192.168.1.36 (Server: Unknown)
+2025-10-16 16:39:51,276 | INFO     | ✅ Contacted device at 192.168.1.88 (Server: Unknown)
+2025-10-16 16:39:51,277 | INFO     | ✅ Contacted device at 192.168.1.85 (Server: Unknown)
+2025-10-16 16:39:51,277 | INFO     | ✅ Contacted device at 192.168.1.95 (Server: Unknown)
+2025-10-16 16:39:51,278 | INFO     | ✅ Contacted device at 192.168.1.84 (Server: Unknown)
+2025-10-16 16:39:51,280 | INFO     | ✅ Contacted device at 192.168.1.97 (Server: Unknown)
+2025-10-16 16:39:51,281 | INFO     | ✅ Contacted device at 192.168.1.64 (Server: Unknown)
+2025-10-16 16:39:51,281 | INFO     | ✅ Contacted device at 192.168.1.86 (Server: Unknown)
+2025-10-16 16:39:51,281 | INFO     | ✅ Contacted device at 192.168.1.62 (Server: Unknown)
+2025-10-16 16:39:51,282 | INFO     | ✅ Contacted device at 192.168.1.76 (Server: Unknown)
+2025-10-16 16:39:51,283 | INFO     | ✅ Contacted device at 192.168.1.51 (Server: Unknown)
+2025-10-16 16:39:51,284 | INFO     | ✅ Contacted device at 192.168.1.78 (Server: Unknown)
+2025-10-16 16:39:51,285 | INFO     | ✅ Contacted device at 192.168.1.50 (Server: Unknown)
+2025-10-16 16:39:51,286 | INFO     | ✅ Contacted device at 192.168.1.98 (Server: Unknown)
+2025-10-16 16:39:51,286 | INFO     | ✅ Contacted device at 192.168.1.94 (Server: Unknown)
+2025-10-16 16:41:12,161 | INFO     | 🔓 Open ports on 192.168.1.102: [25, 993, 995]
+2025-10-16 16:41:12,161 | INFO     | 🔓 Open ports on 192.168.1.101: [25, 993, 995]
+2025-10-16 16:41:12,166 | INFO     | ✅ Contacted device at 192.168.1.102 (Server: Unknown)
+2025-10-16 16:41:12,167 | INFO     | ✅ Contacted device at 192.168.1.101 (Server: Unknown)
+2025-10-16 16:41:12,207 | INFO     | 🔓 Open ports on 192.168.1.100: [25, 993, 995]
+2025-10-16 16:41:12,210 | INFO     | ✅ Contacted device at 192.168.1.100 (Server: Unknown)
+2025-10-16 16:41:12,238 | INFO     | 🔓 Open ports on 192.168.1.103: [25, 993, 995]
+2025-10-16 16:41:12,241 | INFO     | ✅ Contacted device at 192.168.1.103 (Server: Unknown)
+2025-10-16 16:41:12,254 | INFO     | 🔓 Open ports on 192.168.1.118: [25, 993, 995]
+2025-10-16 16:41:12,254 | INFO     | 🔓 Open ports on 192.168.1.107: [25, 993, 995]
+2025-10-16 16:41:12,254 | INFO     | 🔓 Open ports on 192.168.1.116: [25, 993, 995]
+2025-10-16 16:41:12,254 | INFO     | 🔓 Open ports on 192.168.1.110: [25, 993, 995]
+2025-10-16 16:41:12,263 | INFO     | ✅ Contacted device at 192.168.1.118 (Server: Unknown)
+2025-10-16 16:41:12,263 | INFO     | ✅ Contacted device at 192.168.1.107 (Server: Unknown)
+2025-10-16 16:41:12,265 | INFO     | ✅ Contacted device at 192.168.1.116 (Server: Unknown)
+2025-10-16 16:41:12,266 | INFO     | ✅ Contacted device at 192.168.1.110 (Server: Unknown)
+2025-10-16 16:41:12,270 | INFO     | 🔓 Open ports on 192.168.1.104: [25, 993, 995]
+2025-10-16 16:41:12,270 | INFO     | 🔓 Open ports on 192.168.1.105: [25, 993, 995]
+2025-10-16 16:41:12,277 | INFO     | ✅ Contacted device at 192.168.1.104 (Server: Unknown)
+2025-10-16 16:41:12,277 | INFO     | ✅ Contacted device at 192.168.1.105 (Server: Unknown)
+2025-10-16 16:41:12,285 | INFO     | 🔓 Open ports on 192.168.1.115: [25, 993, 995]
+2025-10-16 16:41:12,285 | INFO     | 🔓 Open ports on 192.168.1.109: [25, 993, 995]
+2025-10-16 16:41:12,285 | INFO     | 🔓 Open ports on 192.168.1.106: [25, 993, 995]
+2025-10-16 16:41:12,285 | INFO     | 🔓 Open ports on 192.168.1.112: [25, 993, 995]
+2025-10-16 16:41:12,285 | INFO     | 🔓 Open ports on 192.168.1.113: [25, 993, 995]
+2025-10-16 16:41:12,285 | INFO     | 🔓 Open ports on 192.168.1.111: [25, 993, 995]
+2025-10-16 16:41:12,285 | INFO     | 🔓 Open ports on 192.168.1.108: [25, 993, 995]
+2025-10-16 16:41:12,301 | INFO     | 🔓 Open ports on 192.168.1.117: [25, 993, 995]
+2025-10-16 16:41:12,301 | INFO     | 🔓 Open ports on 192.168.1.114: [25, 993, 995]
+2025-10-16 16:41:12,302 | INFO     | ✅ Contacted device at 192.168.1.106 (Server: Unknown)
+2025-10-16 16:41:12,303 | INFO     | ✅ Contacted device at 192.168.1.112 (Server: Unknown)
+2025-10-16 16:41:12,304 | INFO     | ✅ Contacted device at 192.168.1.113 (Server: Unknown)
+2025-10-16 16:41:12,305 | INFO     | ✅ Contacted device at 192.168.1.115 (Server: Unknown)
+2025-10-16 16:41:12,308 | INFO     | ✅ Contacted device at 192.168.1.111 (Server: Unknown)
+2025-10-16 16:41:12,308 | INFO     | ✅ Contacted device at 192.168.1.108 (Server: Unknown)
+2025-10-16 16:41:12,312 | INFO     | ✅ Contacted device at 192.168.1.109 (Server: Unknown)
+2025-10-16 16:41:12,313 | INFO     | ✅ Contacted device at 192.168.1.117 (Server: Unknown)
+2025-10-16 16:41:12,315 | INFO     | ✅ Contacted device at 192.168.1.114 (Server: Unknown)
+2025-10-16 16:41:12,331 | INFO     | 🔓 Open ports on 192.168.1.130: [25, 993, 995]
+2025-10-16 16:41:12,331 | INFO     | 🔓 Open ports on 192.168.1.129: [25, 993, 995]
+2025-10-16 16:41:12,331 | INFO     | 🔓 Open ports on 192.168.1.122: [25, 993, 995]
+2025-10-16 16:41:12,337 | INFO     | ✅ Contacted device at 192.168.1.130 (Server: Unknown)
+2025-10-16 16:41:12,338 | INFO     | ✅ Contacted device at 192.168.1.122 (Server: Unknown)
+2025-10-16 16:41:12,339 | INFO     | ✅ Contacted device at 192.168.1.129 (Server: Unknown)
+2025-10-16 16:41:12,347 | INFO     | 🔓 Open ports on 192.168.1.123: [25, 993, 995]
+2025-10-16 16:41:12,351 | INFO     | ✅ Contacted device at 192.168.1.123 (Server: Unknown)
+2025-10-16 16:41:12,378 | INFO     | 🔓 Open ports on 192.168.1.127: [25, 993, 995]
+2025-10-16 16:41:12,378 | INFO     | 🔓 Open ports on 192.168.1.133: [25, 993, 995]
+2025-10-16 16:41:12,378 | INFO     | 🔓 Open ports on 192.168.1.125: [25, 993, 995]
+2025-10-16 16:41:12,378 | INFO     | 🔓 Open ports on 192.168.1.119: [25, 993, 995]
+2025-10-16 16:41:12,378 | INFO     | 🔓 Open ports on 192.168.1.121: [25, 993, 995]
+2025-10-16 16:41:12,378 | INFO     | 🔓 Open ports on 192.168.1.120: [25, 993, 995]
+2025-10-16 16:41:12,391 | INFO     | ✅ Contacted device at 192.168.1.127 (Server: Unknown)
+2025-10-16 16:41:12,393 | INFO     | 🔓 Open ports on 192.168.1.126: [25, 993, 995]
+2025-10-16 16:41:12,393 | INFO     | 🔓 Open ports on 192.168.1.132: [25, 993, 995]
+2025-10-16 16:41:12,393 | INFO     | 🔓 Open ports on 192.168.1.131: [25, 993, 995]
+2025-10-16 16:41:12,395 | INFO     | ✅ Contacted device at 192.168.1.121 (Server: Unknown)
+2025-10-16 16:41:12,395 | INFO     | ✅ Contacted device at 192.168.1.119 (Server: Unknown)
+2025-10-16 16:41:12,396 | INFO     | ✅ Contacted device at 192.168.1.133 (Server: Unknown)
+2025-10-16 16:41:12,397 | INFO     | ✅ Contacted device at 192.168.1.125 (Server: Unknown)
+2025-10-16 16:41:12,401 | INFO     | ✅ Contacted device at 192.168.1.120 (Server: Unknown)
+2025-10-16 16:41:12,405 | INFO     | ✅ Contacted device at 192.168.1.126 (Server: Unknown)
+2025-10-16 16:41:12,406 | INFO     | ✅ Contacted device at 192.168.1.132 (Server: Unknown)
+2025-10-16 16:41:12,407 | INFO     | ✅ Contacted device at 192.168.1.131 (Server: Unknown)
+2025-10-16 16:41:12,409 | INFO     | 🔓 Open ports on 192.168.1.134: [25, 993, 995]
+2025-10-16 16:41:12,409 | INFO     | 🔓 Open ports on 192.168.1.124: [25, 993, 995]
+2025-10-16 16:41:12,409 | INFO     | 🔓 Open ports on 192.168.1.128: [25, 993, 995]
+2025-10-16 16:41:12,417 | INFO     | ✅ Contacted device at 192.168.1.124 (Server: Unknown)
+2025-10-16 16:41:12,417 | INFO     | ✅ Contacted device at 192.168.1.134 (Server: Unknown)
+2025-10-16 16:41:12,418 | INFO     | ✅ Contacted device at 192.168.1.128 (Server: Unknown)
+2025-10-16 16:41:12,441 | INFO     | 🔓 Open ports on 192.168.1.135: [25, 993, 995]
+2025-10-16 16:41:12,441 | INFO     | 🔓 Open ports on 192.168.1.137: [25, 993, 995]
+2025-10-16 16:41:12,447 | INFO     | ✅ Contacted device at 192.168.1.137 (Server: Unknown)
+2025-10-16 16:41:12,447 | INFO     | ✅ Contacted device at 192.168.1.135 (Server: Unknown)
+2025-10-16 16:41:12,456 | INFO     | 🔓 Open ports on 192.168.1.138: [25, 993, 995]
+2025-10-16 16:41:12,456 | INFO     | 🔓 Open ports on 192.168.1.139: [25, 993, 995]
+2025-10-16 16:41:12,462 | INFO     | ✅ Contacted device at 192.168.1.138 (Server: Unknown)
+2025-10-16 16:41:12,463 | INFO     | ✅ Contacted device at 192.168.1.139 (Server: Unknown)
+2025-10-16 16:41:12,471 | INFO     | 🔓 Open ports on 192.168.1.136: [25, 993, 995]
+2025-10-16 16:41:12,474 | INFO     | ✅ Contacted device at 192.168.1.136 (Server: Unknown)
+2025-10-16 16:41:12,518 | INFO     | 🔓 Open ports on 192.168.1.154: [25, 993, 995]
+2025-10-16 16:41:12,518 | INFO     | 🔓 Open ports on 192.168.1.148: [25, 993, 995]
+2025-10-16 16:41:12,518 | INFO     | 🔓 Open ports on 192.168.1.183: [25, 993, 995]
+2025-10-16 16:41:12,518 | INFO     | 🔓 Open ports on 192.168.1.166: [25, 993, 995]
+2025-10-16 16:41:12,526 | INFO     | ✅ Contacted device at 192.168.1.154 (Server: Unknown)
+2025-10-16 16:41:12,528 | INFO     | ✅ Contacted device at 192.168.1.183 (Server: Unknown)
+2025-10-16 16:41:12,529 | INFO     | ✅ Contacted device at 192.168.1.166 (Server: Unknown)
+2025-10-16 16:41:12,531 | INFO     | ✅ Contacted device at 192.168.1.148 (Server: Unknown)
+2025-10-16 16:41:12,533 | INFO     | 🔓 Open ports on 192.168.1.156: [25, 993, 995]
+2025-10-16 16:41:12,533 | INFO     | 🔓 Open ports on 192.168.1.143: [25, 993, 995]
+2025-10-16 16:41:12,533 | INFO     | 🔓 Open ports on 192.168.1.149: [25, 993, 995]
+2025-10-16 16:41:12,534 | INFO     | 🔓 Open ports on 192.168.1.179: [25, 993, 995]
+2025-10-16 16:41:12,543 | INFO     | ✅ Contacted device at 192.168.1.156 (Server: Unknown)
+2025-10-16 16:41:12,547 | INFO     | ✅ Contacted device at 192.168.1.143 (Server: Unknown)
+2025-10-16 16:41:12,548 | INFO     | ✅ Contacted device at 192.168.1.149 (Server: Unknown)
+2025-10-16 16:41:12,549 | INFO     | 🔓 Open ports on 192.168.1.151: [25, 993, 995]
+2025-10-16 16:41:12,549 | INFO     | 🔓 Open ports on 192.168.1.182: [25, 993, 995]
+2025-10-16 16:41:12,549 | INFO     | 🔓 Open ports on 192.168.1.189: [25, 993, 995]
+2025-10-16 16:41:12,549 | INFO     | 🔓 Open ports on 192.168.1.171: [25, 993, 995]
+2025-10-16 16:41:12,549 | INFO     | 🔓 Open ports on 192.168.1.197: [25, 993, 995]
+2025-10-16 16:41:12,550 | INFO     | ✅ Contacted device at 192.168.1.179 (Server: Unknown)
+2025-10-16 16:41:12,549 | INFO     | 🔓 Open ports on 192.168.1.160: [25, 993, 995]
+2025-10-16 16:41:12,564 | INFO     | 🔓 Open ports on 192.168.1.196: [25, 993, 995]
+2025-10-16 16:41:12,564 | INFO     | 🔓 Open ports on 192.168.1.188: [25, 993, 995]
+2025-10-16 16:41:12,564 | INFO     | 🔓 Open ports on 192.168.1.177: [25, 993, 995]
+2025-10-16 16:41:12,564 | INFO     | 🔓 Open ports on 192.168.1.157: [25, 993, 995]
+2025-10-16 16:41:12,564 | INFO     | 🔓 Open ports on 192.168.1.169: [25, 993, 995]
+2025-10-16 16:41:12,564 | INFO     | 🔓 Open ports on 192.168.1.162: [25, 993, 995]
+2025-10-16 16:41:12,564 | INFO     | 🔓 Open ports on 192.168.1.141: [25, 993, 995]
+2025-10-16 16:41:12,568 | INFO     | ✅ Contacted device at 192.168.1.151 (Server: Unknown)
+2025-10-16 16:41:12,569 | INFO     | ✅ Contacted device at 192.168.1.197 (Server: Unknown)
+2025-10-16 16:41:12,570 | INFO     | ✅ Contacted device at 192.168.1.160 (Server: Unknown)
+2025-10-16 16:41:12,571 | INFO     | ✅ Contacted device at 192.168.1.189 (Server: Unknown)
+2025-10-16 16:41:12,579 | INFO     | 🔓 Open ports on 192.168.1.176: [25, 993, 995]
+2025-10-16 16:41:12,579 | INFO     | 🔓 Open ports on 192.168.1.146: [25, 993, 995]
+2025-10-16 16:41:12,579 | INFO     | 🔓 Open ports on 192.168.1.159: [25, 993, 995]
+2025-10-16 16:41:12,579 | INFO     | 🔓 Open ports on 192.168.1.167: [25, 993, 995]
+2025-10-16 16:41:12,580 | INFO     | 🔓 Open ports on 192.168.1.170: [25, 993, 995]
+2025-10-16 16:41:12,584 | INFO     | ✅ Contacted device at 192.168.1.157 (Server: Unknown)
+2025-10-16 16:41:12,584 | INFO     | ✅ Contacted device at 192.168.1.182 (Server: Unknown)
+2025-10-16 16:41:12,589 | INFO     | ✅ Contacted device at 192.168.1.171 (Server: Unknown)
+2025-10-16 16:41:12,590 | INFO     | ✅ Contacted device at 192.168.1.177 (Server: Unknown)
+2025-10-16 16:41:12,595 | INFO     | 🔓 Open ports on 192.168.1.190: [25, 993, 995]
+2025-10-16 16:41:12,595 | INFO     | 🔓 Open ports on 192.168.1.168: [25, 993, 995]
+2025-10-16 16:41:12,595 | INFO     | 🔓 Open ports on 192.168.1.185: [25, 993, 995]
+2025-10-16 16:41:12,595 | INFO     | 🔓 Open ports on 192.168.1.184: [25, 993, 995]
+2025-10-16 16:41:12,595 | INFO     | 🔓 Open ports on 192.168.1.178: [25, 993, 995]
+2025-10-16 16:41:12,595 | INFO     | 🔓 Open ports on 192.168.1.186: [25, 993, 995]
+2025-10-16 16:41:12,595 | INFO     | 🔓 Open ports on 192.168.1.191: [25, 993, 995]
+2025-10-16 16:41:12,595 | INFO     | 🔓 Open ports on 192.168.1.164: [25, 993, 995]
+2025-10-16 16:41:12,595 | INFO     | 🔓 Open ports on 192.168.1.140: [25, 993, 995]
+2025-10-16 16:41:12,595 | INFO     | 🔓 Open ports on 192.168.1.195: [25, 993, 995]
+2025-10-16 16:41:12,596 | INFO     | 🔓 Open ports on 192.168.1.198: [25, 993, 995]
+2025-10-16 16:41:12,596 | INFO     | 🔓 Open ports on 192.168.1.150: [25, 993, 995]
+2025-10-16 16:41:12,599 | INFO     | ✅ Contacted device at 192.168.1.196 (Server: Unknown)
+2025-10-16 16:41:12,600 | INFO     | ✅ Contacted device at 192.168.1.141 (Server: Unknown)
+2025-10-16 16:41:12,607 | INFO     | ✅ Contacted device at 192.168.1.176 (Server: Unknown)
+2025-10-16 16:41:12,609 | INFO     | 🔓 Open ports on 192.168.1.172: [25, 993, 995]
+2025-10-16 16:41:12,609 | INFO     | 🔓 Open ports on 192.168.1.155: [25, 993, 995]
+2025-10-16 16:41:12,609 | INFO     | 🔓 Open ports on 192.168.1.187: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.147: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.192: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.153: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.144: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.173: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.158: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.181: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.174: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.161: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.142: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.175: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.163: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.194: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.180: [25, 993, 995]
+2025-10-16 16:41:12,615 | INFO     | 🔓 Open ports on 192.168.1.165: [25, 993, 995]
+2025-10-16 16:41:12,615 | INFO     | 🔓 Open ports on 192.168.1.152: [25, 993, 995]
+2025-10-16 16:41:12,614 | INFO     | 🔓 Open ports on 192.168.1.193: [25, 993, 995]
+2025-10-16 16:41:12,622 | INFO     | ✅ Contacted device at 192.168.1.188 (Server: Unknown)
+2025-10-16 16:41:12,630 | INFO     | 🔓 Open ports on 192.168.1.145: [25, 993, 995]
+2025-10-16 16:41:12,632 | INFO     | ✅ Contacted device at 192.168.1.169 (Server: Unknown)
+2025-10-16 16:41:12,643 | INFO     | ✅ Contacted device at 192.168.1.162 (Server: Unknown)
+2025-10-16 16:41:12,653 | INFO     | ✅ Contacted device at 192.168.1.146 (Server: Unknown)
+2025-10-16 16:41:12,669 | INFO     | ✅ Contacted device at 192.168.1.170 (Server: Unknown)
+2025-10-16 16:41:12,673 | INFO     | ✅ Contacted device at 192.168.1.191 (Server: Unknown)
+2025-10-16 16:41:12,675 | INFO     | ✅ Contacted device at 192.168.1.155 (Server: Unknown)
+2025-10-16 16:41:12,676 | INFO     | ✅ Contacted device at 192.168.1.178 (Server: Unknown)
+2025-10-16 16:41:12,679 | INFO     | ✅ Contacted device at 192.168.1.194 (Server: Unknown)
+2025-10-16 16:41:12,682 | INFO     | ✅ Contacted device at 192.168.1.173 (Server: Unknown)
+2025-10-16 16:41:12,683 | INFO     | ✅ Contacted device at 192.168.1.140 (Server: Unknown)
+2025-10-16 16:41:12,684 | INFO     | ✅ Contacted device at 192.168.1.158 (Server: Unknown)
+2025-10-16 16:41:12,685 | INFO     | ✅ Contacted device at 192.168.1.159 (Server: Unknown)
+2025-10-16 16:41:12,689 | INFO     | ✅ Contacted device at 192.168.1.168 (Server: Unknown)
+2025-10-16 16:41:12,692 | INFO     | ✅ Contacted device at 192.168.1.184 (Server: Unknown)
+2025-10-16 16:41:12,696 | INFO     | ✅ Contacted device at 192.168.1.167 (Server: Unknown)
+2025-10-16 16:41:12,701 | INFO     | ✅ Contacted device at 192.168.1.198 (Server: Unknown)
+2025-10-16 16:41:12,704 | INFO     | ✅ Contacted device at 192.168.1.180 (Server: Unknown)
+2025-10-16 16:41:12,706 | INFO     | ✅ Contacted device at 192.168.1.150 (Server: Unknown)
+2025-10-16 16:41:12,708 | INFO     | ✅ Contacted device at 192.168.1.142 (Server: Unknown)
+2025-10-16 16:41:12,708 | INFO     | ✅ Contacted device at 192.168.1.190 (Server: Unknown)
+2025-10-16 16:41:12,709 | INFO     | ✅ Contacted device at 192.168.1.185 (Server: Unknown)
+2025-10-16 16:41:12,714 | INFO     | ✅ Contacted device at 192.168.1.147 (Server: Unknown)
+2025-10-16 16:41:12,715 | INFO     | ✅ Contacted device at 192.168.1.175 (Server: Unknown)
+2025-10-16 16:41:12,715 | INFO     | ✅ Contacted device at 192.168.1.186 (Server: Unknown)
+2025-10-16 16:41:12,718 | INFO     | ✅ Contacted device at 192.168.1.164 (Server: Unknown)
+2025-10-16 16:41:12,718 | INFO     | ✅ Contacted device at 192.168.1.152 (Server: Unknown)
+2025-10-16 16:41:12,718 | INFO     | ✅ Contacted device at 192.168.1.187 (Server: Unknown)
+2025-10-16 16:41:12,719 | INFO     | ✅ Contacted device at 192.168.1.172 (Server: Unknown)
+2025-10-16 16:41:12,719 | INFO     | ✅ Contacted device at 192.168.1.195 (Server: Unknown)
+2025-10-16 16:41:12,721 | INFO     | ✅ Contacted device at 192.168.1.153 (Server: Unknown)
+2025-10-16 16:41:12,724 | INFO     | ✅ Contacted device at 192.168.1.193 (Server: Unknown)
+2025-10-16 16:41:12,727 | INFO     | ✅ Contacted device at 192.168.1.161 (Server: Unknown)
+2025-10-16 16:41:12,729 | INFO     | ✅ Contacted device at 192.168.1.165 (Server: Unknown)
+2025-10-16 16:41:12,729 | INFO     | ✅ Contacted device at 192.168.1.192 (Server: Unknown)
+2025-10-16 16:41:12,731 | INFO     | ✅ Contacted device at 192.168.1.174 (Server: Unknown)
+2025-10-16 16:41:12,732 | INFO     | ✅ Contacted device at 192.168.1.163 (Server: Unknown)
+2025-10-16 16:41:12,732 | INFO     | ✅ Contacted device at 192.168.1.145 (Server: Unknown)
+2025-10-16 16:41:12,732 | INFO     | ✅ Contacted device at 192.168.1.181 (Server: Unknown)
+2025-10-16 16:41:12,733 | INFO     | ✅ Contacted device at 192.168.1.144 (Server: Unknown)
+2025-10-16 16:42:33,403 | INFO     | 🔓 Open ports on 192.168.1.199: [25, 993, 995]
+2025-10-16 16:42:33,405 | INFO     | ✅ Contacted device at 192.168.1.199 (Server: Unknown)
+2025-10-16 16:42:33,419 | INFO     | 🔓 Open ports on 192.168.1.200: [25, 993, 995]
+2025-10-16 16:42:33,422 | INFO     | ✅ Contacted device at 192.168.1.200 (Server: Unknown)
+2025-10-16 16:42:33,497 | INFO     | 🔓 Open ports on 192.168.1.205: [25, 993, 995]
+2025-10-16 16:42:33,497 | INFO     | 🔓 Open ports on 192.168.1.206: [25, 993, 995]
+2025-10-16 16:42:33,501 | INFO     | ✅ Contacted device at 192.168.1.206 (Server: Unknown)
+2025-10-16 16:42:33,502 | INFO     | ✅ Contacted device at 192.168.1.205 (Server: Unknown)
+2025-10-16 16:42:33,527 | INFO     | 🔓 Open ports on 192.168.1.201: [25, 993, 995]
+2025-10-16 16:42:33,527 | INFO     | 🔓 Open ports on 192.168.1.202: [25, 993, 995]
+2025-10-16 16:42:33,532 | INFO     | ✅ Contacted device at 192.168.1.201 (Server: Unknown)
+2025-10-16 16:42:33,533 | INFO     | ✅ Contacted device at 192.168.1.202 (Server: Unknown)
+2025-10-16 16:42:33,543 | INFO     | 🔓 Open ports on 192.168.1.204: [25, 993, 995]
+2025-10-16 16:42:33,543 | INFO     | 🔓 Open ports on 192.168.1.203: [25, 993, 995]
+2025-10-16 16:42:33,547 | INFO     | ✅ Contacted device at 192.168.1.204 (Server: Unknown)
+2025-10-16 16:42:33,548 | INFO     | ✅ Contacted device at 192.168.1.203 (Server: Unknown)
+2025-10-16 16:42:33,637 | INFO     | 🔓 Open ports on 192.168.1.214: [25, 993, 995]
+2025-10-16 16:42:33,637 | INFO     | 🔓 Open ports on 192.168.1.221: [25, 993, 995]
+2025-10-16 16:42:33,637 | INFO     | 🔓 Open ports on 192.168.1.218: [25, 993, 995]
+2025-10-16 16:42:33,637 | INFO     | 🔓 Open ports on 192.168.1.211: [25, 993, 995]
+2025-10-16 16:42:33,643 | INFO     | ✅ Contacted device at 192.168.1.211 (Server: Unknown)
+2025-10-16 16:42:33,644 | INFO     | ✅ Contacted device at 192.168.1.214 (Server: Unknown)
+2025-10-16 16:42:33,645 | INFO     | ✅ Contacted device at 192.168.1.221 (Server: Unknown)
+2025-10-16 16:42:33,645 | INFO     | ✅ Contacted device at 192.168.1.218 (Server: Unknown)
+2025-10-16 16:42:33,652 | INFO     | 🔓 Open ports on 192.168.1.219: [25, 993, 995]
+2025-10-16 16:42:33,652 | INFO     | 🔓 Open ports on 192.168.1.217: [25, 993, 995]
+2025-10-16 16:42:33,652 | INFO     | 🔓 Open ports on 192.168.1.208: [25, 993, 995]
+2025-10-16 16:42:33,652 | INFO     | 🔓 Open ports on 192.168.1.216: [25, 993, 995]
+2025-10-16 16:42:33,652 | INFO     | 🔓 Open ports on 192.168.1.209: [25, 993, 995]
+2025-10-16 16:42:33,659 | INFO     | ✅ Contacted device at 192.168.1.219 (Server: Unknown)
+2025-10-16 16:42:33,661 | INFO     | ✅ Contacted device at 192.168.1.217 (Server: Unknown)
+2025-10-16 16:42:33,663 | INFO     | ✅ Contacted device at 192.168.1.208 (Server: Unknown)
+2025-10-16 16:42:33,664 | INFO     | ✅ Contacted device at 192.168.1.216 (Server: Unknown)
+2025-10-16 16:42:33,666 | INFO     | ✅ Contacted device at 192.168.1.209 (Server: Unknown)
+2025-10-16 16:42:33,668 | INFO     | 🔓 Open ports on 192.168.1.215: [25, 993, 995]
+2025-10-16 16:42:33,668 | INFO     | 🔓 Open ports on 192.168.1.220: [25, 993, 995]
+2025-10-16 16:42:33,668 | INFO     | 🔓 Open ports on 192.168.1.210: [25, 993, 995]
+2025-10-16 16:42:33,667 | INFO     | 🔓 Open ports on 192.168.1.213: [25, 993, 995]
+2025-10-16 16:42:33,668 | INFO     | 🔓 Open ports on 192.168.1.212: [25, 993, 995]
+2025-10-16 16:42:33,668 | INFO     | 🔓 Open ports on 192.168.1.207: [25, 993, 995]
+2025-10-16 16:42:33,676 | INFO     | ✅ Contacted device at 192.168.1.220 (Server: Unknown)
+2025-10-16 16:42:33,680 | INFO     | ✅ Contacted device at 192.168.1.212 (Server: Unknown)
+2025-10-16 16:42:33,682 | INFO     | ✅ Contacted device at 192.168.1.215 (Server: Unknown)
+2025-10-16 16:42:33,683 | INFO     | ✅ Contacted device at 192.168.1.210 (Server: Unknown)
+2025-10-16 16:42:33,683 | INFO     | ✅ Contacted device at 192.168.1.207 (Server: Unknown)
+2025-10-16 16:42:33,684 | INFO     | ✅ Contacted device at 192.168.1.213 (Server: Unknown)
+2025-10-16 16:42:33,730 | INFO     | 🔓 Open ports on 192.168.1.227: [25, 993, 995]
+2025-10-16 16:42:33,730 | INFO     | 🔓 Open ports on 192.168.1.222: [25, 993, 995]
+2025-10-16 16:42:33,731 | INFO     | 🔓 Open ports on 192.168.1.229: [25, 993, 995]
+2025-10-16 16:42:33,731 | INFO     | 🔓 Open ports on 192.168.1.238: [25, 993, 995]
+2025-10-16 16:42:33,737 | INFO     | ✅ Contacted device at 192.168.1.229 (Server: Unknown)
+2025-10-16 16:42:33,741 | INFO     | ✅ Contacted device at 192.168.1.227 (Server: Unknown)
+2025-10-16 16:42:33,742 | INFO     | ✅ Contacted device at 192.168.1.222 (Server: Unknown)
+2025-10-16 16:42:33,743 | INFO     | ✅ Contacted device at 192.168.1.238 (Server: Unknown)
+2025-10-16 16:42:33,760 | INFO     | 🔓 Open ports on 192.168.1.226: [25, 993, 995]
+2025-10-16 16:42:33,760 | INFO     | 🔓 Open ports on 192.168.1.228: [25, 993, 995]
+2025-10-16 16:42:33,760 | INFO     | 🔓 Open ports on 192.168.1.224: [25, 993, 995]
+2025-10-16 16:42:33,760 | INFO     | 🔓 Open ports on 192.168.1.233: [25, 993, 995]
+2025-10-16 16:42:33,760 | INFO     | 🔓 Open ports on 192.168.1.236: [25, 993, 995]
+2025-10-16 16:42:33,760 | INFO     | 🔓 Open ports on 192.168.1.235: [25, 993, 995]
+2025-10-16 16:42:33,760 | INFO     | 🔓 Open ports on 192.168.1.223: [25, 993, 995]
+2025-10-16 16:42:33,760 | INFO     | 🔓 Open ports on 192.168.1.232: [25, 993, 995]
+2025-10-16 16:42:33,760 | INFO     | 🔓 Open ports on 192.168.1.237: [25, 993, 995]
+2025-10-16 16:42:33,772 | INFO     | ✅ Contacted device at 192.168.1.226 (Server: Unknown)
+2025-10-16 16:42:33,775 | INFO     | 🔓 Open ports on 192.168.1.225: [25, 993, 995]
+2025-10-16 16:42:33,783 | INFO     | ✅ Contacted device at 192.168.1.236 (Server: Unknown)
+2025-10-16 16:42:33,784 | INFO     | ✅ Contacted device at 192.168.1.232 (Server: Unknown)
+2025-10-16 16:42:33,785 | INFO     | ✅ Contacted device at 192.168.1.233 (Server: Unknown)
+2025-10-16 16:42:33,787 | INFO     | ✅ Contacted device at 192.168.1.228 (Server: Unknown)
+2025-10-16 16:42:33,787 | INFO     | ✅ Contacted device at 192.168.1.235 (Server: Unknown)
+2025-10-16 16:42:33,790 | INFO     | ✅ Contacted device at 192.168.1.223 (Server: Unknown)
+2025-10-16 16:42:33,790 | INFO     | 🔓 Open ports on 192.168.1.230: [25, 993, 995]
+2025-10-16 16:42:33,790 | INFO     | 🔓 Open ports on 192.168.1.231: [25, 993, 995]
+2025-10-16 16:42:33,791 | INFO     | 🔓 Open ports on 192.168.1.234: [25, 993, 995]
+2025-10-16 16:42:33,791 | INFO     | ✅ Contacted device at 192.168.1.224 (Server: Unknown)
+2025-10-16 16:42:33,793 | INFO     | ✅ Contacted device at 192.168.1.237 (Server: Unknown)
+2025-10-16 16:42:33,798 | INFO     | ✅ Contacted device at 192.168.1.225 (Server: Unknown)
+2025-10-16 16:42:33,802 | INFO     | ✅ Contacted device at 192.168.1.231 (Server: Unknown)
+2025-10-16 16:42:33,802 | INFO     | ✅ Contacted device at 192.168.1.234 (Server: Unknown)
+2025-10-16 16:42:33,802 | INFO     | ✅ Contacted device at 192.168.1.230 (Server: Unknown)
+2025-10-16 16:42:33,852 | INFO     | 🔓 Open ports on 192.168.1.239: [25, 993, 995]
+2025-10-16 16:42:33,852 | INFO     | 🔓 Open ports on 192.168.1.243: [25, 993, 995]
+2025-10-16 16:42:33,852 | INFO     | 🔓 Open ports on 192.168.1.252: [25, 993, 995]
+2025-10-16 16:42:33,852 | INFO     | 🔓 Open ports on 192.168.1.245: [25, 993, 995]
+2025-10-16 16:42:33,852 | INFO     | 🔓 Open ports on 192.168.1.244: [25, 993, 995]
+2025-10-16 16:42:33,852 | INFO     | 🔓 Open ports on 192.168.1.250: [25, 993, 995]
+2025-10-16 16:42:33,860 | INFO     | ✅ Contacted device at 192.168.1.243 (Server: Unknown)
+2025-10-16 16:42:33,862 | INFO     | ✅ Contacted device at 192.168.1.252 (Server: Unknown)
+2025-10-16 16:42:33,863 | INFO     | ✅ Contacted device at 192.168.1.239 (Server: Unknown)
+2025-10-16 16:42:33,864 | INFO     | ✅ Contacted device at 192.168.1.250 (Server: Unknown)
+2025-10-16 16:42:33,866 | INFO     | ✅ Contacted device at 192.168.1.245 (Server: Unknown)
+2025-10-16 16:42:33,866 | INFO     | ✅ Contacted device at 192.168.1.244 (Server: Unknown)
+2025-10-16 16:42:33,867 | INFO     | 🔓 Open ports on 192.168.1.249: [25, 993, 995]
+2025-10-16 16:42:33,867 | INFO     | 🔓 Open ports on 192.168.1.251: [25, 993, 995]
+2025-10-16 16:42:33,868 | INFO     | 🔓 Open ports on 192.168.1.247: [25, 993, 995]
+2025-10-16 16:42:33,868 | INFO     | 🔓 Open ports on 192.168.1.253: [25, 993, 995]
+2025-10-16 16:42:33,868 | INFO     | 🔓 Open ports on 192.168.1.246: [25, 993, 995]
+2025-10-16 16:42:33,868 | INFO     | 🔓 Open ports on 192.168.1.248: [25, 993, 995]
+2025-10-16 16:42:33,868 | INFO     | 🔓 Open ports on 192.168.1.242: [25, 993, 995]
+2025-10-16 16:42:33,868 | INFO     | 🔓 Open ports on 192.168.1.240: [25, 993, 995]
+2025-10-16 16:42:33,883 | INFO     | 🔓 Open ports on 192.168.1.254: [25, 993, 995]
+2025-10-16 16:42:33,883 | INFO     | 🔓 Open ports on 192.168.1.241: [25, 993, 995]
+2025-10-16 16:42:33,884 | INFO     | ✅ Contacted device at 192.168.1.248 (Server: Unknown)
+2025-10-16 16:42:33,885 | INFO     | ✅ Contacted device at 192.168.1.251 (Server: Unknown)
+2025-10-16 16:42:33,888 | INFO     | ✅ Contacted device at 192.168.1.247 (Server: Unknown)
+2025-10-16 16:42:33,891 | INFO     | ✅ Contacted device at 192.168.1.246 (Server: Unknown)
+2025-10-16 16:42:33,891 | INFO     | ✅ Contacted device at 192.168.1.249 (Server: Unknown)
+2025-10-16 16:42:33,891 | INFO     | ✅ Contacted device at 192.168.1.253 (Server: Unknown)
+2025-10-16 16:42:33,892 | INFO     | ✅ Contacted device at 192.168.1.240 (Server: Unknown)
+2025-10-16 16:42:33,895 | INFO     | ✅ Contacted device at 192.168.1.242 (Server: Unknown)
+2025-10-16 16:42:33,896 | INFO     | ✅ Contacted device at 192.168.1.254 (Server: Unknown)
+2025-10-16 16:42:33,897 | INFO     | ✅ Contacted device at 192.168.1.241 (Server: Unknown)
+2025-10-16 16:42:33,940 | INFO     | ✅ Scan complete. Full log: scan_report_20251016_163807.log
+2025-10-16 16:42:33,941 | CRITICAL | 🚨 1270 VULNERABLE DEVICE(S) DETECTED! Details saved to: exploited_devices_20251016_163807.json
+2025-10-16 16:42:33,942 | INFO     | 📊 Scan Statistics: 254 devices scanned, 762 ports scanned, 1270 vulnerabilities found

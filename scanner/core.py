@@ -14,6 +14,7 @@ from scanner.port_scanner import is_port_open
 from scanner.cve_checker import test_port_based_cve
 from scanner.report import setup_logger, save_results
 from utils.security import is_safe_network, validate_port_list
+from utils.persistent_storage import persistent_storage
 
 # Set up logger
 logger = setup_logger()
@@ -143,6 +144,11 @@ class AdvancedNetworkScanner:
             t.join(timeout=10)
 
         save_results(self.exploited_devices, RESULTS_FILE)
+        
+        # Save to persistent storage
+        scan_id = persistent_storage.save_scan_results(self.exploited_devices, network, "network_scan")
+        persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        
         logger.info(f"✅ Scan complete. Full log: {LOG_FILE}")
         if self.exploited_devices:
             logger.critical(
@@ -169,6 +175,12 @@ class AdvancedNetworkScanner:
         # Restore all results
         self.exploited_devices = all_results
         save_results(self.exploited_devices, RESULTS_FILE)
+        
+        # Save to persistent storage
+        if networks:
+            scan_id = persistent_storage.save_scan_results(self.exploited_devices, ", ".join(networks), "multiple_networks")
+            persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+            
         logger.info(f"✅ Multi-network scan complete. Results saved to: {RESULTS_FILE}")
 
     def scan_with_exclusions(self, network: str, exclude_ips: List[str]):
@@ -200,6 +212,11 @@ class AdvancedNetworkScanner:
             t.join(timeout=10)
 
         save_results(self.exploited_devices, RESULTS_FILE)
+        
+        # Save to persistent storage
+        scan_id = persistent_storage.save_scan_results(self.exploited_devices, network, "network_with_exclusions")
+        persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        
         logger.info(f"✅ Scan with exclusions complete. Results saved to: {RESULTS_FILE}")
 
     def scan_ipv6_network(self, network: str):
@@ -226,6 +243,11 @@ class AdvancedNetworkScanner:
                 t.join(timeout=5)
 
             save_results(self.exploited_devices, RESULTS_FILE)
+            
+            # Save to persistent storage
+            scan_id = persistent_storage.save_scan_results(self.exploited_devices, network, "ipv6_network")
+            persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+            
             logger.info(f"✅ IPv6 scan complete. Results saved to: {RESULTS_FILE}")
             
         except Exception as e:
@@ -248,6 +270,11 @@ class AdvancedNetworkScanner:
         logger.info(f"🎯 Scanning single IP: {ip}")
         self.scan_single_host(ip)
         save_results(self.exploited_devices, RESULTS_FILE)
+        
+        # Save to persistent storage
+        scan_id = persistent_storage.save_scan_results(self.exploited_devices, ip, "single_ip")
+        persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        
         logger.info(f"✅ Scan complete. Full log: {LOG_FILE}")
         if self.exploited_devices:
             logger.critical(
@@ -287,6 +314,11 @@ class AdvancedNetworkScanner:
                     self.stats["vulnerabilities_found"] += vulnerabilities_found
                 
         save_results(self.exploited_devices, RESULTS_FILE)
+        
+        # Save to persistent storage
+        scan_id = persistent_storage.save_scan_results(self.exploited_devices, network, "port_scan")
+        persistent_storage.save_results_to_files(self.exploited_devices, scan_id)
+        
         logger.info(f"✅ Port scan complete. Full log: {LOG_FILE}")
         if self.exploited_devices:
             logger.critical(

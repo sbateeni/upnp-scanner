@@ -59,6 +59,13 @@ An advanced network scanning tool with CVE detection capabilities, designed for 
 - **Interactive Prompts** - User-friendly input handling
 - **ASCII Art Banner** - Professional appearance
 
+### 🌐 Web Interface
+- **Browser-Based GUI** - Alternative to CLI interface
+- **Real-Time Status Updates** - Live progress monitoring
+- **Scan Configuration** - Web forms for scan settings
+- **Results Visualization** - Browser-friendly result display
+- **API Endpoints** - RESTful API for integration
+
 ### 🛡️ Security Features
 - **Safe Network Validation** - Only allows scanning of private networks
 - **Port Validation** - Restricts scanning to known safe ports
@@ -79,10 +86,22 @@ pip install -r requirements.txt
 
 ## 📖 Usage
 
+### CLI Interface
 ```bash
 # Run the scanner
 python main.py
 ```
+
+### Web Interface
+```bash
+# Start the web interface
+python web_interface.py
+
+# Or start from the main menu (option 11)
+python main.py
+```
+
+Open your browser to http://localhost:8080
 
 ### Menu Options:
 1. **Scan Full Network** - Scan an entire network subnet
@@ -95,8 +114,9 @@ python main.py
 8. **Scan Multiple Networks** - Scan several networks at once
 9. **Scan with IP Exclusions** - Skip specific IPs
 10. **VLAN Scan** - Scan VLANs by ID or range
-11. **View Reports** - View previous scan results
-12. **Exit** - Quit the application
+11. **Start Web Interface** - Launch browser-based GUI
+12. **View Reports** - View previous scan results
+13. **Exit** - Quit the application
 
 ## 📁 Project Structure
 
@@ -108,6 +128,7 @@ upnp-scanner/
 ├── test_scanner.py        # Component testing script
 ├── update_scanner.py      # Automatic update script
 ├── termux_update.sh       # Termux-specific update script
+├── web_interface.py       # Web-based GUI interface
 │
 ├── config/                # Configuration files
 │   ├── settings.py        # Global settings
@@ -189,6 +210,27 @@ Visual feedback during long-running operations with animated progress indicators
 
 ### Interactive Menus
 User-friendly menus with clear options and intuitive navigation.
+
+## 🌐 Web Interface
+
+The scanner includes a built-in web interface for easier use, especially in environments like Termux where a GUI is beneficial.
+
+### Features
+- **Dashboard**: Overview of system status and recent results
+- **Scan Configuration**: Web forms for setting up scans
+- **Live Progress**: Real-time status updates during scans
+- **Results Display**: Browser-friendly presentation of findings
+- **RESTful API**: Programmatic access to scanner functionality
+
+### Usage
+1. Start the web interface: `python web_interface.py`
+2. Open your browser to http://localhost:8080
+3. Use the web interface to configure and run scans
+
+### API Endpoints
+- `GET /api/status` - Get current scan status
+- `GET /api/results` - Get scan results
+- `POST /api/scan_network` - Start a network scan
 
 ## 🛡️ Safety Features
 
@@ -283,6 +325,11 @@ This tool is designed for authorized security testing only. Always ensure you ha
 - **Git not found**: Run `pkg install git`
 - **Permission denied**: Ensure Termux has storage permissions
 - **Network timeouts**: Check internet connection and try again
+
+### Web Interface Issues
+- **Port already in use**: Change the port in web_interface.py
+- **Flask not found**: Install with `pip install flask`
+- **Browser not opening**: Manually navigate to http://localhost:8080
 
 ### Support
 For issues, please check the GitHub repository or contact the maintainers.
