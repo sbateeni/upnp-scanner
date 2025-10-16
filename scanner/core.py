@@ -19,6 +19,14 @@ from utils.persistent_storage import persistent_storage
 # Set up logger
 logger = setup_logger()
 
+# Camera-specific ports and signatures
+CAMERA_PORTS = [554, 80, 8080, 8000, 37777, 37778, 8001, 9000]
+CAMERA_SIGNATURES = [
+    "Network Camera", "IP Camera", "DVR", "NVR", " surveillance", 
+    "camera server", "rtsp", "onvif", "axis", "hikvision", 
+    "dahua", "foscam", "tplink", "netcam"
+]
+
 class AdvancedNetworkScanner:
     """Advanced network scanner with multiple discovery methods and CVE checking."""
     
@@ -380,14 +388,20 @@ class AdvancedNetworkScanner:
             110: "POP3",
             143: "IMAP",
             443: "HTTPS",
+            554: "RTSP",  # RTSP - Real Time Streaming Protocol (common for IP cameras)
             993: "IMAPS",
             995: "POP3S",
             1433: "MSSQL",
             3306: "MySQL",
             3389: "RDP",
+            37777: "DVR/NVR",  # Common port for DVR/NVR systems
+            37778: "DVR/NVR",  # Another common port for DVR/NVR systems
             5432: "PostgreSQL",
             5900: "VNC",
-            8080: "HTTP-Alt"
+            8000: "HTTP-Alt",
+            8001: "HTTP-Alt",
+            8080: "HTTP-Alt",
+            9000: "HTTP-Alt"
         }
         
         return service_map.get(port, f"Unknown Service (Port {port})")
@@ -436,3 +450,202 @@ class AdvancedNetworkScanner:
                 
         except Exception as e:
             logger.error(f"❌ Error during VLAN scan: {e}")
+
+    def detect_cameras(self, network: str):
+        """Detect cameras on the network including IP cameras, DVRs, NVRs, etc."""
+        logger.info(f"📹 Starting camera detection on network: {network}")
+        
+        if not is_safe_network(network):
+            logger.error(f"❌ Network {network} is not safe to scan.")
+            return []
+            
+        net = ipaddress.IPv4Network(network, strict=False)
+        camera_devices = []
+        threads = []
+        
+        # Update stats
+        with self.lock:
+            self.stats["devices_scanned"] = 0
+            self.stats["ports_scanned"] = 0
+            self.stats["vulnerabilities_found"] = 0
+        
+        for ip in net.hosts():
+            while threading.active_count() > MAX_THREADS:
+                time.sleep(0.1)
+
+            t = threading.Thread(target=self._scan_camera_device, args=(str(ip), camera_devices), daemon=True)
+            t.start()
+            threads.append(t)
+
+        for t in threads:
+            t.join(timeout=15)  # Increased timeout for camera detection
+
+        logger.info(f"✅ Camera detection complete. Found {len(camera_devices)} camera devices")
+        
+        # Save results
+        if camera_devices:
+            save_results(camera_devices, RESULTS_FILE.replace('.json', '_cameras.json'))
+            
+            # Save to persistent storage
+            try:
+                scan_id = persistent_storage.save_scan_results(camera_devices, network, "camera_detection")
+                persistent_storage.save_results_to_files(camera_devices, scan_id)
+            except Exception as e:
+                logger.error(f"❌ Error saving camera results to persistent storage: {e}")
+            
+            logger.critical(f"📹 {len(camera_devices)} CAMERA DEVICE(S) DETECTED!")
+            
+        return camera_devices
+
+    def _scan_camera_device(self, ip: str, camera_devices: List[Dict]):
+        """Scan a single device for camera services."""
+        # Update stats
+        with self.lock:
+            self.stats["devices_scanned"] += 1
+            
+        logger.debug(f"🔍 Scanning {ip} for camera services...")
+        
+        # Check camera-specific ports
+        camera_ports_open = []
+        for port in CAMERA_PORTS:
+            if is_port_open(ip, port):
+                camera_ports_open.append(port)
+                with self.lock:
+                    self.stats["ports_scanned"] += 1
+                logger.debug(f"🔓 Camera port {port} open on {ip}")
+        
+        if not camera_ports_open:
+            return  # No camera ports open, skip further checks
+            
+        # Try to identify camera services
+        camera_info = self._identify_camera_service(ip, camera_ports_open)
+        
+        if camera_info:
+            with self.lock:
+                camera_devices.append(camera_info)
+                self.stats["vulnerabilities_found"] += 1
+            logger.info(f"📹 Camera detected: {ip} - {camera_info.get('device_type', 'Unknown')}")
+
+    def _identify_camera_service(self, ip: str, open_ports: List[int]) -> Optional[Dict]:
+        """Identify camera service based on open ports and HTTP responses."""
+        camera_info = {
+            "ip": ip,
+            "device_type": "Unknown Camera Device",
+            "ports": open_ports,
+            "vendor": "Unknown",
+            "model": "Unknown",
+            "vulnerabilities": []
+        }
+        
+        # Check port 80/HTTP first for device identification
+        if 80 in open_ports or 8080 in open_ports or 8000 in open_ports:
+            http_port = 80 if 80 in open_ports else (8080 if 8080 in open_ports else 8000)
+            try:
+                response = requests.get(f"http://{ip}:{http_port}", timeout=5, verify=False)
+                content = response.text.lower()
+                headers = str(response.headers).lower()
+                
+                # Check for camera signatures in response
+                for signature in CAMERA_SIGNATURES:
+                    if signature in content or signature in headers:
+                        camera_info["device_type"] = self._determine_camera_type(signature)
+                        camera_info["vendor"] = self._extract_vendor(content, headers)
+                        camera_info["model"] = self._extract_model(content)
+                        break
+                        
+                # Extract title if available
+                if "<title>" in response.text:
+                    start = response.text.find("<title>") + 7
+                    end = response.text.find("</title>")
+                    if end > start:
+                        title = response.text[start:end].strip()
+                        if not camera_info["model"] or camera_info["model"] == "Unknown":
+                            camera_info["model"] = title
+            except Exception as e:
+                logger.debug(f"❌ HTTP request failed for {ip}:{http_port} - {e}")
+        
+        # Check RTSP port (554)
+        if 554 in open_ports:
+            try:
+                # Try to connect to RTSP
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                sock.settimeout(3)
+                result = sock.connect_ex((ip, 554))
+                if result == 0:
+                    # Send RTSP OPTIONS request
+                    rtsp_request = f"OPTIONS rtsp://{ip}:554/ RTSP/1.0\r\nCSeq: 1\r\n\r\n"
+                    sock.send(rtsp_request.encode())
+                    response = sock.recv(1024).decode().lower()
+                    if "rtsp" in response:
+                        if "hikvision" in response:
+                            camera_info["vendor"] = "Hikvision"
+                            camera_info["device_type"] = "IP Camera"
+                        elif "dahua" in response:
+                            camera_info["vendor"] = "Dahua"
+                            camera_info["device_type"] = "IP Camera"
+                        else:
+                            camera_info["device_type"] = "RTSP Camera"
+                sock.close()
+            except Exception as e:
+                logger.debug(f"❌ RTSP connection failed for {ip}:554 - {e}")
+        
+        # Check DVR/NVR ports
+        if 37777 in open_ports or 37778 in open_ports:
+            camera_info["device_type"] = "DVR/NVR System"
+            camera_info["vendor"] = "Generic"
+            
+        # If we found any camera-related information, return the device info
+        if (camera_info["device_type"] != "Unknown Camera Device" or 
+            camera_info["vendor"] != "Unknown" or 
+            len(open_ports) > 0):
+            return camera_info
+            
+        return None
+
+    def _determine_camera_type(self, signature: str) -> str:
+        """Determine camera type based on signature."""
+        signature = signature.lower()
+        if "dvr" in signature:
+            return "DVR System"
+        elif "nvr" in signature:
+            return "NVR System"
+        elif "ip camera" in signature or "network camera" in signature:
+            return "IP Camera"
+        elif "surveillance" in signature:
+            return "Surveillance Camera"
+        elif "onvif" in signature:
+            return "ONVIF Camera"
+        elif "rtsp" in signature:
+            return "RTSP Camera"
+        else:
+            return "Network Camera"
+
+    def _extract_vendor(self, content: str, headers: str) -> str:
+        """Extract vendor information from HTTP response."""
+        content = content.lower()
+        headers = headers.lower()
+        
+        vendors = {
+            "hikvision": ["hikvision", "hik"],
+            "dahua": ["dahua"],
+            "axis": ["axis"],
+            "foscam": ["foscam"],
+            "tplink": ["tp-link", "tplink"],
+            "dlink": ["d-link", "dlink"],
+            "sony": ["sony"],
+            "panasonic": ["panasonic"],
+            "bosch": ["bosch"]
+        }
+        
+        for vendor, signatures in vendors.items():
+            for sig in signatures:
+                if sig in content or sig in headers:
+                    return vendor.capitalize()
+                    
+        return "Unknown"
+
+    def _extract_model(self, content: str) -> str:
+        """Extract model information from HTTP response."""
+        # This is a simplified model extraction
+        # In a real implementation, you would have more sophisticated parsing
+        return "Unknown"

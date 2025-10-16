@@ -33,15 +33,16 @@ def display_menu():
     cli.print_menu_item(9, "Scan with IP Exclusions", "🚫")
     cli.print_menu_item(10, "VLAN Scan", "🌐")
     cli.print_menu_item(11, "Start Web Interface", "🌐")
-    cli.print_menu_item(12, "View Last Scan Report", "📜")
-    cli.print_menu_item(13, "Exit", "🚪")
+    cli.print_menu_item(12, "Detect Network Cameras", "📹")
+    cli.print_menu_item(13, "View Last Scan Report", "📜")
+    cli.print_menu_item(14, "Exit", "🚪")
     
     print(cli.colorize("="*60, 'cyan'))
 
 def get_user_choice():
     """Get and validate user menu choice."""
     try:
-        choice = int(cli.get_user_input("Enter your choice (1-13)"))
+        choice = int(cli.get_user_input("Enter your choice (1-14)"))
         return choice
     except ValueError:
         return -1
@@ -353,6 +354,40 @@ def start_web_interface():
     except Exception as e:
         cli.print_status(f"Error starting web interface: {e}", "error")
 
+def run_camera_detection(scanner):
+    """Detect cameras on the network."""
+    cli.print_header("Camera Detection")
+    cli.print_status("This feature detects IP cameras, DVRs, NVRs, and other camera devices on your network.", "info")
+    cli.print_status("It checks for common camera ports and identifies devices by their signatures.", "info")
+    
+    network = cli.get_user_input("Enter network CIDR (e.g., 192.168.1.0/24)", "192.168.1.0/24")
+    
+    cli.print_status(f"Starting camera detection on {network}...", "info")
+    cli.animated_wait("Detecting cameras", 5)
+    
+    camera_devices = scanner.detect_cameras(network)
+    
+    if camera_devices:
+        cli.print_status(f"📹 Found {len(camera_devices)} camera devices:", "success")
+        print()
+        for i, device in enumerate(camera_devices, 1):
+            print(f"  {cli.colorize(str(i), 'yellow')}. {device['ip']}")
+            print(f"     Type: {device.get('device_type', 'Unknown')}")
+            print(f"     Vendor: {device.get('vendor', 'Unknown')}")
+            print(f"     Model: {device.get('model', 'Unknown')}")
+            print(f"     Ports: {', '.join(map(str, device.get('ports', [])))}")
+            print()
+            
+        # Save camera results
+        base_name = RESULTS_FILE.replace('.json', '_cameras')
+        save_results_csv(camera_devices, f"{base_name}.csv")
+        save_results_xml(camera_devices, f"{base_name}.xml")
+        save_results_html(camera_devices, f"{base_name}.html")
+        
+        cli.print_status(f"Camera detection results saved to {base_name}.*", "success")
+    else:
+        cli.print_status("No camera devices found on the network.", "info")
+
 def update_from_github():
     """Update the scanner from GitHub repository with better Termux compatibility."""
     cli.print_header("Update Scanner")
@@ -469,15 +504,17 @@ def main():
         elif choice == 11:
             start_web_interface()
         elif choice == 12:
-            view_report()
+            run_camera_detection(scanner)
         elif choice == 13:
+            view_report()
+        elif choice == 14:
             cli.print_status("Exiting scanner. Goodbye!", "info")
             break
         else:
-            cli.print_status("Invalid choice. Please enter a number between 1 and 13.", "warning")
+            cli.print_status("Invalid choice. Please enter a number between 1 and 14.", "warning")
         
         # Pause before showing menu again
-        if choice != 13:
+        if choice != 14:
             input(f"\n{cli.colorize('Press Enter to continue...', 'dim')}")
 
 if __name__ == "__main__":
