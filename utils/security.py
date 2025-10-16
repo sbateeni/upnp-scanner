@@ -30,7 +30,19 @@ def is_safe_network(network: str) -> bool:
         if net.network_address.is_reserved:
             return False
             
-        # Only allow private networks (RFC 1918)
+        # For IPv6, only allow private address spaces
+        if net.version == 6:
+            # Allow Unique Local Addresses (ULA) - fc00::/7
+            ula_network = ipaddress.IPv6Network('fc00::/7')
+            if net.overlaps(ula_network):
+                return True
+            # Allow Link-Local addresses - fe80::/10
+            link_local_network = ipaddress.IPv6Network('fe80::/10')
+            if net.overlaps(link_local_network):
+                return True
+            return False
+            
+        # For IPv4, only allow private networks (RFC 1918)
         safe_ranges = [
             ipaddress.ip_network('10.0.0.0/8'),      # 10.0.0.0 - 10.255.255.255
             ipaddress.ip_network('172.16.0.0/12'),   # 172.16.0.0 - 172.31.255.255
@@ -72,8 +84,7 @@ def get_safe_scan_range() -> str:
             return str(network)
         else:
             # For IPv6, get a smaller range
-            return "192.168.1.0/24"  # Default fallback
-            
+            return "fc00::/7"  # ULA range for IPv6
     except Exception:
         # Fallback to a common private network
         return "192.168.1.0/24"
@@ -168,7 +179,11 @@ def obfuscate_results(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
                     obfuscated_result['ip'] = f"{parts[0]}.{parts[1]}.{parts[2]}.xxx"
                 else:
                     parts = ip.split(':')
-                    obfuscated_result['ip'] = ':'.join(parts[:-1]) + ':xxxx'
+                    # For IPv6, obfuscate the last segments
+                    if len(parts) > 4:
+                        obfuscated_result['ip'] = ':'.join(parts[:4]) + ':xxxx:xxxx:xxxx:xxxx'
+                    else:
+                        obfuscated_result['ip'] = ':'.join(parts[:-1]) + ':xxxx'
             except Exception:
                 obfuscated_result['ip'] = "xxx.xxx.xxx.xxx"
                 
@@ -194,3 +209,35 @@ def generate_scan_token() -> str:
     token = hashlib.sha256(unique_string.encode()).hexdigest()[:16]
     
     return token
+
+def is_valid_vlan_id(vlan_id: int) -> bool:
+    """
+    Check if a VLAN ID is valid.
+    
+    Args:
+        vlan_id: VLAN ID to check
+        
+    Returns:
+        True if valid, False otherwise
+    """
+    return isinstance(vlan_id, int) and 1 <= vlan_id <= 4094
+
+def validate_network_list(networks: List[str]) -> List[str]:
+    """
+    Validate a list of networks for safety.
+    
+    Args:
+        networks: List of network CIDR strings
+        
+    Returns:
+        Filtered list of safe networks
+    """
+    safe_networks = []
+    
+    for network in networks:
+        if is_safe_network(network):
+            safe_networks.append(network)
+        else:
+            print(f"⚠️  Skipping unsafe network: {network}")
+            
+    return safe_networks

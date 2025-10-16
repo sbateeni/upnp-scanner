@@ -154,6 +154,83 @@ class AdvancedNetworkScanner:
                    f"{self.stats['ports_scanned']} ports scanned, "
                    f"{self.stats['vulnerabilities_found']} vulnerabilities found")
 
+    def scan_multiple_networks(self, networks: List[str]):
+        """Scan multiple network subnets."""
+        logger.info(f"🔄 Scanning multiple networks: {networks}")
+        
+        all_results = []
+        for network in networks:
+            logger.info(f"📡 Scanning network: {network}")
+            self.scan_network(network)
+            all_results.extend(self.exploited_devices.copy())
+            # Clear results for next network
+            self.exploited_devices.clear()
+        
+        # Restore all results
+        self.exploited_devices = all_results
+        save_results(self.exploited_devices, RESULTS_FILE)
+        logger.info(f"✅ Multi-network scan complete. Results saved to: {RESULTS_FILE}")
+
+    def scan_with_exclusions(self, network: str, exclude_ips: List[str]):
+        """Scan network excluding specific IPs."""
+        logger.info(f"🔄 Scanning network {network} excluding IPs: {exclude_ips}")
+        
+        if not is_safe_network(network):
+            logger.error(f"❌ Network {network} is not safe to scan.")
+            return
+            
+        net = ipaddress.IPv4Network(network, strict=False)
+        exclude_set = set(exclude_ips)
+        threads = []
+
+        for ip in net.hosts():
+            # Skip excluded IPs
+            if str(ip) in exclude_set:
+                logger.debug(f"⏭️  Skipping excluded IP: {ip}")
+                continue
+                
+            while threading.active_count() > MAX_THREADS:
+                time.sleep(0.1)
+
+            t = threading.Thread(target=self.scan_single_host, args=(str(ip),), daemon=True)
+            t.start()
+            threads.append(t)
+
+        for t in threads:
+            t.join(timeout=10)
+
+        save_results(self.exploited_devices, RESULTS_FILE)
+        logger.info(f"✅ Scan with exclusions complete. Results saved to: {RESULTS_FILE}")
+
+    def scan_ipv6_network(self, network: str):
+        """Scan an IPv6 network subnet."""
+        try:
+            logger.info(f"🔄 Scanning IPv6 network: {network}")
+            net = ipaddress.IPv6Network(network, strict=False)
+            threads = []
+
+            for ip in net.hosts():
+                # Limit IPv6 scans due to address space size
+                if threading.active_count() > MAX_THREADS:
+                    time.sleep(0.1)
+
+                t = threading.Thread(target=self.scan_single_host, args=(str(ip),), daemon=True)
+                t.start()
+                threads.append(t)
+
+                # Limit total threads for IPv6 (much larger address space)
+                if len(threads) > 1000:
+                    break
+
+            for t in threads:
+                t.join(timeout=5)
+
+            save_results(self.exploited_devices, RESULTS_FILE)
+            logger.info(f"✅ IPv6 scan complete. Results saved to: {RESULTS_FILE}")
+            
+        except Exception as e:
+            logger.error(f"❌ Error scanning IPv6 network: {e}")
+
     def check_private_network(self, ip: str) -> bool:
         """Check if IP is within private network ranges."""
         try:
@@ -287,3 +364,25 @@ class AdvancedNetworkScanner:
                 
         logger.info(f"📊 Discovered {len(discovered_devices)} devices")
         return discovered_devices
+
+    def vlan_scan(self, base_network: str, vlan_ids: List[int]):
+        """Scan VLANs by modifying the base network."""
+        logger.info(f"🔄 Scanning VLANs {vlan_ids} on base network {base_network}")
+        
+        # This is a simplified VLAN scan - in practice, you'd need special network equipment
+        # For demonstration, we'll simulate by modifying the network's third octet
+        try:
+            base_net = ipaddress.IPv4Network(base_network, strict=False)
+            base_parts = str(base_net.network_address).split('.')
+            
+            for vlan_id in vlan_ids:
+                # Modify the network to simulate VLAN (e.g., 192.168.1.0/24 -> 192.168.{vlan_id}.0/24)
+                modified_parts = base_parts.copy()
+                modified_parts[2] = str(vlan_id % 256)  # Keep within valid range
+                modified_network = '.'.join(modified_parts) + '/24'
+                
+                logger.info(f"📡 Scanning VLAN {vlan_id} network: {modified_network}")
+                self.scan_network(modified_network)
+                
+        except Exception as e:
+            logger.error(f"❌ Error during VLAN scan: {e}")
