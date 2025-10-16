@@ -8,6 +8,8 @@ import threading
 import json
 import os
 import sys
+import subprocess
+import platform
 from typing import List, Dict, Any
 from scanner.core import AdvancedNetworkScanner
 from utils.security import is_safe_network, validate_port_list
@@ -172,6 +174,94 @@ def simple_web_server():
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
                 self.wfile.write(json.dumps({'status': 'started', 'network': network, 'scan_type': scan_type}).encode())
+            
+            elif self.path == '/api/update_github':
+                # Handle GitHub update
+                try:
+                    import subprocess
+                    import os
+                    import platform
+                    
+                    # Check if we're in a git repository
+                    if not os.path.exists(".git"):
+                        self.send_response(400)
+                        self.send_header('Content-type', 'application/json')
+                        self.end_headers()
+                        self.wfile.write(json.dumps({'status': 'error', 'message': 'Not a git repository'}).encode())
+                        return
+                    
+                    # Detect if we're in Termux
+                    is_termux = "termux" in platform.platform().lower()
+                    
+                    if is_termux:
+                        # Use a more compatible approach for Termux
+                        # First, fetch the latest changes
+                        result = subprocess.run(["git", "fetch"], capture_output=True, text=True, timeout=30)
+                        if result.returncode != 0:
+                            self.send_response(500)
+                            self.send_header('Content-type', 'application/json')
+                            self.end_headers()
+                            self.wfile.write(json.dumps({'status': 'error', 'message': f'Fetch failed: {result.stderr}'}).encode())
+                            return
+                            
+                        # Then merge the changes
+                        result = subprocess.run(["git", "merge", "origin/main"], capture_output=True, text=True, timeout=30)
+                        
+                        if result.returncode == 0:
+                            # Check if requirements.txt was updated
+                            if "requirements.txt" in result.stdout:
+                                try:
+                                    subprocess.run(["pip", "install", "-r", "requirements.txt"], 
+                                                 capture_output=True, text=True, timeout=60)
+                                    self.wfile.write(json.dumps({'status': 'success', 'message': 'Update successful with requirements updated'}).encode())
+                                except subprocess.TimeoutExpired:
+                                    self.wfile.write(json.dumps({'status': 'success', 'message': 'Update successful but requirements update timed out'}).encode())
+                            else:
+                                self.wfile.write(json.dumps({'status': 'success', 'message': 'Update successful'}).encode())
+                        else:
+                            self.send_response(500)
+                            self.send_header('Content-type', 'application/json')
+                            self.end_headers()
+                            self.wfile.write(json.dumps({'status': 'error', 'message': f'Update failed: {result.stderr}'}).encode())
+                            return
+                    else:
+                        # Standard update method for other environments
+                        result = subprocess.run(["git", "pull"], capture_output=True, text=True, timeout=30)
+                        
+                        if result.returncode == 0:
+                            # Check if requirements.txt was updated
+                            if "requirements.txt" in result.stdout:
+                                subprocess.run(["pip", "install", "-r", "requirements.txt"], 
+                                             capture_output=True, text=True, timeout=60)
+                                self.wfile.write(json.dumps({'status': 'success', 'message': 'Update successful with requirements updated'}).encode())
+                            else:
+                                self.wfile.write(json.dumps({'status': 'success', 'message': 'Update successful'}).encode())
+                        else:
+                            self.send_response(500)
+                            self.send_header('Content-type', 'application/json')
+                            self.end_headers()
+                            self.wfile.write(json.dumps({'status': 'error', 'message': f'Update failed: {result.stderr}'}).encode())
+                            return
+                    
+                    self.send_response(200)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                
+                except FileNotFoundError:
+                    self.send_response(500)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({'status': 'error', 'message': 'Git is not installed'}).encode())
+                except subprocess.TimeoutExpired:
+                    self.send_response(500)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({'status': 'error', 'message': 'Update operation timed out'}).encode())
+                except Exception as e:
+                    self.send_response(500)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({'status': 'error', 'message': f'Error during update: {str(e)}'}).encode())
         
         def run_scan(self, network):
             global scan_status, scan_progress, scanner
