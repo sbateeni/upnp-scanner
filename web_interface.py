@@ -2336,7 +2336,25 @@ def simple_web_server():
         }
         
         function updateScanner() {
-            alert('Scanner update would be implemented in a full version');
+            if (confirm('Update scanner from GitHub? This will fetch the latest changes.')) {
+                fetch('/api/update_github', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Update successful! ' + data.message);
+                    } else {
+                        alert('Update failed: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    alert('Update error: ' + error);
+                });
+            }
         }
         
         function clearHistory() {
