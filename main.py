@@ -32,15 +32,16 @@ def display_menu():
     cli.print_menu_item(8, "Scan Multiple Networks", "🔗")
     cli.print_menu_item(9, "Scan with IP Exclusions", "🚫")
     cli.print_menu_item(10, "VLAN Scan", "🌐")
-    cli.print_menu_item(11, "View Last Scan Report", "📜")
-    cli.print_menu_item(12, "Exit", "🚪")
+    cli.print_menu_item(11, "Start Web Interface", "🌐")
+    cli.print_menu_item(12, "View Last Scan Report", "📜")
+    cli.print_menu_item(13, "Exit", "🚪")
     
     print(cli.colorize("="*60, 'cyan'))
 
 def get_user_choice():
     """Get and validate user menu choice."""
     try:
-        choice = int(cli.get_user_input("Enter your choice (1-12)"))
+        choice = int(cli.get_user_input("Enter your choice (1-13)"))
         return choice
     except ValueError:
         return -1
@@ -333,6 +334,25 @@ def run_vlan_scan(scanner):
     except Exception as e:
         cli.print_status(f"Error during VLAN scan: {e}", "error")
 
+def start_web_interface():
+    """Start the web interface."""
+    cli.print_header("Web Interface")
+    cli.print_status("Starting web interface...", "info")
+    cli.print_status("Open your browser to http://localhost:8080", "info")
+    cli.print_status("Press Ctrl+C to stop the server", "info")
+    
+    try:
+        # Import and run the web interface
+        from web_interface import main as web_main
+        web_main()
+    except ImportError:
+        cli.print_status("Web interface not available. Make sure Flask is installed.", "error")
+        cli.print_status("Install with: pip install flask", "info")
+    except KeyboardInterrupt:
+        cli.print_status("Web interface stopped.", "info")
+    except Exception as e:
+        cli.print_status(f"Error starting web interface: {e}", "error")
+
 def update_from_github():
     """Update the scanner from GitHub repository with better Termux compatibility."""
     cli.print_header("Update Scanner")
@@ -447,15 +467,17 @@ def main():
         elif choice == 10:
             run_vlan_scan(scanner)
         elif choice == 11:
-            view_report()
+            start_web_interface()
         elif choice == 12:
+            view_report()
+        elif choice == 13:
             cli.print_status("Exiting scanner. Goodbye!", "info")
             break
         else:
-            cli.print_status("Invalid choice. Please enter a number between 1 and 12.", "warning")
+            cli.print_status("Invalid choice. Please enter a number between 1 and 13.", "warning")
         
         # Pause before showing menu again
-        if choice != 12:
+        if choice != 13:
             input(f"\n{cli.colorize('Press Enter to continue...', 'dim')}")
 
 if __name__ == "__main__":
