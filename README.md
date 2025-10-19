@@ -65,6 +65,7 @@ An advanced network scanning tool with CVE detection capabilities, designed for 
 - **Scan Configuration** - Web forms for scan settings
 - **Results Visualization** - Browser-friendly result display
 - **API Endpoints** - RESTful API for integration
+- **Modular Structure** - Organized into routes, templates, and static files for easier maintenance
 
 ### 🛡️ Security Features
 - **Safe Network Validation** - Only allows scanning of private networks
@@ -130,7 +131,8 @@ upnp-scanner/
 ├── test_scanner.py        # Component testing script
 ├── update_scanner.py      # Automatic update script
 ├── termux_update.sh       # Termux-specific update script
-├── web_interface.py       # Web-based GUI interface
+├── web_interface.py       # Legacy web interface (see web/ directory)
+├── run_web.py             # Script to run the new web interface
 │
 ├── config/                # Configuration files
 │   ├── settings.py        # Global settings
@@ -151,6 +153,12 @@ upnp-scanner/
 │   ├── github_webhook.py # GitHub integration
 │   ├── network_visualizer.py # Network visualization
 │   └── cli_ui.py         # Enhanced CLI interface
+│
+├── web/                   # New modular web interface
+│   ├── app.py            # Main Flask application
+│   ├── routes/           # Route handlers
+│   ├── templates/        # HTML templates
+│   └── static/           # CSS, JavaScript, and other static files
 │
 └── data/                  # Data files
     └── cve_db.json       # CVE database
@@ -223,11 +231,15 @@ The scanner includes a built-in web interface for easier use, especially in envi
 - **Live Progress**: Real-time status updates during scans
 - **Results Display**: Browser-friendly presentation of findings
 - **RESTful API**: Programmatic access to scanner functionality
+- **Surrounding Networks Detection**: Auto-detect and scan nearby networks
 
 ### Usage
-1. Start the web interface: `python web_interface.py`
+1. Start the web interface: `python run_web.py`
 2. Open your browser to http://localhost:8080
 3. Use the web interface to configure and run scans
+
+### Legacy Usage
+If you prefer the original web interface: `python web_interface.py`
 
 ### API Endpoints
 - `GET /api/status` - Get current scan status
@@ -277,7 +289,7 @@ Summary reports showing:
 The scanner is fully compatible with Termux on Android devices.
 
 ### Termux Installation
-```bash
+```
 # Install Termux from F-Droid (recommended)
 # Install required packages
 pkg update && pkg upgrade
@@ -329,9 +341,13 @@ This tool is designed for authorized security testing only. Always ensure you ha
 - **Network timeouts**: Check internet connection and try again
 
 ### Web Interface Issues
-- **Port already in use**: Change the port in web_interface.py
+- **Port already in use**: Change the port in web/app.py
 - **Flask not found**: Install with `pip install flask`
 - **Browser not opening**: Manually navigate to http://localhost:8080
+
+### Legacy Web Interface Issues
+If using the legacy web interface:
+- **Port already in use**: Change the port in web_interface.py
 
 ### Support
 For issues, please check the GitHub repository or contact the maintainers.

@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Camera Detection - Advanced Network Scanner{% endblock %}
+
+{% block header %}📹 Camera Detection{% endblock %}
+
+{% block subtitle %}Discover IP cameras, DVRs, and NVR systems on your network{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>📈 Camera Summary</h2>
+    <div class="summary">
+        <div class="stat-box">
+            <div class="stat-value">{{ cameras|length }}</div>
+            <div>Total Cameras</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">{{ cameras|selectattr('device_type', 'equalto', 'IP Camera')|list|length }}</div>
+            <div>IP Cameras</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">{{ cameras|selectattr('device_type', 'match', 'DVR|NVR')|list|length }}</div>
+            <div>DVR/NVR Systems</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">{{ cameras|selectattr('vendor')|map(attribute='vendor')|unique|list|length }}</div>
+            <div>Unique Vendors</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>📷 Camera Types</h2>
+    <div class="camera-types">
+        <div class="camera-type">
+            <h3>IP Cameras</h3>
+            <p>Network-connected cameras with built-in web servers</p>
+        </div>
+        <div class="camera-type">
+            <h3>DVR Systems</h3>
+            <p>Digital Video Recorders for analog camera systems</p>
+        </div>
+        <div class="camera-type">
+            <h3>NVR Systems</h3>
+            <p>Network Video Recorders for IP camera systems</p>
+        </div>
+    </div>
+</div>
+
+<button class="scan-btn" onclick="startCameraScan()">🔍 Scan for Cameras</button>
+
+<div class="card">
+    <h2>🔍 Detected Cameras</h2>
+    <div class="export-options">
+        <button class="export-btn" onclick="exportResults('json')">Export JSON</button>
+        <button class="export-btn" onclick="exportResults('csv')">Export CSV</button>
+        <button class="export-btn" onclick="exportResults('html')">Export HTML</button>
+        <button class="export-btn" onclick="printResults()">Print Report</button>
+    </div>
+    
+    <div class="results" id="camerasContainer">
+        {% if cameras %}
+            {% for camera in cameras %}
+            <div class="result-item">
+                <h4>{{ camera.ip or 'Unknown IP' }}</h4>
+                <p><strong>Device Type:</strong> {{ camera.device_type or 'Unknown' }}</p>
+                <p><strong>Vendor:</strong> {{ camera.vendor or 'Unknown' }}</p>
+                <p><strong>Model:</strong> {{ camera.model or 'Unknown' }}</p>
+                <p><strong>Open Ports:</strong> {{ camera.ports|join(', ') if camera.ports else 'None' }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No cameras found. Run a camera detection scan to find devices.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function startCameraScan() {
+        const network = prompt('Enter network to scan for cameras (e.g., 192.168.1.0/24):', '192.168.1.0/24');
+        if (network) {
+            if (confirm('Start camera detection on ' + network + '?')) {
+                // Show loading
+                document.getElementById('camerasContainer').innerHTML = '<p>Scanning for cameras... Please wait.</p>';
+                
+                fetch('/api/scan_network', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        network: network,
+                        scan_type: 'cameras'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Camera detection started: ' + data.network);
+                    // Poll for status updates
+                    const statusInterval = setInterval(() => {
+                        fetch('/api/status')
+                        .then(response => response.json())
+                        .then(status => {
+                            if (status.status === 'completed' || status.status === 'error') {
+                                clearInterval(statusInterval);
+                                if (status.status === 'completed') {
+                                    // Reload the page to show results
+                                    location.reload();
+                                } else {
+                                    document.getElementById('camerasContainer').innerHTML = '<p>Error during camera detection.</p>';
+                                }
+                            }
+                        });
+                    }, 1000);
+                })
+                .catch(error => {
+                    document.getElementById('camerasContainer').innerHTML = '<p>Error starting camera detection: ' + error + '</p>';
+                });
+            }
+        }
+    }
+    
+    function exportResults(format) {
+        alert('Export as ' + format.toUpperCase() + ' would be implemented in a full version');
+        // In a real implementation, this would trigger the export
+    }
+    
+    function printResults() {
+        window.print();
+    }
+</script>
+{% endblock %}

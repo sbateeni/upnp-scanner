@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Advanced Network Scanner{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>{% block header %}🛡️ Advanced Network Scanner{% endblock %}</h1>
+            <p class="subtitle">{% block subtitle %}Professional Network Security Assessment Tool{% endblock %}</p>
+        </header>
+        
+        <div class="nav">
+            <a href="{{ url_for('main_page') }}">Dashboard</a>
+            <a href="{{ url_for('scan_page') }}">Scan Network</a>
+            <a href="{{ url_for('cameras_page') }}">Cameras</a>
+            <a href="{{ url_for('surrounding_page') }}">Surrounding Networks</a>
+            <a href="{{ url_for('history_page') }}">Scan History</a>
+            <a href="{{ url_for('settings_page') }}">Settings</a>
+        </div>
+        
+        {% block content %}{% endblock %}
+    </div>
+    
+    <footer>
+        <p>Advanced Network Scanner &copy; 2023 | Professional Security Tool</p>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

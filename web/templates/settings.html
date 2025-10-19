@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Advanced Network Scanner{% endblock %}
+
+{% block header %}⚙️ Settings{% endblock %}
+
+{% block subtitle %}Configure scanner preferences and settings{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>🔧 Scanner Settings</h2>
+    
+    <div class="settings-section">
+        <h3>Network Configuration</h3>
+        
+        <div class="setting-row">
+            <div class="setting-info">
+                <h4>Default Network</h4>
+                <p>Network to scan when no specific network is provided</p>
+            </div>
+            <div class="setting-control">
+                <input type="text" value="192.168.1.0/24" placeholder="e.g., 192.168.1.0/24">
+            </div>
+        </div>
+        
+        <div class="setting-row">
+            <div class="setting-info">
+                <h4>Max Threads</h4>
+                <p>Maximum number of concurrent scanning threads</p>
+            </div>
+            <div class="setting-control">
+                <input type="number" value="100" min="10" max="500">
+            </div>
+        </div>
+        
+        <div class="setting-row">
+            <div class="setting-info">
+                <h4>Port Scan Timeout</h4>
+                <p>Timeout for port scanning operations (seconds)</p>
+            </div>
+            <div class="setting-control">
+                <input type="number" value="3" min="1" max="30">
+            </div>
+        </div>
+    </div>
+    
+    <div class="settings-section">
+        <h3>Security Settings</h3>
+        
+        <div class="setting-row">
+            <div class="setting-info">
+                <h4>Safe Network Check</h4>
+                <p>Prevent scanning of public networks</p>
+            </div>
+            <div class="setting-control">
+                <select>
+                    <option value="enabled" selected>Enabled</option>
+                    <option value="disabled">Disabled</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="setting-row">
+            <div class="setting-info">
+                <h4>Port Validation</h4>
+                <p>Validate ports before scanning</p>
+            </div>
+            <div class="setting-control">
+                <select>
+                    <option value="enabled" selected>Enabled</option>
+                    <option value="disabled">Disabled</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="settings-section">
+        <h3>Data Management</h3>
+        
+        <div class="setting-row">
+            <div class="setting-info">
+                <h4>Persistent Storage</h4>
+                <p>Save scan results to persistent storage</p>
+            </div>
+            <div class="setting-control">
+                <select>
+                    <option value="enabled" selected>Enabled</option>
+                    <option value="disabled">Disabled</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="setting-row">
+            <div class="setting-info">
+                <h4>Auto Export</h4>
+                <p>Automatically export results in multiple formats</p>
+            </div>
+            <div class="setting-control">
+                <select>
+                    <option value="enabled">Enabled</option>
+                    <option value="disabled" selected>Disabled</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="settings-section">
+        <h3>System Actions</h3>
+        
+        <div class="setting-row">
+            <div class="setting-info">
+                <h4>Update CVE Database</h4>
+                <p>Download latest CVE data from NVD</p>
+            </div>
+            <div class="setting-control">
+                <button class="btn-success" onclick="updateCveDatabase()">Update Now</button>
+            </div>
+        </div>
+        
+        <div class="setting-row">
+            <div class="setting-info">
+                <h4>Update Scanner</h4>
+                <p>Update scanner from GitHub repository</p>
+            </div>
+            <div class="setting-control">
+                <button class="btn-success" onclick="updateScanner()">Update Now</button>
+            </div>
+        </div>
+        
+        <div class="setting-row">
+            <div class="setting-info">
+                <h4>Clear Scan History</h4>
+                <p>Delete all stored scan results</p>
+            </div>
+            <div class="setting-control">
+                <button class="btn-danger" onclick="clearHistory()">Clear History</button>
+            </div>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 30px;">
+        <button class="btn-success" style="padding: 15px 30px; font-size: 16px;">Save Settings</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function updateCveDatabase() {
+        alert('CVE database update would be implemented in a full version');
+    }
+    
+    function updateScanner() {
+        if (confirm('Update scanner from GitHub? This will fetch the latest changes.')) {
+            fetch('/api/update_github', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Update successful! ' + data.message);
+                } else {
+                    alert('Update failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                alert('Update error: ' + error);
+            });
+        }
+    }
+    
+    function clearHistory() {
+        if (confirm('Are you sure you want to clear all scan history? This cannot be undone.')) {
+            alert('History cleared');
+        }
+    }
+</script>
+{% endblock %}

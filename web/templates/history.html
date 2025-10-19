@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Scan History - Advanced Network Scanner{% endblock %}
+
+{% block header %}📜 Scan History{% endblock %}
+
+{% block subtitle %}Review previous scan results and reports{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>📊 History Summary</h2>
+    <div class="stats-summary">
+        <div class="stat-card">
+            <div class="stat-value" id="totalScans">0</div>
+            <div>Total Scans</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="totalVulns">0</div>
+            <div>Total Vulnerabilities</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="avgVulns">0</div>
+            <div>Avg. Per Scan</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="lastScan">Never</div>
+            <div>Last Scan</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>📋 Scan Records</h2>
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date & Time</th>
+                <th>Network</th>
+                <th>Type</th>
+                <th>Devices</th>
+                <th>Vulnerabilities</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="historyTableBody">
+            <tr>
+                <td colspan="7" style="text-align: center;">Loading history...</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="pagination">
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn">Next →</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Load scan history
+    function loadScanHistory() {
+        fetch('/api/history')
+        .then(response => response.json())
+        .then(history => {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+            
+            if (history.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No scan history found</td></tr>';
+                return;
+            }
+            
+            // Update summary stats
+            document.getElementById('totalScans').textContent = history.length;
+            
+            // Calculate total vulnerabilities
+            let totalVulns = 0;
+            history.forEach(scan => {
+                totalVulns += scan.vulnerability_count || 0;
+            });
+            document.getElementById('totalVulns').textContent = totalVulns;
+            
+            // Calculate average vulnerabilities per scan
+            const avgVulns = history.length > 0 ? Math.round(totalVulns / history.length) : 0;
+            document.getElementById('avgVulns').textContent = avgVulns;
+            
+            // Add rows for each scan
+            history.forEach(scan => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${scan.id || 'N/A'}</td>
+                    <td>${scan.timestamp ? new Date(scan.timestamp).toLocaleString() : 'Unknown'}</td>
+                    <td>${scan.network || 'Unknown'}</td>
+                    <td>${scan.scan_type || 'Unknown'}</td>
+                    <td>${scan.device_count || 0}</td>
+                    <td>${scan.vulnerability_count || 0}</td>
+                    <td>
+                        <button class="view-btn" onclick="viewScanDetails(${scan.id})">View</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            // Update last scan time
+            if (history.length > 0) {
+                const lastScan = new Date(history[0].timestamp);
+                document.getElementById('lastScan').textContent = lastScan.toLocaleDateString();
+            }
+        })
+        .catch(error => {
+            console.error('Error loading scan history:', error);
+            document.getElementById('historyTableBody').innerHTML = '<tr><td colspan="7" style="text-align: center;">Error loading history</td></tr>';
+        });
+    }
+    
+    // View scan details
+    function viewScanDetails(scanId) {
+        alert('Viewing details for scan #' + scanId + ' would be implemented in a full version');
+        // In a real implementation, this would show the scan details
+    }
+    
+    // Initialize
+    loadScanHistory();
+</script>
+{% endblock %}

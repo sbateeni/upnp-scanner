@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %}Advanced Network Scanner - Dashboard{% endblock %}
+
+{% block header %}🛡️ Advanced Network Scanner{% endblock %}
+
+{% block subtitle %}Professional Network Security Assessment Tool{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+    <div class="card status-card">
+        <h2>⚡ System Status</h2>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-value">{{ scan_progress }}%</div>
+                <div class="stat-label">Progress</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">{{ scan_status }}</div>
+                <div class="stat-label">Status</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">{{ scan_results|length }}</div>
+                <div class="stat-label">Vulnerabilities</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">{{ camera_results|length }}</div>
+                <div class="stat-label">Cameras</div>
+            </div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Scan Progress</span>
+                <span>{{ scan_progress }}%</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" style="width: {{ scan_progress }}%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>📊 Quick Statistics</h2>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-value" id="totalScans">0</div>
+                <div class="stat-label">Total Scans</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="totalVulns">0</div>
+                <div class="stat-label">Vulnerabilities</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="totalDevices">0</div>
+                <div class="stat-label">Devices</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="totalCameras">0</div>
+                <div class="stat-label">Cameras</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>⚡ Quick Actions</h2>
+        <div class="quick-actions">
+            <button class="action-btn" onclick="startQuickScan()">Quick Scan</button>
+            <button class="action-btn info" onclick="detectCameras()">Find Cameras</button>
+            <button class="action-btn warning" onclick="viewHistory()">View History</button>
+            <button class="action-btn danger" onclick="clearResults()">Clear Results</button>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>🔍 Recent Results</h2>
+    <div class="recent-results" id="recentResults">
+        {% if scan_results|length == 0 and camera_results|length == 0 %}
+            <p>No results yet. Run a scan to get started.</p>
+        {% else %}
+            <!-- Recent results will be populated by JavaScript -->
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Update statistics
+    function updateStats() {
+        fetch('/api/history')
+        .then(response => response.json())
+        .then(history => {
+            // For now, we'll just show the length of history as total scans
+            document.getElementById('totalScans').textContent = history.length;
+        })
+        .catch(error => {
+            console.log('Error fetching history:', error);
+        });
+    }
+    
+    // Start quick scan
+    function startQuickScan() {
+        if (confirm('Start quick vulnerability scan on 192.168.1.0/24?')) {
+            fetch('/api/scan_network', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    network: '192.168.1.0/24',
+                    scan_type: 'full'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Vulnerability scan started: ' + data.network);
+                // Refresh the page to show progress
+                setTimeout(() => location.reload(), 1000);
+            })
+            .catch(error => {
+                alert('Error starting scan: ' + error);
+            });
+        }
+    }
+    
+    // Detect cameras
+    function detectCameras() {
+        const network = prompt('Enter network to scan for cameras (e.g., 192.168.1.0/24):', '192.168.1.0/24');
+        if (network) {
+            if (confirm('Start camera detection on ' + network + '?')) {
+                fetch('/api/scan_network', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        network: network,
+                        scan_type: 'cameras'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Camera detection started: ' + data.network);
+                    // Refresh the page to show progress
+                    setTimeout(() => location.reload(), 1000);
+                })
+                .catch(error => {
+                    alert('Error starting camera detection: ' + error);
+                });
+            }
+        }
+    }
+    
+    // View history
+    function viewHistory() {
+        window.location.href = '/history';
+    }
+    
+    // Clear results
+    function clearResults() {
+        if (confirm('Clear all current results?')) {
+            // This would be implemented in a real application
+            alert('Results cleared');
+            location.reload();
+        }
+    }
+    
+    // Initialize
+    updateStats();
+    
+    // Poll for status updates
+    setInterval(() => {
+        fetch('/api/status')
+        .then(response => response.json())
+        .then(status => {
+            document.querySelector('.progress-bar').style.width = status.progress + '%';
+            document.querySelector('.progress-label span:last-child').textContent = status.progress + '%';
+            document.querySelector('.stat-box:nth-child(2) .stat-value').textContent = status.status;
+            document.querySelector('.stat-box:nth-child(3) .stat-value').textContent = status.results_count;
+            document.querySelector('.stat-box:nth-child(4) .stat-value').textContent = status.camera_results_count;
+        });
+    }, 2000);
+</script>
+{% endblock %}

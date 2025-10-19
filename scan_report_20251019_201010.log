@@ -1,0 +1,53 @@
+2025-10-19 20:10:10,177 | WARNING  |  * Debugger is active!
+2025-10-19 20:10:10,200 | INFO     |  * Debugger PIN: 114-653-248
+2025-10-19 20:10:14,069 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:14] "GET /surrounding HTTP/1.1" 200 -
+2025-10-19 20:10:14,217 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:14] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-10-19 20:10:14,300 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:14] "GET /static/js/script.js HTTP/1.1" 200 -
+2025-10-19 20:10:16,080 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:16] "GET /surrounding HTTP/1.1" 200 -
+2025-10-19 20:10:16,201 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:16] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-10-19 20:10:16,334 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:16] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2025-10-19 20:10:18,257 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:18] "GET /cameras HTTP/1.1" 200 -
+2025-10-19 20:10:18,552 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:18] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-10-19 20:10:18,582 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:18] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2025-10-19 20:10:19,385 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:19] "GET /scan HTTP/1.1" 200 -
+2025-10-19 20:10:19,492 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:19] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-10-19 20:10:19,627 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:19] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2025-10-19 20:10:20,350 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:20] "GET / HTTP/1.1" 200 -
+2025-10-19 20:10:20,647 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:20] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-10-19 20:10:20,673 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:20] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2025-10-19 20:10:21,071 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:21] "GET /api/history HTTP/1.1" 200 -
+2025-10-19 20:10:21,324 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:21] "GET /settings HTTP/1.1" 200 -
+2025-10-19 20:10:21,376 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:21] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-10-19 20:10:21,584 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:21] "GET /api/history HTTP/1.1" 200 -
+2025-10-19 20:10:21,652 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:21] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2025-10-19 20:10:22,453 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:22] "GET /history HTTP/1.1" 200 -
+2025-10-19 20:10:22,754 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:22] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-10-19 20:10:22,783 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:22] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2025-10-19 20:10:23,150 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:23] "GET /api/history HTTP/1.1" 200 -
+2025-10-19 20:10:23,400 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:23] "GET /surrounding HTTP/1.1" 200 -
+2025-10-19 20:10:23,483 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:23] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-10-19 20:10:23,721 | INFO     | 127.0.0.1 - - [19/Oct/2025 20:10:23] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2025-10-19 20:11:47,594 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\demonstrate_dashboard.py', reloading
+2025-10-19 20:11:47,609 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\test_camera.py', reloading
+2025-10-19 20:11:47,614 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\test_persistent_storage.py', reloading
+2025-10-19 20:11:47,618 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\test_scanner.py', reloading
+2025-10-19 20:11:47,621 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\test_storage.py', reloading
+2025-10-19 20:11:47,622 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\test_web.py', reloading
+2025-10-19 20:11:47,624 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\update_scanner.py', reloading
+2025-10-19 20:11:47,627 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\config\\__init__.py', reloading
+2025-10-19 20:11:47,629 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\config\\profiles.py', reloading
+2025-10-19 20:11:47,630 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\config\\settings.py', reloading
+2025-10-19 20:11:47,649 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\scanner\\__init__.py', reloading
+2025-10-19 20:11:47,654 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\scanner\\core.py', reloading
+2025-10-19 20:11:47,655 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\scanner\\cve_checker.py', reloading
+2025-10-19 20:11:47,656 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\scanner\\discovery.py', reloading
+2025-10-19 20:11:47,656 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\scanner\\port_scanner.py', reloading
+2025-10-19 20:11:47,657 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\scanner\\report.py', reloading
+2025-10-19 20:11:47,658 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\scanner\\vlan_scanner.py', reloading
+2025-10-19 20:11:47,666 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\utils\\__init__.py', reloading
+2025-10-19 20:11:47,667 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\utils\\cli_ui.py', reloading
+2025-10-19 20:11:47,668 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\utils\\cve_updater.py', reloading
+2025-10-19 20:11:47,668 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\utils\\github_webhook.py', reloading
+2025-10-19 20:11:47,669 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\utils\\network_visualizer.py', reloading
+2025-10-19 20:11:47,669 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\utils\\persistent_storage.py', reloading
+2025-10-19 20:11:47,670 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\utils\\security.py', reloading
