@@ -39,14 +39,15 @@ def display_menu():
     cli.print_menu_item(11, "Start Web Interface", "🌐")
     cli.print_menu_item(12, "Detect Network Cameras", "📹")
     cli.print_menu_item(13, "View Last Scan Report", "📜")
-    cli.print_menu_item(14, "Exit", "🚪")
+    cli.print_menu_item(14, "Detect Surrounding Networks", "📡")  # New option
+    cli.print_menu_item(15, "Exit", "🚪")  # Updated exit option
     
     print(cli.colorize("="*60, 'cyan'))
 
 def get_user_choice():
     """Get and validate user menu choice."""
     try:
-        choice = int(cli.get_user_input("Enter your choice (1-14)"))
+        choice = int(cli.get_user_input("Enter your choice (1-15)"))  # Updated range
         return choice
     except ValueError:
         return -1
@@ -359,38 +360,206 @@ def start_web_interface():
         cli.print_status(f"Error starting web interface: {e}", "error")
 
 def run_camera_detection(scanner):
-    """Detect cameras on the network."""
+    """Detect network cameras."""
     cli.print_header("Camera Detection")
-    cli.print_status("This feature detects IP cameras, DVRs, NVRs, and other camera devices on your network.", "info")
-    cli.print_status("It checks for common camera ports and identifies devices by their signatures.", "info")
     
     network = cli.get_user_input("Enter network CIDR (e.g., 192.168.1.0/24)", "192.168.1.0/24")
     
-    cli.print_status(f"Starting camera detection on {network}...", "info")
-    cli.animated_wait("Detecting cameras", 5)
+    cli.print_status(f"Detecting cameras on {network}...", "info")
+    cli.animated_wait("Detecting cameras", 3)
     
-    camera_devices = scanner.detect_cameras(network)
+    cameras = scanner.detect_cameras(network)
     
-    if camera_devices:
-        cli.print_status(f"📹 Found {len(camera_devices)} camera devices:", "success")
-        print()
-        for i, device in enumerate(camera_devices, 1):
-            print(f"  {cli.colorize(str(i), 'yellow')}. {device['ip']}")
-            print(f"     Type: {device.get('device_type', 'Unknown')}")
-            print(f"     Vendor: {device.get('vendor', 'Unknown')}")
-            print(f"     Model: {device.get('model', 'Unknown')}")
-            print(f"     Ports: {', '.join(map(str, device.get('ports', [])))}")
-            print()
-            
-        # Save camera results
-        base_name = RESULTS_FILE.replace('.json', '_cameras')
-        save_results_csv(camera_devices, f"{base_name}.csv")
-        save_results_xml(camera_devices, f"{base_name}.xml")
-        save_results_html(camera_devices, f"{base_name}.html")
-        
-        cli.print_status(f"Camera detection results saved to {base_name}.*", "success")
+    if cameras:
+        cli.print_status(f"Detected {len(cameras)} camera devices:", "success")
+        for i, camera in enumerate(cameras, 1):
+            print(f"\n{cli.colorize(f'Camera {i}:', 'bold')}")
+            print(f"  IP: {camera.get('ip', 'Unknown')}")
+            print(f"  Type: {camera.get('device_type', 'Unknown')}")
+            print(f"  Vendor: {camera.get('vendor', 'Unknown')}")
+            print(f"  Model: {camera.get('model', 'Unknown')}")
+            print(f"  Ports: {', '.join(map(str, camera.get('ports', [])))}")
     else:
-        cli.print_status("No camera devices found on the network.", "info")
+        cli.print_status("No cameras detected.", "info")
+
+def run_surrounding_networks_detection(scanner):  # New function
+    """Detect surrounding networks when connecting to Wi-Fi."""
+    cli.print_header("Surrounding Networks Detection")
+    
+    cli.print_status("Detecting network interfaces and surrounding networks...", "info")
+    
+    try:
+        # Try to get network interfaces - different approach for different platforms
+        import platform
+        system = platform.system().lower()
+        
+        if system == "windows":
+            # Windows approach
+            cli.print_status("Using Windows network detection...", "info")
+            try:
+                import subprocess
+                import re
+                
+                # Get network interfaces
+                result = subprocess.run(["netsh", "interface", "ip", "show", "addresses"], 
+                                      capture_output=True, text=True, timeout=10)
+                
+                if result.returncode == 0:
+                    lines = result.stdout.split('\n')
+                    interfaces = []
+                    current_interface = None
+                    
+                    for line in lines:
+                        if 'Configuration for interface' in line:
+                            match = re.search(r'"(.+)"', line)
+                            if match:
+                                current_interface = match.group(1)
+                                interfaces.append(current_interface)
+                                print(f"  Interface: {current_interface}")
+                        elif 'IP Address' in line and current_interface:
+                            match = re.search(r'(\d+\.\d+\.\d+\.\d+)', line)
+                            if match:
+                                ip = match.group(1)
+                                print(f"    IP Address: {ip}")
+                        elif 'Subnet Prefix' in line and current_interface:
+                            match = re.search(r'(\d+\.\d+\.\d+\.\d+/\d+)', line)
+                            if match:
+                                subnet = match.group(1)
+                                print(f"    Subnet: {subnet}")
+                
+                # Get routing table to find default gateway
+                cli.print_status("\nGetting routing information...", "info")
+                result = subprocess.run(["route", "print", "0.0.0.0"], 
+                                      capture_output=True, text=True, timeout=10)
+                
+                if result.returncode == 0:
+                    lines = result.stdout.split('\n')
+                    for line in lines:
+                        if '0.0.0.0' in line and 'Active Routes' not in line:
+                            parts = line.strip().split()
+                            if len(parts) >= 4:
+                                destination = parts[0]
+                                netmask = parts[1]
+                                gateway = parts[2]
+                                interface = parts[3]
+                                if destination == "0.0.0.0":
+                                    cli.print_status(f"Default gateway: {gateway} via interface {interface}", "info")
+                                    break
+                
+                cli.print_status("\nNote: On Windows, you may need to run this as Administrator for full functionality.", "warning")
+                
+            except Exception as e:
+                cli.print_status(f"Error in Windows network detection: {e}", "error")
+        else:
+            # Unix/Linux/Mac approach using netifaces
+            try:
+                import netifaces
+                interfaces = netifaces.interfaces()
+                
+                cli.print_status(f"Found {len(interfaces)} network interfaces:", "success")
+                
+                # Display interfaces
+                for i, interface in enumerate(interfaces, 1):
+                    print(f"  {i}. {interface}")
+                    try:
+                        addrs = netifaces.ifaddresses(interface)
+                        if netifaces.AF_INET in addrs:
+                            for addr in addrs[netifaces.AF_INET]:
+                                print(f"     IPv4: {addr.get('addr', 'N/A')}/{addr.get('netmask', 'N/A')}")
+                        if netifaces.AF_INET6 in addrs:
+                            for addr in addrs[netifaces.AF_INET6]:
+                                print(f"     IPv6: {addr.get('addr', 'N/A')}")
+                    except Exception as e:
+                        print(f"     Error getting details: {e}")
+                
+                # Try to detect surrounding networks based on current IP
+                cli.print_status("\nDetecting surrounding networks...", "info")
+                
+                # Get the default gateway and network
+                try:
+                    gateways = netifaces.gateways()
+                    if 'default' in gateways and netifaces.AF_INET in gateways['default']:
+                        default_gateway = gateways['default'][netifaces.AF_INET]
+                        gateway_ip = default_gateway[0]
+                        interface_name = default_gateway[1]
+                        cli.print_status(f"Default gateway: {gateway_ip} on interface {interface_name}", "info")
+                        
+                        # Try to determine the network range
+                        try:
+                            import ipaddress
+                            # Get the interface details
+                            addrs = netifaces.ifaddresses(interface_name)
+                            if netifaces.AF_INET in addrs:
+                                for addr in addrs[netifaces.AF_INET]:
+                                    ip = addr.get('addr')
+                                    netmask = addr.get('netmask')
+                                    if ip and netmask:
+                                        # Create network object
+                                        network = ipaddress.IPv4Network(f"{ip}/{netmask}", strict=False)
+                                        cli.print_status(f"Current network: {network}", "success")
+                                        
+                                        # Suggest scanning the network
+                                        if cli.get_user_input(f"Scan this network? (y/n)", "y").lower() == 'y':
+                                            cli.print_status(f"Starting scan on {network}...", "info")
+                                            cli.animated_wait("Scanning network", 3)
+                                            scanner.scan_network(str(network))
+                                            
+                                            # Save results
+                                            base_name = RESULTS_FILE.replace('.json', '')
+                                            save_results_csv(scanner.exploited_devices, f"{base_name}_surrounding.csv")
+                                            save_results_xml(scanner.exploited_devices, f"{base_name}_surrounding.xml")
+                                            save_results_html(scanner.exploited_devices, f"{base_name}_surrounding.html")
+                                            
+                                            # Print summary
+                                            if scanner.exploited_devices:
+                                                cli.print_status(f"Found {len(scanner.exploited_devices)} vulnerabilities!", "critical")
+                                                summary = print_summary_stats(scanner.exploited_devices)
+                                                print(summary)
+                                                cli.print_scan_summary(scanner.exploited_devices)
+                                            else:
+                                                cli.print_status("No vulnerabilities found.", "success")
+                        except Exception as e:
+                            cli.print_status(f"Error determining network: {e}", "error")
+                    else:
+                        cli.print_status("No default gateway found.", "warning")
+                except Exception as e:
+                    cli.print_status(f"Error getting gateways: {e}", "error")
+                    
+            except ImportError:
+                cli.print_status("netifaces module not found.", "warning")
+                cli.print_status("You can install it with: pip install netifaces", "info")
+                
+    except Exception as e:
+        cli.print_status(f"Error detecting surrounding networks: {e}", "error")
+        
+    # Provide manual network entry option
+    cli.print_status("\nAs an alternative, you can manually enter a network to scan:", "info")
+    network = cli.get_user_input("Enter network CIDR (e.g., 192.168.1.0/24)", "")
+    if network:
+        try:
+            import ipaddress
+            # Validate network
+            ipaddress.IPv4Network(network, strict=False)
+            cli.print_status(f"Starting scan on {network}...", "info")
+            cli.animated_wait("Scanning network", 3)
+            scanner.scan_network(network)
+            
+            # Save results
+            base_name = RESULTS_FILE.replace('.json', '')
+            save_results_csv(scanner.exploited_devices, f"{base_name}_surrounding.csv")
+            save_results_xml(scanner.exploited_devices, f"{base_name}_surrounding.xml")
+            save_results_html(scanner.exploited_devices, f"{base_name}_surrounding.html")
+            
+            # Print summary
+            if scanner.exploited_devices:
+                cli.print_status(f"Found {len(scanner.exploited_devices)} vulnerabilities!", "critical")
+                summary = print_summary_stats(scanner.exploited_devices)
+                print(summary)
+                cli.print_scan_summary(scanner.exploited_devices)
+            else:
+                cli.print_status("No vulnerabilities found.", "success")
+        except Exception as e:
+            cli.print_status(f"Error scanning network: {e}", "error")
 
 def update_from_github():
     """Update the scanner from GitHub repository with better Termux compatibility."""
@@ -512,13 +681,15 @@ def main():
         elif choice == 13:
             view_report()
         elif choice == 14:
+            run_surrounding_networks_detection(scanner)  # New option
+        elif choice == 15:
             cli.print_status("Exiting scanner. Goodbye!", "info")
             break
         else:
-            cli.print_status("Invalid choice. Please enter a number between 1 and 14.", "warning")
+            cli.print_status("Invalid choice. Please enter a number between 1 and 15.", "warning")
         
         # Pause before showing menu again
-        if choice != 14:
+        if choice != 15:
             input(f"\n{cli.colorize('Press Enter to continue...', 'dim')}")
 
 if __name__ == "__main__":

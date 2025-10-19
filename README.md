@@ -115,8 +115,10 @@ Open your browser to http://localhost:8080
 9. **Scan with IP Exclusions** - Skip specific IPs
 10. **VLAN Scan** - Scan VLANs by ID or range
 11. **Start Web Interface** - Launch browser-based GUI
-12. **View Reports** - View previous scan results
-13. **Exit** - Quit the application
+12. **Detect Network Cameras** - Find IP cameras and surveillance systems
+13. **View Reports** - View previous scan results
+14. **Detect Surrounding Networks** - Auto-detect and scan nearby networks
+15. **Exit** - Quit the application
 
 ## 📁 Project Structure
 
