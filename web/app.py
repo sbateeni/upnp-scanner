@@ -6,14 +6,19 @@ This provides a simple web-based interface alternative to the CLI
 
 import os
 import sys
-import subprocess  # Added missing import
-import platform    # Added missing import
+
+# 🔧 الحل: إضافة المسار الجذر للمشروع إلى sys.path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
+
+import subprocess
+import platform
 from flask import Flask, render_template, request, jsonify, send_file
 from scanner.core import AdvancedNetworkScanner
 from scanner.report import save_results_csv, save_results_xml, save_results_html
 from utils.network_visualizer import generate_network_map, print_summary_stats
-from utils.helpers import cleanup_old_logs  # Added import
-from utils.persistent_storage import persistent_storage  # Added missing import
+from utils.helpers import cleanup_old_logs
+from utils.persistent_storage import persistent_storage
 import json
 import threading
 from datetime import datetime
@@ -30,7 +35,7 @@ scanner = AdvancedNetworkScanner()
 
 # Global variables to store scan results
 scan_results = []
-camera_results = []  # Added missing variable
+camera_results = []
 scan_status = "idle"  # idle, scanning, complete
 scan_progress = 0
 scanner_thread = None
