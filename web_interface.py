@@ -4,43 +4,52 @@ Web Interface for Advanced Network Scanner
 This provides a simple web-based interface alternative to the CLI
 """
 
-import threading
-import json
 import os
 import sys
-import subprocess
-import platform
-from typing import List, Dict, Any
+import subprocess  # Added missing import
+import platform    # Added missing import
+from flask import Flask, render_template, request, jsonify, send_file
 from scanner.core import AdvancedNetworkScanner
-from utils.security import is_safe_network, validate_port_list
-from utils.network_visualizer import print_summary_stats
-from utils.persistent_storage import persistent_storage
+from scanner.report import save_results_csv, save_results_xml, save_results_html
+from utils.network_visualizer import generate_network_map, print_summary_stats
+from utils.helpers import cleanup_old_logs  # Added import
+from utils.persistent_storage import persistent_storage  # Added missing import
+import json
+import threading
+from datetime import datetime
+import webbrowser
+import time
 
-# Global variables for scan results and status
-_scan_results: List[Dict[str, Any]] = []
-_camera_results: List[Dict[str, Any]] = []
-scan_status = "idle"  # idle, running, completed, error
+app = Flask(__name__)
+scanner = AdvancedNetworkScanner()
+
+# Global variables to store scan results
+scan_results = []
+camera_results = []  # Added missing variable
+scan_status = "idle"  # idle, scanning, complete
 scan_progress = 0
 scanner_thread = None
-scanner = None
 
 def get_scan_results():
     """Get current scan results"""
-    return _scan_results
-
-def get_camera_results():
-    """Get current camera detection results"""
-    return _camera_results
+    return scan_results
 
 def update_scan_results(results):
     """Update scan results"""
-    global _scan_results
-    _scan_results = results
+    global scan_results
+    scan_results = results
+
+def get_camera_results():
+    """Get current camera results"""
+    return camera_results
 
 def update_camera_results(results):
-    """Update camera detection results"""
-    global _camera_results
-    _camera_results = results
+    """Update camera results"""
+    global camera_results
+    camera_results = results
+
+# Clean up old log files on startup
+cleanup_old_logs()
 
 def simple_web_server():
     """Create a simple HTTP server for the web interface"""

@@ -4,6 +4,41 @@ import random
 from threading import Lock
 import socket
 import struct
+import os
+import glob
+from datetime import datetime, timedelta
+
+def cleanup_old_logs(max_age_hours=24):
+    """
+    Clean up old scan report log files.
+    
+    Args:
+        max_age_hours (int): Maximum age of log files in hours before deletion
+    """
+    try:
+        # Find all scan report log files
+        log_files = glob.glob("scan_report_*.log")
+        
+        # Calculate the cutoff time
+        cutoff_time = datetime.now() - timedelta(hours=max_age_hours)
+        
+        deleted_count = 0
+        for log_file in log_files:
+            try:
+                # Get file modification time
+                mod_time = datetime.fromtimestamp(os.path.getmtime(log_file))
+                
+                # Delete if older than cutoff time
+                if mod_time < cutoff_time:
+                    os.remove(log_file)
+                    deleted_count += 1
+            except Exception as e:
+                print(f"Warning: Could not process log file {log_file}: {e}")
+        
+        if deleted_count > 0:
+            print(f"🧹 Cleaned up {deleted_count} old log file(s)")
+    except Exception as e:
+        print(f"Warning: Could not clean up old log files: {e}")
 
 def check_private_network(ip: str) -> bool:
     """Check if IP is within private network ranges."""

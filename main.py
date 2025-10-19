@@ -12,11 +12,15 @@ from scanner.report import view_report, save_results_csv, save_results_xml, save
 from utils.cve_updater import update_cve_database
 from utils.network_visualizer import generate_network_map, generate_simple_topology, print_summary_stats
 from utils.cli_ui import EnhancedCLI
+from utils.helpers import cleanup_old_logs  # Added import
 from config.settings import COMMON_PORTS, RESULTS_FILE, AVAILABLE_PROFILES
 from config.profiles import get_profile
 
 # Initialize enhanced CLI
 cli = EnhancedCLI()
+
+# Clean up old log files on startup
+cleanup_old_logs()
 
 def display_menu():
     """Display the main menu options."""
