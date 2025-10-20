@@ -40,7 +40,6 @@ def display_menu():
     cli.print_menu_item(12, "Detect Network Cameras", "📹")
     cli.print_menu_item(13, "View Last Scan Report", "📜")
     cli.print_menu_item(14, "Detect Surrounding Networks", "📡")
-    cli.print_menu_item(15, "Detect Surrounding Routers", "📶")  # New option
     cli.print_menu_item(16, "Exit", "🚪")  # Updated exit option
     
     print(cli.colorize("="*60, 'cyan'))
@@ -487,10 +486,33 @@ def run_surrounding_networks_detection(scanner):  # New function
             except Exception as e:
                 cli.print_status(f"Error in Windows network detection: {e}", "error")
         else:
-            # Unix/Linux/Mac approach using netifaces
+            # Unix/Linux/Mac approach using netifaces with psutil fallback
+            netifaces = None
+            psutil = None
+            
+            # Try to import netifaces
             try:
                 import netifaces
-                interfaces = netifaces.interfaces()
+            except ImportError:
+                cli.print_status("netifaces not found", "warning")
+            
+            # Try to import psutil
+            try:
+                import psutil
+            except ImportError:
+                cli.print_status("psutil not found", "warning")
+            
+            if netifaces is None and psutil is None:
+                cli.print_status("Neither netifaces nor psutil modules found.", "error")
+                cli.print_status("You can install them with: pip install netifaces psutil", "info")
+                return
+                
+            try:
+                interfaces = []
+                if netifaces is not None:
+                    interfaces = netifaces.interfaces()
+                elif psutil is not None:
+                    interfaces = list(psutil.net_if_addrs().keys())
                 
                 cli.print_status(f"Found {len(interfaces)} network interfaces:", "success")
                 
@@ -498,13 +520,23 @@ def run_surrounding_networks_detection(scanner):  # New function
                 for i, interface in enumerate(interfaces, 1):
                     print(f"  {i}. {interface}")
                     try:
-                        addrs = netifaces.ifaddresses(interface)
-                        if netifaces.AF_INET in addrs:
-                            for addr in addrs[netifaces.AF_INET]:
-                                print(f"     IPv4: {addr.get('addr', 'N/A')}/{addr.get('netmask', 'N/A')}")
-                        if netifaces.AF_INET6 in addrs:
-                            for addr in addrs[netifaces.AF_INET6]:
-                                print(f"     IPv6: {addr.get('addr', 'N/A')}")
+                        if netifaces is not None:
+                            addrs = netifaces.ifaddresses(interface)
+                            if netifaces.AF_INET in addrs:
+                                for addr in addrs[netifaces.AF_INET]:
+                                    print(f"     IPv4: {addr.get('addr', 'N/A')}/{addr.get('netmask', 'N/A')}")
+                            if netifaces.AF_INET6 in addrs:
+                                for addr in addrs[netifaces.AF_INET6]:
+                                    print(f"     IPv6: {addr.get('addr', 'N/A')}")
+                        elif psutil is not None:
+                            # Fallback to psutil
+                            import ipaddress
+                            addrs = psutil.net_if_addrs().get(interface, [])
+                            for addr in addrs:
+                                if addr.family == 2:  # AF_INET
+                                    print(f"     IPv4: {addr.address}/{addr.netmask}")
+                                elif addr.family == 23:  # AF_INET6
+                                    print(f"     IPv6: {addr.address}")
                     except Exception as e:
                         print(f"     Error getting details: {e}")
                 
@@ -513,58 +545,63 @@ def run_surrounding_networks_detection(scanner):  # New function
                 
                 # Get the default gateway and network
                 try:
-                    gateways = netifaces.gateways()
-                    if 'default' in gateways and netifaces.AF_INET in gateways['default']:
-                        default_gateway = gateways['default'][netifaces.AF_INET]
-                        gateway_ip = default_gateway[0]
-                        interface_name = default_gateway[1]
-                        cli.print_status(f"Default gateway: {gateway_ip} on interface {interface_name}", "info")
-                        
-                        # Try to determine the network range
-                        try:
-                            import ipaddress
-                            # Get the interface details
-                            addrs = netifaces.ifaddresses(interface_name)
-                            if netifaces.AF_INET in addrs:
-                                for addr in addrs[netifaces.AF_INET]:
-                                    ip = addr.get('addr')
-                                    netmask = addr.get('netmask')
-                                    if ip and netmask:
-                                        # Create network object
-                                        network = ipaddress.IPv4Network(f"{ip}/{netmask}", strict=False)
-                                        cli.print_status(f"Current network: {network}", "success")
-                                        
-                                        # Suggest scanning the network
-                                        if cli.get_user_input(f"Scan this network? (y/n)", "y").lower() == 'y':
-                                            cli.print_status(f"Starting scan on {network}...", "info")
-                                            cli.animated_wait("Scanning network", 3)
-                                            scanner.scan_network(str(network))
+                    if netifaces is not None:
+                        gateways = netifaces.gateways()
+                        if 'default' in gateways and netifaces.AF_INET in gateways['default']:
+                            default_gateway = gateways['default'][netifaces.AF_INET]
+                            gateway_ip = default_gateway[0]
+                            interface_name = default_gateway[1]
+                            cli.print_status(f"Default gateway: {gateway_ip} on interface {interface_name}", "info")
+                            
+                            # Try to determine the network range
+                            try:
+                                import ipaddress
+                                # Get the interface details
+                                addrs = netifaces.ifaddresses(interface_name)
+                                if netifaces.AF_INET in addrs:
+                                    for addr in addrs[netifaces.AF_INET]:
+                                        ip = addr.get('addr')
+                                        netmask = addr.get('netmask')
+                                        if ip and netmask:
+                                            # Create network object
+                                            network = ipaddress.IPv4Network(f"{ip}/{netmask}", strict=False)
+                                            cli.print_status(f"Current network: {network}", "success")
                                             
-                                            # Save results
-                                            base_name = RESULTS_FILE.replace('.json', '')
-                                            save_results_csv(scanner.exploited_devices, f"{base_name}_surrounding.csv")
-                                            save_results_xml(scanner.exploited_devices, f"{base_name}_surrounding.xml")
-                                            save_results_html(scanner.exploited_devices, f"{base_name}_surrounding.html")
-                                            
-                                            # Print summary
-                                            if scanner.exploited_devices:
-                                                cli.print_status(f"Found {len(scanner.exploited_devices)} vulnerabilities!", "critical")
-                                                summary = print_summary_stats(scanner.exploited_devices)
-                                                print(summary)
-                                                cli.print_scan_summary(scanner.exploited_devices)
-                                            else:
-                                                cli.print_status("No vulnerabilities found.", "success")
-                        except Exception as e:
-                            cli.print_status(f"Error determining network: {e}", "error")
+                                            # Suggest scanning the network
+                                            if cli.get_user_input(f"Scan this network? (y/n)", "y").lower() == 'y':
+                                                cli.print_status(f"Starting scan on {network}...", "info")
+                                                cli.animated_wait("Scanning network", 3)
+                                                scanner.scan_network(str(network))
+                                                
+                                                # Save results
+                                                base_name = RESULTS_FILE.replace('.json', '')
+                                                save_results_csv(scanner.exploited_devices, f"{base_name}_surrounding.csv")
+                                                save_results_xml(scanner.exploited_devices, f"{base_name}_surrounding.xml")
+                                                save_results_html(scanner.exploited_devices, f"{base_name}_surrounding.html")
+                                                
+                                                # Print summary
+                                                if scanner.exploited_devices:
+                                                    cli.print_status(f"Found {len(scanner.exploited_devices)} vulnerabilities!", "critical")
+                                                    summary = print_summary_stats(scanner.exploited_devices)
+                                                    print(summary)
+                                                    cli.print_scan_summary(scanner.exploited_devices)
+                                                else:
+                                                    cli.print_status("No vulnerabilities found.", "success")
+                            except Exception as e:
+                                cli.print_status(f"Error determining network: {e}", "error")
+                        else:
+                            cli.print_status("No default gateway found.", "warning")
                     else:
-                        cli.print_status("No default gateway found.", "warning")
+                        # Fallback when netifaces is not available
+                        cli.print_status("Network gateway detection not available without netifaces", "warning")
+                        cli.print_status("You can install netifaces with: pip install netifaces", "info")
+                        
                 except Exception as e:
                     cli.print_status(f"Error getting gateways: {e}", "error")
                     
-            except ImportError:
-                cli.print_status("netifaces module not found.", "warning")
-                cli.print_status("You can install it with: pip install netifaces", "info")
-                
+            except Exception as e:
+                cli.print_status(f"Error detecting surrounding networks: {e}", "error")
+        
     except Exception as e:
         cli.print_status(f"Error detecting surrounding networks: {e}", "error")
         

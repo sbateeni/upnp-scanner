@@ -924,9 +924,25 @@ class AdvancedNetworkScanner:
         """List WiFi adapters on Unix-like systems."""
         adapters = []
         try:
-            # Try to get network interfaces
-            import netifaces
-            interfaces = netifaces.interfaces()
+            # Try to get network interfaces with netifaces, fallback to psutil
+            netifaces = None
+            try:
+                import netifaces
+            except ImportError:
+                logger.warning("netifaces module not available for adapter listing")
+            
+            psutil = None
+            try:
+                import psutil
+            except ImportError:
+                if netifaces is None:
+                    logger.warning("psutil module not available for adapter listing")
+            
+            interfaces = []
+            if netifaces is not None:
+                interfaces = netifaces.interfaces()
+            elif psutil is not None:
+                interfaces = list(psutil.net_if_addrs().keys())
             
             # Filter for WiFi interfaces (common names)
             wifi_keywords = ['wlan', 'wifi', 'wireless', 'wl', 'ath']
@@ -938,7 +954,7 @@ class AdvancedNetworkScanner:
                     })
                     
         except ImportError:
-            logger.warning("netifaces module not available for adapter listing")
+            logger.warning("Neither netifaces nor psutil modules available for adapter listing")
         except Exception as e:
             logger.error(f"Error listing Unix WiFi adapters: {e}")
             
