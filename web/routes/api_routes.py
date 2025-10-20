@@ -3,50 +3,64 @@ import subprocess
 import platform
 import os
 import threading
-from flask import jsonify, request
-from web.app import app, scanner, get_scan_results, update_scan_results, get_camera_results, update_camera_results, scan_status, scan_progress, scanner_thread, persistent_storage
-from scanner.core import AdvancedNetworkScanner
+from flask import Blueprint, jsonify, request
 
-@app.route('/api/status')
+# Create a blueprint for API routes
+bp = Blueprint('api', __name__)
+
+# Import scanner only when needed to avoid circular imports
+def get_scanner():
+    import web.app
+    if not web.app.scanner:
+        from scanner.core import AdvancedNetworkScanner
+        web.app.scanner = AdvancedNetworkScanner()
+    return web.app.scanner
+
+@bp.route('/api/status')
 def api_status():
+    import web.app
     status_data = {
-        'status': scan_status,
-        'progress': scan_progress,
-        'results_count': len(get_scan_results()),
-        'camera_results_count': len(get_camera_results())
+        'status': web.app.scan_status,
+        'progress': web.app.scan_progress,
+        'results_count': len(web.app.get_scan_results()),
+        'camera_results_count': len(web.app.get_camera_results())
     }
     return jsonify(status_data)
 
-@app.route('/api/results')
+@bp.route('/api/results')
 def api_results():
-    return jsonify(get_scan_results())
+    import web.app
+    return jsonify(web.app.get_scan_results())
 
-@app.route('/api/cameras')
+@bp.route('/api/cameras')
 def api_cameras():
-    return jsonify(get_camera_results())
+    import web.app
+    return jsonify(web.app.get_camera_results())
 
-@app.route('/api/history')
+@bp.route('/api/history')
 def api_history():
+    import web.app
     try:
-        history = persistent_storage.get_scan_history(20)
+        history = web.app.persistent_storage.get_scan_history(20)
         return jsonify(history)
     except Exception as e:
         return jsonify([])
 
-@app.route('/api/scan_network', methods=['POST'])
+@bp.route('/api/scan_network', methods=['POST'])
 def api_scan_network():
-    global scanner_thread, scan_status, scan_progress, scanner
+    import web.app
+    global scanner_thread
     data = request.get_json()
     
     network = data.get('network', '192.168.1.0/24')
     scan_type = data.get('scan_type', 'full')
     
     # Start scan in background
-    scan_status = "running"
-    scan_progress = 0
+    web.app.scan_status = "running"
+    web.app.scan_progress = 0
     
-    if not scanner:
-        scanner = AdvancedNetworkScanner()
+    # Get scanner instance
+    scanner = get_scanner()
         
     if scan_type == 'cameras':
         scanner_thread = threading.Thread(target=run_camera_detection, args=(network,))
@@ -58,7 +72,7 @@ def api_scan_network():
     
     return jsonify({'status': 'started', 'network': network, 'scan_type': scan_type})
 
-@app.route('/api/update_github', methods=['POST'])
+@bp.route('/api/update_github', methods=['POST'])
 def api_update_github():
     # Handle GitHub update
     try:
@@ -115,27 +129,27 @@ def api_update_github():
         return jsonify({'status': 'error', 'message': f'Error during update: {str(e)}'}), 500
 
 def run_scan(network):
-    global scan_status, scan_progress, scanner
+    import web.app
     try:
-        if scanner:
-            scanner.scan_network(network)
-            update_scan_results(scanner.exploited_devices)
-            scan_status = "completed"
-            scan_progress = 100
+        scanner = get_scanner()
+        scanner.scan_network(network)
+        web.app.update_scan_results(scanner.exploited_devices)
+        web.app.scan_status = "completed"
+        web.app.scan_progress = 100
     except Exception as e:
-        scan_status = "error"
-        scan_progress = 0
+        web.app.scan_status = "error"
+        web.app.scan_progress = 0
         print(f"Scan error: {e}")
 
 def run_camera_detection(network):
-    global scan_status, scan_progress, scanner
+    import web.app
     try:
-        if scanner:
-            camera_results = scanner.detect_cameras(network)
-            update_camera_results(camera_results)
-            scan_status = "completed"
-            scan_progress = 100
+        scanner = get_scanner()
+        cameras = scanner.detect_cameras(network)
+        web.app.update_camera_results(cameras)
+        web.app.scan_status = "completed"
+        web.app.scan_progress = 100
     except Exception as e:
-        scan_status = "error"
-        scan_progress = 0
+        web.app.scan_status = "error"
+        web.app.scan_progress = 0
         print(f"Camera detection error: {e}")

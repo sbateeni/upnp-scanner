@@ -10,12 +10,10 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 try:
-    from web.app import app
+    from web.app import run_app
     print("Starting restructured web interface...")
     print("Navigate to http://localhost:8080")
-    # Use getattr to access the run method to avoid static analysis issues
-    run_method = getattr(app, 'run')
-    run_method(host='localhost', port=8080, debug=True)
+    run_app()
 except ImportError as e:
     print(f"Error importing web application: {e}")
     print("Make sure all required files exist in the web/ directory")

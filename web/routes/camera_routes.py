@@ -1,6 +1,10 @@
-from flask import render_template, request
-from web.app import app, get_camera_results
+from flask import Blueprint, render_template, request
 
-@app.route('/cameras')
+# Create a blueprint for camera routes
+bp = Blueprint('camera', __name__)
+
+@bp.route('/cameras')
 def cameras_page():
-    return render_template('cameras.html', cameras=get_camera_results())
+    # Import app functions when needed to avoid circular imports
+    import web.app
+    return render_template('cameras.html', cameras=web.app.get_camera_results())

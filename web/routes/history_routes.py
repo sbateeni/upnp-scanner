@@ -1,6 +1,8 @@
-from flask import render_template, request
-from web.app import app
+from flask import Blueprint, render_template, request
 
-@app.route('/history')
+# Create a blueprint for history routes
+bp = Blueprint('history', __name__)
+
+@bp.route('/history')
 def history_page():
     return render_template('history.html')

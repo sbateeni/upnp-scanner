@@ -1,10 +1,14 @@
-from flask import render_template, request
-from web.app import app, get_scan_results, get_camera_results, scan_progress, scan_status
+from flask import Blueprint, render_template, request
 
-@app.route('/')
+# Create a blueprint for main routes
+bp = Blueprint('main', __name__)
+
+@bp.route('/')
 def main_page():
+    # Import app functions when needed to avoid circular imports
+    import web.app
     return render_template('main.html', 
-                          scan_progress=scan_progress, 
-                          scan_status=scan_status,
-                          scan_results=get_scan_results(),
-                          camera_results=get_camera_results())
+                          scan_progress=web.app.scan_progress, 
+                          scan_status=web.app.scan_status,
+                          scan_results=web.app.get_scan_results(),
+                          camera_results=web.app.get_camera_results())

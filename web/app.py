@@ -7,7 +7,7 @@ This provides a simple web-based interface alternative to the CLI
 import os
 import sys
 
-# 🔧 الحل: إضافة المسار الجذر للمشروع إلى sys.path
+# 🔧 الحل: إضافة المسار الجذر للمشريع إلى sys.path
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
 
@@ -61,23 +61,38 @@ def update_camera_results(results):
 # Clean up old log files on startup
 cleanup_old_logs()
 
-# Import all routes
-from web.routes.main_routes import *
-from web.routes.scan_routes import *
-from web.routes.camera_routes import *
-from web.routes.surrounding_routes import *
-from web.routes.history_routes import *
-from web.routes.settings_routes import *
-from web.routes.api_routes import *
+# Flag to track if routes have been registered
+_routes_registered = False
+
+def register_routes():
+    """Register all routes with the app"""
+    global _routes_registered
+    if _routes_registered:
+        return
+    
+    # Import all routes AFTER the app is fully initialized
+    from web.routes import main_routes, scan_routes, camera_routes, surrounding_routes, history_routes, settings_routes, api_routes
+    
+    # Register the routes with the app
+    app.register_blueprint(main_routes.bp)
+    app.register_blueprint(scan_routes.bp)
+    app.register_blueprint(camera_routes.bp)
+    app.register_blueprint(surrounding_routes.bp)
+    app.register_blueprint(history_routes.bp)
+    app.register_blueprint(settings_routes.bp)
+    app.register_blueprint(api_routes.bp)
+    
+    _routes_registered = True
 
 def run_app():
     """Run the Flask application"""
     print("Starting Flask application...")
     try:
-        # Access the run method through getattr to avoid static analysis issues
-        run_method = getattr(app, 'run')
+        # Register routes
+        register_routes()
+        print(f"Routes registered successfully! Total routes: {len(app.url_map._rules)}")
         print("Running on http://localhost:8080")
-        run_method(host='localhost', port=8080, debug=True)
+        app.run(host='localhost', port=8080, debug=True)
     except Exception as e:
         print(f"Error running Flask app: {e}")
         import traceback

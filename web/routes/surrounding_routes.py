@@ -1,6 +1,8 @@
-from flask import render_template, request
-from web.app import app
+from flask import Blueprint, render_template, request
 
-@app.route('/surrounding')
+# Create a blueprint for surrounding routes
+bp = Blueprint('surrounding', __name__)
+
+@bp.route('/surrounding')
 def surrounding_page():
     return render_template('surrounding.html')

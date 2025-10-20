@@ -1,0 +1,4 @@
+2025-10-20 10:57:19,555 | INFO     | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:8080
+2025-10-20 10:57:19,556 | INFO     | [33mPress CTRL+C to quit[0m
+2025-10-20 10:57:19,568 | INFO     |  * Restarting with watchdog (windowsapi)

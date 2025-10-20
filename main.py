@@ -359,6 +359,8 @@ def start_web_interface():
         cli.print_status("Web interface stopped.", "info")
     except Exception as e:
         cli.print_status(f"Error starting web interface: {e}", "error")
+        import traceback
+        traceback.print_exc()
 
 def run_camera_detection(scanner):
     """Detect network cameras."""

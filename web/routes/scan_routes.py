@@ -1,6 +1,8 @@
-from flask import render_template, request
-from web.app import app
+from flask import Blueprint, render_template, request
 
-@app.route('/scan')
+# Create a blueprint for scan routes
+bp = Blueprint('scan', __name__)
+
+@bp.route('/scan')
 def scan_page():
     return render_template('scan.html')

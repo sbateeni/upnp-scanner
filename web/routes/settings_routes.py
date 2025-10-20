@@ -1,6 +1,8 @@
-from flask import render_template, request
-from web.app import app
+from flask import Blueprint, render_template, request
 
-@app.route('/settings')
+# Create a blueprint for settings routes
+bp = Blueprint('settings', __name__)
+
+@bp.route('/settings')
 def settings_page():
     return render_template('settings.html')
