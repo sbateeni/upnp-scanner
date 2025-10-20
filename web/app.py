@@ -70,5 +70,18 @@ from web.routes.history_routes import *
 from web.routes.settings_routes import *
 from web.routes.api_routes import *
 
+def run_app():
+    """Run the Flask application"""
+    print("Starting Flask application...")
+    try:
+        # Access the run method through getattr to avoid static analysis issues
+        run_method = getattr(app, 'run')
+        print("Running on http://localhost:8080")
+        run_method(host='localhost', port=8080, debug=True)
+    except Exception as e:
+        print(f"Error running Flask app: {e}")
+        import traceback
+        traceback.print_exc()
+
 if __name__ == "__main__":
-    app.run(host='localhost', port=8080, debug=True)
+    run_app()

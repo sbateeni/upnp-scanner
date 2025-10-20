@@ -348,11 +348,12 @@ def start_web_interface():
     cli.print_status("Press Ctrl+C to stop the server", "info")
     
     try:
-        # Import and run the web interface
-        from web_interface import main as web_main
-        web_main()
-    except ImportError:
-        cli.print_status("Web interface not available. Make sure Flask is installed.", "error")
+        # Import and run the new web interface
+        from web.app import run_app
+        run_app()
+    except ImportError as e:
+        cli.print_status(f"Web interface not available. Import error: {e}", "error")
+        cli.print_status("Make sure Flask is installed.", "error")
         cli.print_status("Install with: pip install flask", "info")
     except KeyboardInterrupt:
         cli.print_status("Web interface stopped.", "info")
