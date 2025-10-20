@@ -153,3 +153,20 @@ def run_camera_detection(network):
         web.app.scan_status = "error"
         web.app.scan_progress = 0
         print(f"Camera detection error: {e}")
+
+@bp.route('/api/discover_routers')
+def api_discover_routers():
+    """API endpoint to discover surrounding routers."""
+    try:
+        scanner = get_scanner()
+        routers = scanner.discover_surrounding_routers()
+        return jsonify({
+            'status': 'success',
+            'routers': routers,
+            'count': len(routers)
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500

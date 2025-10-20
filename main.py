@@ -39,15 +39,16 @@ def display_menu():
     cli.print_menu_item(11, "Start Web Interface", "🌐")
     cli.print_menu_item(12, "Detect Network Cameras", "📹")
     cli.print_menu_item(13, "View Last Scan Report", "📜")
-    cli.print_menu_item(14, "Detect Surrounding Networks", "📡")  # New option
-    cli.print_menu_item(15, "Exit", "🚪")  # Updated exit option
+    cli.print_menu_item(14, "Detect Surrounding Networks", "📡")
+    cli.print_menu_item(15, "Detect Surrounding Routers", "📶")  # New option
+    cli.print_menu_item(16, "Exit", "🚪")  # Updated exit option
     
     print(cli.colorize("="*60, 'cyan'))
 
 def get_user_choice():
     """Get and validate user menu choice."""
     try:
-        choice = int(cli.get_user_input("Enter your choice (1-15)"))  # Updated range
+        choice = int(cli.get_user_input("Enter your choice (1-16)"))  # Updated range
         return choice
     except ValueError:
         return -1
@@ -596,6 +597,53 @@ def run_surrounding_networks_detection(scanner):  # New function
         except Exception as e:
             cli.print_status(f"Error scanning network: {e}", "error")
 
+def run_surrounding_routers_detection(scanner):
+    """Detect surrounding routers/WiFi networks."""
+    cli.print_header("Surrounding Routers Detection")
+    
+    cli.print_status("Detecting surrounding WiFi routers...", "info")
+    
+    try:
+        # Discover routers
+        routers = scanner.discover_surrounding_routers()
+        
+        if routers:
+            cli.print_status(f"Discovered {len(routers)} WiFi networks:", "success")
+            print()
+            
+            for i, router in enumerate(routers, 1):
+                print(f"{cli.colorize(f'Network {i}:', 'bold')}")
+                
+                # SSID
+                ssid = router.get('ssid', 'Unknown')
+                print(f"  📶 SSID: {ssid}")
+                
+                # BSSID/MAC Address
+                bssid = router.get('bssid', 'Unknown')
+                print(f"  🔢 BSSID: {bssid}")
+                
+                # Signal Strength
+                signal = router.get('signal', 'Unknown')
+                signal_percentage = router.get('signal_percentage', '')
+                if signal_percentage:
+                    print(f"  📶 Signal: {signal} ({signal_percentage})")
+                else:
+                    print(f"  📶 Signal: {signal}")
+                
+                # Security
+                security = router.get('security', 'Unknown')
+                print(f"  🔒 Security: {security}")
+                
+                print()
+        else:
+            cli.print_status("No WiFi networks detected.", "info")
+            cli.print_status("Note: This feature requires WiFi connectivity and appropriate permissions.", "warning")
+            
+    except Exception as e:
+        cli.print_status(f"Error detecting routers: {e}", "error")
+        import traceback
+        traceback.print_exc()
+
 def update_from_github():
     """Update the scanner from GitHub repository with better Termux compatibility."""
     cli.print_header("Update Scanner")
@@ -716,15 +764,17 @@ def main():
         elif choice == 13:
             view_report()
         elif choice == 14:
-            run_surrounding_networks_detection(scanner)  # New option
+            run_surrounding_networks_detection(scanner)
         elif choice == 15:
+            run_surrounding_routers_detection(scanner)  # New option
+        elif choice == 16:
             cli.print_status("Exiting scanner. Goodbye!", "info")
             break
         else:
-            cli.print_status("Invalid choice. Please enter a number between 1 and 15.", "warning")
+            cli.print_status("Invalid choice. Please enter a number between 1 and 16.", "warning")
         
         # Pause before showing menu again
-        if choice != 15:
+        if choice != 16:
             input(f"\n{cli.colorize('Press Enter to continue...', 'dim')}")
 
 if __name__ == "__main__":

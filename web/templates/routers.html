@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Router Discovery - Advanced Network Scanner{% endblock %}
+
+{% block header %}📶 Router Discovery{% endblock %}
+
+{% block subtitle %}Discover surrounding WiFi networks and routers{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>🔍 WiFi Network Discovery</h2>
+    <div class="network-info">
+        <p>This feature detects surrounding WiFi networks and routers in your vicinity. 
+        It will show available networks, signal strength, and security information.</p>
+    </div>
+    
+    <button class="scan-btn" onclick="discoverRouters()">📡 Discover Routers</button>
+</div>
+
+<div class="card">
+    <h2>📡 Detected Networks</h2>
+    <div class="detected-networks" id="routersContainer">
+        <p>Click "Discover Routers" to scan for surrounding WiFi networks.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function discoverRouters() {
+        // Show loading
+        const container = document.getElementById('routersContainer');
+        container.innerHTML = '<p>📡 Scanning for WiFi networks... Please wait.</p>';
+        
+        fetch('/api/discover_routers')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                displayRouters(data.routers);
+            } else {
+                container.innerHTML = '<p>❌ Error: ' + data.message + '</p>';
+            }
+        })
+        .catch(error => {
+            container.innerHTML = '<p>❌ Error discovering routers: ' + error + '</p>';
+        });
+    }
+    
+    function displayRouters(routers) {
+        const container = document.getElementById('routersContainer');
+        
+        if (routers.length === 0) {
+            container.innerHTML = '<p>No WiFi networks detected.</p>';
+            return;
+        }
+        
+        let html = `<p>Found ${routers.length} WiFi networks:</p>`;
+        
+        routers.forEach((router, index) => {
+            html += `
+            <div class="network-item">
+                <h3>Network ${index + 1}: ${router.ssid || 'Hidden Network'}</h3>
+                <div class="network-details">
+                    <p><strong>BSSID:</strong> ${router.bssid || 'Unknown'}</p>
+                    <p><strong>Signal:</strong> ${router.signal || 'Unknown'} ${router.signal_percentage ? '(' + router.signal_percentage + ')' : ''}</p>
+                    <p><strong>Security:</strong> ${router.security || 'Unknown'}</p>
+                </div>
+            </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+    }
+</script>
+{% endblock %}

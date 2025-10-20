@@ -71,7 +71,7 @@ def register_routes():
         return
     
     # Import all routes AFTER the app is fully initialized
-    from web.routes import main_routes, scan_routes, camera_routes, surrounding_routes, history_routes, settings_routes, api_routes
+    from web.routes import main_routes, scan_routes, camera_routes, surrounding_routes, history_routes, settings_routes, api_routes, routers_routes
     
     # Register the routes with the app
     app.register_blueprint(main_routes.bp)
@@ -81,6 +81,7 @@ def register_routes():
     app.register_blueprint(history_routes.bp)
     app.register_blueprint(settings_routes.bp)
     app.register_blueprint(api_routes.bp)
+    app.register_blueprint(routers_routes.bp)
     
     _routes_registered = True
 

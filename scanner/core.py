@@ -236,6 +236,203 @@ class AdvancedNetworkScanner:
         
         logger.info(f"✅ Scan with exclusions complete. Results saved to: {RESULTS_FILE}")
 
+    def discover_surrounding_routers(self) -> List[Dict[str, Any]]:
+        """Discover surrounding WiFi routers/networks."""
+        routers = []
+        logger.info("🔍 Discovering surrounding routers...")
+        
+        try:
+            import platform
+            import subprocess
+            import re
+            
+            system = platform.system().lower()
+            
+            if system == "windows":
+                # Windows: Use netsh to discover WiFi networks
+                routers = self._discover_windows_wifi()
+            elif system in ["linux", "darwin"]:  # Linux or macOS
+                # Unix-like systems: Try different approaches
+                routers = self._discover_unix_wifi()
+            else:
+                logger.warning(f"Unsupported platform for router discovery: {system}")
+                
+        except Exception as e:
+            logger.error(f"Error discovering routers: {e}")
+            
+        return routers
+    
+    def _discover_windows_wifi(self) -> List[Dict[str, Any]]:
+        """Discover WiFi networks on Windows using netsh."""
+        routers = []
+        try:
+            # First check if WiFi is available
+            result = subprocess.run([
+                "netsh", "wlan", "show", "interfaces"
+            ], capture_output=True, text=True, timeout=10)
+            
+            if result.returncode == 0 and "disconnected" not in result.stdout.lower():
+                # Show available networks
+                result = subprocess.run([
+                    "netsh", "wlan", "show", "networks", "mode=bssid"
+                ], capture_output=True, text=True, timeout=15)
+                
+                if result.returncode == 0:
+                    routers = self._parse_windows_wifi_output(result.stdout)
+                    
+        except subprocess.TimeoutExpired:
+            logger.warning("WiFi discovery timed out")
+        except Exception as e:
+            logger.error(f"Error in Windows WiFi discovery: {e}")
+            
+        return routers
+    
+    def _discover_unix_wifi(self) -> List[Dict[str, Any]]:
+        """Discover WiFi networks on Unix-like systems."""
+        routers = []
+        try:
+            # Try nmcli (NetworkManager)
+            result = subprocess.run([
+                "nmcli", "device", "wifi", "list"
+            ], capture_output=True, text=True, timeout=15)
+            
+            if result.returncode == 0:
+                routers = self._parse_nmcli_output(result.stdout)
+            else:
+                # Try iwlist as fallback
+                result = subprocess.run([
+                    "sudo", "iwlist", "scan"
+                ], capture_output=True, text=True, timeout=20)
+                
+                if result.returncode == 0:
+                    routers = self._parse_iwlist_output(result.stdout)
+                    
+        except subprocess.TimeoutExpired:
+            logger.warning("WiFi discovery timed out")
+        except Exception as e:
+            logger.error(f"Error in Unix WiFi discovery: {e}")
+            
+        return routers
+    
+    def _parse_windows_wifi_output(self, output: str) -> List[Dict[str, Any]]:
+        """Parse Windows netsh WiFi output."""
+        routers = []
+        current_network = None
+        
+        for line in output.split('\n'):
+            line = line.strip()
+            
+            # Look for network SSID
+            if line.startswith("SSID"):
+                if current_network and 'ssid' in current_network:
+                    routers.append(current_network)
+                    
+                current_network = {}
+                # Extract SSID (format: "SSID 1 : NetworkName")
+                parts = line.split(":", 1)
+                if len(parts) > 1:
+                    current_network['ssid'] = parts[1].strip()
+                    
+            # Look for BSSID (MAC address)
+            elif line.startswith("BSSID") and current_network:
+                parts = line.split(":", 1)
+                if len(parts) > 1:
+                    current_network['bssid'] = parts[1].strip()
+                    
+            # Look for signal strength
+            elif line.startswith("Signal") and current_network:
+                parts = line.split(":", 1)
+                if len(parts) > 1:
+                    signal = parts[1].strip().replace('%', '')
+                    try:
+                        # Convert percentage to dBm approximation
+                        signal_dbm = int(signal) / 2 - 100
+                        current_network['signal'] = f"{signal_dbm:.0f} dBm"
+                        current_network['signal_percentage'] = f"{signal}%"
+                    except ValueError:
+                        current_network['signal'] = signal
+                        
+            # Look for authentication
+            elif line.startswith("Authentication") and current_network:
+                parts = line.split(":", 1)
+                if len(parts) > 1:
+                    current_network['security'] = parts[1].strip()
+        
+        # Add the last network
+        if current_network and 'ssid' in current_network:
+            routers.append(current_network)
+            
+        return routers
+    
+    def _parse_nmcli_output(self, output: str) -> List[Dict[str, Any]]:
+        """Parse nmcli WiFi output."""
+        routers = []
+        
+        lines = output.split('\n')
+        if len(lines) > 1:
+            # Skip header line
+            for line in lines[1:]:
+                if line.strip():
+                    parts = line.split()
+                    if len(parts) >= 8:
+                        router = {
+                            'ssid': parts[1] if parts[1] != '--' else 'Hidden Network',
+                            'bssid': parts[0],
+                            'signal': f"{parts[6]} dBm" if parts[6] != '--' else 'Unknown',
+                            'security': parts[7] if parts[7] != '--' else 'Open'
+                        }
+                        routers.append(router)
+                        
+        return routers
+    
+    def _parse_iwlist_output(self, output: str) -> List[Dict[str, Any]]:
+        """Parse iwlist scan output."""
+        routers = []
+        current_network = {}
+        
+        for line in output.split('\n'):
+            line = line.strip()
+            
+            if line.startswith("Cell"):
+                if current_network:
+                    routers.append(current_network)
+                current_network = {}
+                
+            elif "ESSID:" in line:
+                match = re.search(r'ESSID:"(.+)"', line)
+                if match:
+                    current_network['ssid'] = match.group(1)
+                    
+            elif "Address:" in line:
+                match = re.search(r'Address: (.+)', line)
+                if match:
+                    current_network['bssid'] = match.group(1)
+                    
+            elif "Quality=" in line:
+                match = re.search(r'Quality=(\d+)/(\d+)', line)
+                if match:
+                    try:
+                        quality = int(match.group(1))
+                        max_quality = int(match.group(2))
+                        percentage = (quality / max_quality) * 100
+                        signal_dbm = percentage / 2 - 100
+                        current_network['signal'] = f"{signal_dbm:.0f} dBm"
+                        current_network['signal_percentage'] = f"{percentage:.0f}%"
+                    except:
+                        pass
+                        
+            elif "Encryption key:" in line:
+                if "on" in line:
+                    current_network['security'] = "Encrypted"
+                else:
+                    current_network['security'] = "Open"
+        
+        # Add the last network
+        if current_network:
+            routers.append(current_network)
+            
+        return routers
+
     def scan_ipv6_network(self, network: str):
         """Scan an IPv6 network subnet."""
         try:
