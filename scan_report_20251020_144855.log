@@ -1,0 +1,25 @@
+2025-10-20 14:49:05,358 | WARNING  |  * Debugger is active!
+2025-10-20 14:49:05,375 | INFO     |  * Debugger PIN: 114-653-248
+2025-10-20 14:49:05,469 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:49:05] "GET / HTTP/1.1" 200 -
+2025-10-20 14:49:05,809 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:49:05] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2025-10-20 14:49:05,810 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:49:05] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-10-20 14:49:06,182 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:49:06] "GET /api/history HTTP/1.1" 200 -
+2025-10-20 14:49:06,430 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:49:06] "GET /api/history HTTP/1.1" 200 -
+2025-10-20 14:49:07,875 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:49:07] "GET /api/status HTTP/1.1" 200 -
+2025-10-20 14:49:10,179 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:49:10] "GET /api/status HTTP/1.1" 200 -
+2025-10-20 14:49:11,873 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:49:11] "GET /api/status HTTP/1.1" 200 -
+2025-10-20 14:49:12,463 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:49:12] "GET /surrounding HTTP/1.1" 200 -
+2025-10-20 14:49:12,546 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:49:12] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-10-20 14:49:12,715 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:49:12] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2025-10-20 14:49:25,208 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:49:25] "GET /api/status HTTP/1.1" 200 -
+2025-10-20 14:50:10,230 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:50:10] "GET /routers HTTP/1.1" 200 -
+2025-10-20 14:50:10,270 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:50:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-10-20 14:50:10,461 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:50:10] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2025-10-20 14:50:25,507 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:50:25] "GET /api/status HTTP/1.1" 200 -
+2025-10-20 14:50:33,596 | INFO     | 🔍 Discovering surrounding routers...
+2025-10-20 14:50:34,581 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:50:34] "GET /api/discover_routers HTTP/1.1" 200 -
+2025-10-20 14:50:37,662 | INFO     | 🔍 Discovering surrounding routers...
+2025-10-20 14:50:37,812 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:50:37] "GET /api/discover_routers HTTP/1.1" 200 -
+2025-10-20 14:50:38,892 | INFO     | 🔍 Discovering surrounding routers...
+2025-10-20 14:50:39,007 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:50:39] "GET /api/discover_routers HTTP/1.1" 200 -
+2025-10-20 14:50:43,535 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\test_flask.py', reloading

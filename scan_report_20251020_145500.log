@@ -1,0 +1,12 @@
+2025-10-20 14:55:01,918 | WARNING  |  * Debugger is active!
+2025-10-20 14:55:01,936 | INFO     |  * Debugger PIN: 114-653-248
+2025-10-20 14:55:05,783 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:55:05] "GET /routers HTTP/1.1" 200 -
+2025-10-20 14:55:05,915 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:55:05] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-10-20 14:55:06,014 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:55:06] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2025-10-20 14:55:25,513 | INFO     | 127.0.0.1 - - [20/Oct/2025 14:55:25] "GET /api/status HTTP/1.1" 200 -
+2025-10-20 14:55:43,950 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\web\\routes\\camera_routes.py', reloading
+2025-10-20 14:55:43,951 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\web\\routes\\history_routes.py', reloading
+2025-10-20 14:55:43,952 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\web\\routes\\main_routes.py', reloading
+2025-10-20 14:55:43,952 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\web\\routes\\scan_routes.py', reloading
+2025-10-20 14:55:43,953 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\web\\routes\\settings_routes.py', reloading
+2025-10-20 14:55:43,953 | INFO     |  * Detected change in 'c:\\Users\\Yosif\\Documents\\GitHub\\upnp-scanner\\web\\routes\\surrounding_routes.py', reloading
