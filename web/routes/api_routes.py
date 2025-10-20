@@ -170,3 +170,46 @@ def api_discover_routers():
             'status': 'error',
             'message': str(e)
         }), 500
+
+@bp.route('/api/list_wifi_adapters')
+def api_list_wifi_adapters():
+    """API endpoint to list available WiFi adapters."""
+    try:
+        scanner = get_scanner()
+        adapters = scanner.list_wifi_adapters()
+        return jsonify({
+            'status': 'success',
+            'adapters': adapters,
+            'count': len(adapters)
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+@bp.route('/api/discover_routers_on_adapter', methods=['POST'])
+def api_discover_routers_on_adapter():
+    """API endpoint to discover surrounding routers on a specific adapter."""
+    try:
+        data = request.get_json()
+        adapter_name = data.get('adapter_name')
+        
+        if not adapter_name:
+            return jsonify({
+                'status': 'error',
+                'message': 'Adapter name is required'
+            }), 400
+            
+        scanner = get_scanner()
+        routers = scanner.discover_surrounding_routers_on_adapter(adapter_name)
+        return jsonify({
+            'status': 'success',
+            'routers': routers,
+            'count': len(routers)
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500

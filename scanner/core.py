@@ -264,6 +264,57 @@ class AdvancedNetworkScanner:
             
         return routers
     
+    def list_wifi_adapters(self) -> List[Dict[str, Any]]:
+        """List available WiFi adapters/interfaces."""
+        adapters = []
+        logger.info("🔍 Listing WiFi adapters...")
+        
+        try:
+            import platform
+            import subprocess
+            
+            system = platform.system().lower()
+            
+            if system == "windows":
+                # Windows: Use netsh to list WiFi interfaces
+                adapters = self._list_windows_wifi_adapters()
+            elif system in ["linux", "darwin"]:  # Linux or macOS
+                # Unix-like systems: Try different approaches
+                adapters = self._list_unix_wifi_adapters()
+            else:
+                logger.warning(f"Unsupported platform for adapter listing: {system}")
+                
+        except Exception as e:
+            logger.error(f"Error listing WiFi adapters: {e}")
+            
+        return adapters
+    
+    def discover_surrounding_routers_on_adapter(self, adapter_name: str) -> List[Dict[str, Any]]:
+        """Discover surrounding WiFi routers/networks on a specific adapter."""
+        routers = []
+        logger.info(f"🔍 Discovering surrounding routers on adapter: {adapter_name}")
+        
+        try:
+            import platform
+            import subprocess
+            import re
+            
+            system = platform.system().lower()
+            
+            if system == "windows":
+                # Windows: Use netsh to discover WiFi networks on specific interface
+                routers = self._discover_windows_wifi_on_adapter(adapter_name)
+            elif system in ["linux", "darwin"]:  # Linux or macOS
+                # Unix-like systems: Try different approaches
+                routers = self._discover_unix_wifi_on_adapter(adapter_name)
+            else:
+                logger.warning(f"Unsupported platform for router discovery: {system}")
+                
+        except Exception as e:
+            logger.error(f"Error discovering routers on adapter {adapter_name}: {e}")
+            
+        return routers
+    
     def _discover_windows_wifi(self) -> List[Dict[str, Any]]:
         """Discover WiFi networks on Windows using netsh."""
         routers = []
@@ -848,3 +899,130 @@ class AdvancedNetworkScanner:
         # This is a simplified model extraction
         # In a real implementation, you would have more sophisticated parsing
         return "Unknown"
+    
+    def _list_windows_wifi_adapters(self) -> List[Dict[str, Any]]:
+        """List WiFi adapters on Windows using netsh."""
+        adapters = []
+        try:
+            # List interfaces
+            result = subprocess.run([
+                "netsh", "wlan", "show", "interfaces"
+            ], capture_output=True, text=True, timeout=10)
+            
+            if result.returncode == 0:
+                # Parse the output to extract adapter information
+                adapters = self._parse_windows_interfaces_output(result.stdout)
+                    
+        except subprocess.TimeoutExpired:
+            logger.warning("WiFi adapter listing timed out")
+        except Exception as e:
+            logger.error(f"Error listing Windows WiFi adapters: {e}")
+            
+        return adapters
+    
+    def _list_unix_wifi_adapters(self) -> List[Dict[str, Any]]:
+        """List WiFi adapters on Unix-like systems."""
+        adapters = []
+        try:
+            # Try to get network interfaces
+            import netifaces
+            interfaces = netifaces.interfaces()
+            
+            # Filter for WiFi interfaces (common names)
+            wifi_keywords = ['wlan', 'wifi', 'wireless', 'wl', 'ath']
+            for interface in interfaces:
+                if any(keyword in interface.lower() for keyword in wifi_keywords):
+                    adapters.append({
+                        'name': interface,
+                        'description': f"Wireless interface {interface}"
+                    })
+                    
+        except ImportError:
+            logger.warning("netifaces module not available for adapter listing")
+        except Exception as e:
+            logger.error(f"Error listing Unix WiFi adapters: {e}")
+            
+        return adapters
+    
+    def _discover_windows_wifi_on_adapter(self, adapter_name: str) -> List[Dict[str, Any]]:
+        """Discover WiFi networks on a specific Windows adapter."""
+        routers = []
+        try:
+            # Show available networks on specific interface
+            result = subprocess.run([
+                "netsh", "wlan", "show", "networks", "mode=bssid", f"interface={adapter_name}"
+            ], capture_output=True, text=True, timeout=15)
+            
+            if result.returncode == 0:
+                routers = self._parse_windows_wifi_output(result.stdout)
+                    
+        except subprocess.TimeoutExpired:
+            logger.warning("WiFi discovery timed out")
+        except Exception as e:
+            logger.error(f"Error in Windows WiFi discovery on adapter {adapter_name}: {e}")
+            
+        return routers
+    
+    def _discover_unix_wifi_on_adapter(self, adapter_name: str) -> List[Dict[str, Any]]:
+        """Discover WiFi networks on a specific Unix adapter."""
+        routers = []
+        try:
+            # Try nmcli (NetworkManager) with specific interface
+            result = subprocess.run([
+                "nmcli", "device", "wifi", "list", "ifname", adapter_name
+            ], capture_output=True, text=True, timeout=15)
+            
+            if result.returncode == 0:
+                routers = self._parse_nmcli_output(result.stdout)
+            else:
+                # Try iwlist with specific interface
+                result = subprocess.run([
+                    "sudo", "iwlist", adapter_name, "scan"
+                ], capture_output=True, text=True, timeout=20)
+                
+                if result.returncode == 0:
+                    routers = self._parse_iwlist_output(result.stdout)
+                    
+        except subprocess.TimeoutExpired:
+            logger.warning("WiFi discovery timed out")
+        except Exception as e:
+            logger.error(f"Error in Unix WiFi discovery on adapter {adapter_name}: {e}")
+            
+        return routers
+    
+    def _parse_windows_interfaces_output(self, output: str) -> List[Dict[str, Any]]:
+        """Parse Windows netsh interfaces output."""
+        adapters = []
+        current_interface = None
+        
+        for line in output.split('\n'):
+            line = line.strip()
+            
+            # Look for interface name
+            if line.startswith("Name"):
+                if current_interface and 'name' in current_interface:
+                    adapters.append(current_interface)
+                    
+                current_interface = {}
+                # Extract name (format: "Name : InterfaceName")
+                parts = line.split(":", 1)
+                if len(parts) > 1:
+                    current_interface['name'] = parts[1].strip()
+                    
+            # Look for description
+            elif line.startswith("Description") and current_interface:
+                parts = line.split(":", 1)
+                if len(parts) > 1:
+                    current_interface['description'] = parts[1].strip()
+                    
+            # Look for state
+            elif line.startswith("State") and current_interface:
+                parts = line.split(":", 1)
+                if len(parts) > 1:
+                    current_interface['state'] = parts[1].strip()
+        
+        # Add the last interface
+        if current_interface and 'name' in current_interface:
+            adapters.append(current_interface)
+            
+        return adapters

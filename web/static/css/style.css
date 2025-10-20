@@ -606,6 +606,48 @@ button:hover {
     border-radius: 8px;
 }
 
+.adapter-selection {
+    background: var(--light);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.adapter-selection h3 {
+    color: var(--secondary);
+    margin-bottom: 15px;
+}
+
+.wifi-adapter-select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    background: white;
+}
+
+.wifi-adapter-select:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+.network-item {
+    padding: 15px;
+    background: white;
+    margin: 10px 0;
+    border-radius: 5px;
+    border-left: 5px solid var(--primary);
+}
+
+.network-details {
+    margin-top: 10px;
+}
+
+.network-details p {
+    margin: 5px 0;
+}
+
 footer {
     text-align: center;
     padding: 20px;

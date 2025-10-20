@@ -14,6 +14,17 @@
         It will show available networks, signal strength, and security information.</p>
     </div>
     
+    <div class="adapter-selection" id="adapterSelection">
+        <h3>📡 WiFi Adapter Selection</h3>
+        <div class="form-group">
+            <label for="wifiAdapter">Select WiFi Adapter:</label>
+            <select id="wifiAdapter" class="wifi-adapter-select">
+                <option value="">Loading adapters...</option>
+            </select>
+        </div>
+        <button class="action-btn" onclick="refreshAdapters()">🔄 Refresh Adapters</button>
+    </div>
+    
     <button class="scan-btn" onclick="discoverRouters()">📡 Discover Routers</button>
 </div>
 
@@ -27,23 +38,99 @@
 
 {% block scripts %}
 <script>
-    function discoverRouters() {
-        // Show loading
-        const container = document.getElementById('routersContainer');
-        container.innerHTML = '<p>📡 Scanning for WiFi networks... Please wait.</p>';
+    // Load adapters when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        loadWifiAdapters();
+    });
+    
+    function loadWifiAdapters() {
+        const adapterSelect = document.getElementById('wifiAdapter');
+        adapterSelect.innerHTML = '<option value="">Loading adapters...</option>';
         
-        fetch('/api/discover_routers')
+        fetch('/api/list_wifi_adapters')
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                displayRouters(data.routers);
+                displayAdapters(data.adapters);
             } else {
-                container.innerHTML = '<p>❌ Error: ' + data.message + '</p>';
+                adapterSelect.innerHTML = '<option value="">Error loading adapters</option>';
+                console.error('Error loading adapters:', data.message);
             }
         })
         .catch(error => {
-            container.innerHTML = '<p>❌ Error discovering routers: ' + error + '</p>';
+            adapterSelect.innerHTML = '<option value="">Error loading adapters</option>';
+            console.error('Error loading adapters:', error);
         });
+    }
+    
+    function refreshAdapters() {
+        loadWifiAdapters();
+    }
+    
+    function displayAdapters(adapters) {
+        const adapterSelect = document.getElementById('wifiAdapter');
+        
+        if (adapters.length === 0) {
+            adapterSelect.innerHTML = '<option value="">No adapters found</option>';
+            return;
+        }
+        
+        let html = '<option value="">Select an adapter (default: automatic)</option>';
+        adapters.forEach(adapter => {
+            const name = adapter.name || 'Unknown';
+            const description = adapter.description || 'No description';
+            html += `<option value="${name}">${name} - ${description}</option>`;
+        });
+        
+        adapterSelect.innerHTML = html;
+    }
+    
+    function discoverRouters() {
+        // Show loading
+        const container = document.getElementById('routersContainer');
+        const selectedAdapter = document.getElementById('wifiAdapter').value;
+        
+        if (selectedAdapter) {
+            container.innerHTML = `<p>📡 Scanning for WiFi networks on adapter "${selectedAdapter}"... Please wait.</p>`;
+            
+            // Discover routers on specific adapter
+            fetch('/api/discover_routers_on_adapter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    adapter_name: selectedAdapter
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    displayRouters(data.routers);
+                } else {
+                    container.innerHTML = '<p>❌ Error: ' + data.message + '</p>';
+                }
+            })
+            .catch(error => {
+                container.innerHTML = '<p>❌ Error discovering routers: ' + error + '</p>';
+            });
+        } else {
+            container.innerHTML = '<p>📡 Scanning for WiFi networks... Please wait.</p>';
+            
+            // Discover routers on default adapter
+            fetch('/api/discover_routers')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    displayRouters(data.routers);
+                } else {
+                    container.innerHTML = '<p>❌ Error: ' + data.message + '</p>';
+                }
+            })
+            .catch(error => {
+                container.innerHTML = '<p>❌ Error discovering routers: ' + error + '</p>';
+            });
+        }
     }
     
     function displayRouters(routers) {
