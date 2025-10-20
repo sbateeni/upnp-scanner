@@ -352,9 +352,41 @@ def start_web_interface():
         from web.app import run_app
         run_app()
     except ImportError as e:
+        # More detailed error handling to help with Termux issues
         cli.print_status(f"Web interface not available. Import error: {e}", "error")
-        cli.print_status("Make sure Flask is installed.", "error")
-        cli.print_status("Install with: pip install flask", "info")
+        cli.print_status("This could be due to:", "warning")
+        cli.print_status("1. Flask not installed (but you said it is installed)", "warning")
+        cli.print_status("2. Missing web directory structure", "warning")
+        cli.print_status("3. Circular import issues", "warning")
+        
+        # Check if Flask is really installed
+        try:
+            import flask
+            cli.print_status(f"✅ Flask {flask.__version__} is installed", "success")
+        except ImportError:
+            cli.print_status("❌ Flask is NOT installed", "error")
+            cli.print_status("Install with: pip install flask", "info")
+            return
+            
+        # Check if web directory exists
+        import os
+        web_dir = os.path.join(os.path.dirname(__file__), 'web')
+        if os.path.exists(web_dir):
+            cli.print_status("✅ web directory exists", "success")
+        else:
+            cli.print_status("❌ web directory not found", "error")
+            return
+            
+        # Check if app.py exists
+        app_file = os.path.join(web_dir, 'app.py')
+        if os.path.exists(app_file):
+            cli.print_status("✅ web/app.py exists", "success")
+        else:
+            cli.print_status("❌ web/app.py not found", "error")
+            return
+            
+        cli.print_status("Make sure all required files exist in the web/ directory", "error")
+        cli.print_status("Refer to web/README.md for the directory structure", "info")
     except KeyboardInterrupt:
         cli.print_status("Web interface stopped.", "info")
     except Exception as e:
