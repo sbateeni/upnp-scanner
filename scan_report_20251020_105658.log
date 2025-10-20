@@ -1,7 +1,0 @@
-2025-10-20 10:56:58,348 | WARNING  |  * Debugger is active!
-2025-10-20 10:56:58,372 | INFO     |  * Debugger PIN: 114-653-248
-2025-10-20 10:57:02,956 | INFO     | 127.0.0.1 - - [20/Oct/2025 10:57:02] "[35m[1mGET / HTTP/1.1[0m" 500 -
-2025-10-20 10:57:03,079 | INFO     | 127.0.0.1 - - [20/Oct/2025 10:57:03] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
-2025-10-20 10:57:03,164 | INFO     | 127.0.0.1 - - [20/Oct/2025 10:57:03] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
-2025-10-20 10:57:03,560 | INFO     | 127.0.0.1 - - [20/Oct/2025 10:57:03] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
-2025-10-20 10:57:03,786 | INFO     | 127.0.0.1 - - [20/Oct/2025 10:57:03] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
